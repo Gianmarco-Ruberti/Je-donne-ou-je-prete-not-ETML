@@ -29,4 +29,5 @@ router.group(() => {
   router.post('items', [DonationObjectsController, 'store']).as('donation_objects.store')
   router.post('item/:id', [DonationObjectsController, 'update']).as('donation_objects.update')
   router.delete('item/:id', [DonationObjectsController, 'destroy']).as('donation_objects.destroy')
+  router.post('/item/:id/reserve', [DonationObjectsController, 'reserve']).as('donation_objects.reserve')
 }).use(middleware.auth())

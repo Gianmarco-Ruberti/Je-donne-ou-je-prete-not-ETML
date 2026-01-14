@@ -9,6 +9,7 @@ import { cuid } from '@adonisjs/core/helpers'
 import sharp from 'sharp'
 import fs from 'node:fs/promises'
 import db from '@adonisjs/lucid/services/db'
+import mail from '@adonisjs/mail/services/main'
 
 export default class DonationObjectsController {
   /**
@@ -178,5 +179,61 @@ export default class DonationObjectsController {
 
     await object.delete()
     return response.redirect().toPath('/account')
+  }
+
+
+  async reserve({ params, auth, response, session }: HttpContext) {
+
+    try {
+      const item = await DonationObject.query()
+        .where('id', params.id)
+        .preload('user')
+        .firstOrFail()
+
+
+
+      await mail.send((message) => {
+        message
+          .to(`${item.user.email}`) // Ton mail de test
+          .from('dami.scoot3@gmail.com') // Ton mail valide Brevo
+          .subject(`Demande de réservation : ${item.name}`)
+          .html(`
+          <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; border: 1px solid #e1e1e1; border-radius: 8px; overflow: hidden;">
+            <div style="background-color: #4f46e5; color: white; padding: 20px; text-align: center;">
+              <h1 style="margin: 0; font-size: 24px;">Nouvelle demande !</h1>
+            </div>
+            
+            <div style="padding: 20px; line-height: 1.6;">
+              <p>Bonjour <strong>${item.user.Username}</strong>,</p>
+              
+              <p>Bonne nouvelle ! Un utilisateur est intéressé par votre objet : <strong>${item.name}</strong>.</p>
+              
+              <div style="background-color: #f9fafb; border-radius: 8px; padding: 15px; margin: 20px 0; border-left: 4px solid #4f46e5;">
+                <p style="margin: 0;"><strong>Demandeur :</strong> ${auth.user?.Username}</p>
+                <p style="margin: 5px 0 0 0;"><strong>Email :</strong> ${auth.user?.email}</p>
+              </div>
+
+              <p>Vous pouvez contacter cette personne directement en répondant à cet email.</p>
+              
+              <div style="text-align: center; margin-top: 30px;">
+                <a href="mailto:tkt}" style="background-color: #22c55e; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold;">Répondre au demandeur</a>
+              </div>
+            </div>
+
+            <div style="background-color: #f3f4f6; color: #6b7280; padding: 15px; text-align: center; font-size: 12px;">
+              <p style="margin: 0;">Ceci est un message automatique envoyé par JeDonneJePrete.</p>
+            </div>
+          </div>
+        `)
+      })
+
+      session.flash('success', 'Email envoyé au propriétaire !')
+
+    } catch (error) {
+      console.log('ERREUR CAPTURÉE :', error)
+      session.flash('error', "L'envoi a échoué : " + error.message)
+    }
+
+    return response.redirect().back()
   }
 }

@@ -11,7 +11,7 @@ export default class extends BaseSeeder {
         status: 1,
         categorie: 'Sport & Loisirs',
         user_id: 1,
-        imagePath: 'iqh2z90hp85nyx1196d4q0gn.png',
+        imagePath: 'l0omffpcb7howtrp6b3htyzi.webp',
       },
       {
         name: 'Ballon de basket',
@@ -20,7 +20,7 @@ export default class extends BaseSeeder {
         status: 1,
         categorie: 'Sport & Loisirs',
         user_id: 1,
-        imagePath: 'iqh2z90hp85nyx1196d4q0gn.png',
+        imagePath: 'l0omffpcb7howtrp6b3htyzi.webp',
       },
       {
         name: 'Livre - Le Seigneur des Anneaux',
@@ -29,7 +29,7 @@ export default class extends BaseSeeder {
         status: 1,
         categorie: 'Culture & Livres',
         user_id: 1,
-        imagePath: 'iqh2z90hp85nyx1196d4q0gn.png',
+        imagePath: 'l0omffpcb7howtrp6b3htyzi.webp',
       },
       {
         name: "Veste d'hiver",
@@ -38,7 +38,7 @@ export default class extends BaseSeeder {
         status: 1,
         categorie: 'Vêtements',
         user_id: 1,
-        imagePath: 'iqh2z90hp85nyx1196d4q0gn.png',
+        imagePath: 'l0omffpcb7howtrp6b3htyzi.webp',
       },
       {
         name: 'Console de jeu (ancienne génération)',
@@ -47,7 +47,7 @@ export default class extends BaseSeeder {
         status: 2,
         categorie: 'Informatique & Tech',
         user_id: 1,
-        imagePath: 'iqh2z90hp85nyx1196d4q0gn.png',
+        imagePath: 'l0omffpcb7howtrp6b3htyzi.webp',
       },
       {
         name: 'Assiettes en porcelaine',
@@ -56,7 +56,7 @@ export default class extends BaseSeeder {
         status: 1,
         categorie: 'Maison & Cuisine',
         user_id: 1,
-        imagePath: 'iqh2z90hp85nyx1196d4q0gn.png',
+        imagePath: 'l0omffpcb7howtrp6b3htyzi.webp',
       },
       {
         name: 'Tapis de yoga',
@@ -65,7 +65,7 @@ export default class extends BaseSeeder {
         status: 1,
         categorie: 'Sport & Loisirs',
         user_id: 1,
-        imagePath: 'iqh2z90hp85nyx1196d4q0gn.png',
+        imagePath: 'l0omffpcb7howtrp6b3htyzi.webp',
       },
       {
         name: 'Ordinateur portable',
@@ -74,7 +74,7 @@ export default class extends BaseSeeder {
         status: 3,
         categorie: 'Informatique & Tech',
         user_id: 1,
-        imagePath: 'iqh2z90hp85nyx1196d4q0gn.png',
+        imagePath: 'l0omffpcb7howtrp6b3htyzi.webp',
       },
       {
         name: 'Jeu de construction pour enfants',
@@ -83,7 +83,7 @@ export default class extends BaseSeeder {
         status: 1,
         categorie: 'Jouets & Enfants',
         user_id: 1,
-        imagePath: 'iqh2z90hp85nyx1196d4q0gn.png',
+        imagePath: 'l0omffpcb7howtrp6b3htyzi.webp',
       },
       {
         name: 'Chaussures de randonnée',
@@ -92,7 +92,7 @@ export default class extends BaseSeeder {
         status: 1,
         categorie: 'Vêtements',
         user_id: 1,
-        imagePath: 'iqh2z90hp85nyx1196d4q0gn.png',
+        imagePath: 'l0omffpcb7howtrp6b3htyzi.webp',
       },
       {
         name: 'Micro-ondes',
@@ -101,7 +101,7 @@ export default class extends BaseSeeder {
         status: 1,
         categorie: 'Électroménager',
         user_id: 1,
-        imagePath: 'iqh2z90hp85nyx1196d4q0gn.png',
+        imagePath: 'l0omffpcb7howtrp6b3htyzi.webp',
       },
       {
         name: 'Guitare acoustique',
@@ -110,7 +110,7 @@ export default class extends BaseSeeder {
         status: 2,
         categorie: 'Musique & Art',
         user_id: 1,
-        imagePath: 'iqh2z90hp85nyx1196d4q0gn.png',
+        imagePath: 'l0omffpcb7howtrp6b3htyzi.webp',
       },
       {
         name: 'Lot de stylos et crayons',
@@ -119,7 +119,7 @@ export default class extends BaseSeeder {
         status: 1,
         categorie: 'Bureau & Fournitures',
         user_id: 1,
-        imagePath: 'iqh2z90hp85nyx1196d4q0gn.png',
+        imagePath: 'l0omffpcb7howtrp6b3htyzi.webp',
       },
       {
         name: 'Écran PC 24 pouces',
@@ -128,7 +128,7 @@ export default class extends BaseSeeder {
         status: 1,
         categorie: 'Informatique & Tech',
         user_id: 1,
-        imagePath: 'iqh2z90hp85nyx1196d4q0gn.png',
+        imagePath: 'l0omffpcb7howtrp6b3htyzi.webp',
       },
       {
         name: 'AMD EPYC 9965',
@@ -137,7 +137,7 @@ export default class extends BaseSeeder {
         status: 1,
         categorie: 'Informatique & Tech',
         user_id: 1,
-        imagePath: 'iqh2z90hp85nyx1196d4q0gn.png',
+        imagePath: 'l0omffpcb7howtrp6b3htyzi.webp',
       },
     ]
 

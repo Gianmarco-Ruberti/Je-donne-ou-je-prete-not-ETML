@@ -183,20 +183,18 @@ export default class DonationObjectsController {
 
 
   async reserve({ params, auth, response, session }: HttpContext) {
-    console.log('1. Début de la fonction reserve')
 
     try {
-      // 1. IL MANQUAIT CETTE ÉTAPE : Récupérer l'objet et son proprio
       const item = await DonationObject.query()
         .where('id', params.id)
         .preload('user')
         .firstOrFail()
 
-      console.log('2. Tentative d\'envoi de mail...')
+
 
       await mail.send((message) => {
         message
-          .to('dami.scoot3@gmail.com') // Ton mail de test
+          .to(`${item.user.email}`) // Ton mail de test
           .from('dami.scoot3@gmail.com') // Ton mail valide Brevo
           .subject(`Demande de réservation : ${item.name}`)
           .html(`
@@ -212,7 +210,7 @@ export default class DonationObjectsController {
               
               <div style="background-color: #f9fafb; border-radius: 8px; padding: 15px; margin: 20px 0; border-left: 4px solid #4f46e5;">
                 <p style="margin: 0;"><strong>Demandeur :</strong> ${auth.user?.Username}</p>
-                <p style="margin: 5px 0 0 0;"><strong>Email :</strong> tkt</p>
+                <p style="margin: 5px 0 0 0;"><strong>Email :</strong> ${auth.user?.email}</p>
               </div>
 
               <p>Vous pouvez contacter cette personne directement en répondant à cet email.</p>
@@ -229,7 +227,6 @@ export default class DonationObjectsController {
         `)
       })
 
-      console.log('3. Mail envoyé avec succès')
       session.flash('success', 'Email envoyé au propriétaire !')
 
     } catch (error) {

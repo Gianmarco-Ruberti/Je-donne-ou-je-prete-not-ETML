@@ -17,27 +17,46 @@ export const createDonationObjectValidator = vine.compile(
   vine.object({
     name: vine.string().trim().minLength(3).maxLength(255),
     description: vine.string().trim().escape().maxLength(5000).optional(),
-    type: vine.enum(['0', '1']), // On attend les strings du formulaire
+
+    // Type : '0' pour Don, '1' pour Prêt
+    type: vine.enum(['0', '1']),
+
+    // Durée de réservation (en heures ou jours selon ton choix)
+    // On la rend obligatoire seulement si type est '1'
+    reservation_duration: vine.number()
+      .positive()
+      .optional()
+      .requiredWhen('type', '=', '1'),
+
     categorie: vine.string().trim(),
     image: vine
       .file({
         size: '5mb',
         extnames: ['jpg', 'jpeg', 'png', 'webp'],
       })
-      .optional(), // Mettre .optional() si l'image n'est pas obligatoire
+      .optional(),
   })
 )
+
 export const updateDonationObjectValidator = vine.compile(
   vine.object({
     name: vine.string().trim().minLength(3).maxLength(255),
     description: vine.string().trim().escape().maxLength(5000).optional(),
-    type: vine.enum(['0', '1']), // On attend les strings du formulaire
+
+    type: vine.enum(['0', '1']),
+
+    // Idem pour l'update, on peut vouloir changer la durée
+    reservation_duration: vine.number()
+      .positive()
+      .optional()
+      .requiredWhen('type', '=', '1'),
+
     categorie: vine.string().trim(),
     image: vine
       .file({
         size: '5mb',
         extnames: ['jpg', 'jpeg', 'png', 'webp'],
       })
-      .optional(), // Mettre .optional() si l'image n'est pas obligatoire
+      .optional(),
   })
 )

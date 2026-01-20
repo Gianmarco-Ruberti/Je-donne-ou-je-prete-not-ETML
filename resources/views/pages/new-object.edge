@@ -8,7 +8,7 @@
 
         {{ csrfField() }}
 
-        <div >
+        <div>
             <div>
                 @!component('components/input', {
                 name : 'image',
@@ -17,7 +17,7 @@
                 attributes: { onchange: 'previewImage(event)' }
                 })
             </div>
-        <img id="imageDisplay" src="" alt="Aperçu de l'image sélectionnée">
+            <img id="imageDisplay" src="" alt="Aperçu de l'image sélectionnée">
         </div>
 
         <div>
@@ -61,7 +61,11 @@
                 <option value="1">Prêter</option>
             </select>
         </div>
-
+        <div class="field">
+            <label>Durée du prêt (en heures)</label>
+            <input type="number" name="reservation_duration"
+                value="{{ old('reservation_duration') || object?.reservationDuration || '' }}">
+        </div>
         <br>
 
         <div>
@@ -76,24 +80,24 @@
 </main>
 
 <script>
-const imageSelector = document.getElementById('image');
-const imageDisplay = document.getElementById('imageDisplay');
+    const imageSelector = document.getElementById('image');
+    const imageDisplay = document.getElementById('imageDisplay');
 
-imageSelector.addEventListener('change', function(event) {
+    imageSelector.addEventListener('change', function (event) {
 
-    if (event.target.files && event.target.files[0]) {
+        if (event.target.files && event.target.files[0]) {
 
-        const reader = new FileReader();
+            const reader = new FileReader();
 
-        reader.onload = function(e) {
+            reader.onload = function (e) {
 
-            imageDisplay.src = e.target.result;
-            imageDisplay.style.display = 'block';
-        };
+                imageDisplay.src = e.target.result;
+                imageDisplay.style.display = 'block';
+            };
 
 
-        reader.readAsDataURL(event.target.files[0]);
-    }
-});
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    });
 </script>
 @include('partials/footer')

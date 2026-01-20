@@ -5,77 +5,72 @@
 <main>
     <h1>Éditer l'Objet de Donation : {{ object.name }}</h1>
 
-    <form 
-        action="{{ route('donation_objects.update', { id: object.id }) }}"
-        method="POST" 
-        enctype="multipart/form-data"
-    >
-        {{ csrfField() }} 
-        <input type="hidden" name="_method" value="PUT"> 
-        
+    <form action="{{ route('donation_objects.update', { id: object.id }) }}" method="POST"
+        enctype="multipart/form-data">
+        {{ csrfField() }}
+        <input type="hidden" name="_method" value="PUT">
+
         <div>
             <div>
                 @!component('components/input', {
-                    name : 'image',
-                    label : "Image de l'objet (laisser vide pour garder l'ancienne)",
-                    type : 'file',
-                    attributes: { onchange: 'previewImage(event)' } 
+                name : 'image',
+                label : "Image de l'objet (laisser vide pour garder l'ancienne)",
+                type : 'file',
+                attributes: { onchange: 'previewImage(event)' }
                 })
-                
+
             </div>
             <img id="imageDisplay" src="{{object.imageBase64}}" alt="Aperçu de l'image sélectionnée">
 
         </div>
-        
+
         <br>
 
         <div>
             <label for="name">Nom de l'objet:</label><br>
-            <input 
-                id="name" 
-                type="text" 
-                name="name" 
-                value="{{ flashMessages.get('name') || object.name }}"
-                placeholder="Ex: Livre de cuisine"
-                required
-            >
+            <input id="name" type="text" name="name" value="{{ flashMessages.get('name') || object.name }}"
+                placeholder="Ex: Livre de cuisine" required>
             @if(flashMessages.has('errors.name'))
-                <p style="color: red;">Erreur: {{ flashMessages.get('errors.name') }}</p>
+            <p style="color: red;">Erreur: {{ flashMessages.get('errors.name') }}</p>
             @endif
         </div>
-        
+
         <br>
 
         <div>
             <label for="description">Description détaillée:</label><br>
-            <textarea 
-                id="description"
-                name="description"
-                rows="5"
-                required
-                placeholder="Décrivez l'état et les caractéristiques."
-            >{{ flashMessages.get('description') || object.description }}</textarea>
+            <textarea id="description" name="description" rows="5" required
+                placeholder="Décrivez l'état et les caractéristiques.">{{ flashMessages.get('description') || object.description }}</textarea>
 
             @if(flashMessages.has('errors.description'))
-                <p style="color: red;">Erreur: {{ flashMessages.get('errors.description') }}</p>
+            <p style="color: red;">Erreur: {{ flashMessages.get('errors.description') }}</p>
             @endif
         </div>
-        
+
         <br>
 
         <div>
             <label for="categorie">Catégorie:</label><br>
             <select id="categorie" name="categorie" required>
                 <option value="">-- Sélectionner une catégorie --</option>
-                <option value="Sport & Loisirs" {{ (flashMessages.get('categorie') || object.categorie) === 'Sport & Loisirs' ? 'selected' : '' }}>Sport & Loisirs</option>
-                <option value="Culture & Livres" {{ (flashMessages.get('categorie') || object.categorie) === 'Culture & Livres' ? 'selected' : '' }}>Culture & Livres</option>
-                <option value="Vêtements" {{ (flashMessages.get('categorie') || object.categorie) === 'Vêtements' ? 'selected' : '' }}>Vêtements</option>
-                <option value="Informatique & Tech" {{ (flashMessages.get('categorie') || object.categorie) === 'Informatique & Tech' ? 'selected' : '' }}>Informatique & Tech</option>
-                <option value="Maison & Cuisine" {{ (flashMessages.get('categorie') || object.categorie) === 'Maison & Cuisine' ? 'selected' : '' }}>Maison & Cuisine</option>
-                <option value="Jouets & Enfants" {{ (flashMessages.get('categorie') || object.categorie) === 'Jouets & Enfants' ? 'selected' : '' }}>Jouets & Enfants</option>
-                <option value="Électroménager" {{ (flashMessages.get('categorie') || object.categorie) === 'Électroménager' ? 'selected' : '' }}>Électroménager</option>
-                <option value="Musique & Art" {{ (flashMessages.get('categorie') || object.categorie) === 'Musique & Art' ? 'selected' : '' }}>Musique & Art</option>
-                <option value="Bureau & Fournitures" {{ (flashMessages.get('categorie') || object.categorie) === 'Bureau & Fournitures' ? 'selected' : '' }}>Bureau & Fournitures</option>
+                <option value="Sport & Loisirs" {{ (flashMessages.get('categorie') ||
+                    object.categorie)==='Sport & Loisirs' ? 'selected' : '' }}>Sport & Loisirs</option>
+                <option value="Culture & Livres" {{ (flashMessages.get('categorie') ||
+                    object.categorie)==='Culture & Livres' ? 'selected' : '' }}>Culture & Livres</option>
+                <option value="Vêtements" {{ (flashMessages.get('categorie') || object.categorie)==='Vêtements'
+                    ? 'selected' : '' }}>Vêtements</option>
+                <option value="Informatique & Tech" {{ (flashMessages.get('categorie') ||
+                    object.categorie)==='Informatique & Tech' ? 'selected' : '' }}>Informatique & Tech</option>
+                <option value="Maison & Cuisine" {{ (flashMessages.get('categorie') ||
+                    object.categorie)==='Maison & Cuisine' ? 'selected' : '' }}>Maison & Cuisine</option>
+                <option value="Jouets & Enfants" {{ (flashMessages.get('categorie') ||
+                    object.categorie)==='Jouets & Enfants' ? 'selected' : '' }}>Jouets & Enfants</option>
+                <option value="Électroménager" {{ (flashMessages.get('categorie') ||
+                    object.categorie)==='Électroménager' ? 'selected' : '' }}>Électroménager</option>
+                <option value="Musique & Art" {{ (flashMessages.get('categorie') || object.categorie)==='Musique & Art'
+                    ? 'selected' : '' }}>Musique & Art</option>
+                <option value="Bureau & Fournitures" {{ (flashMessages.get('categorie') ||
+                    object.categorie)==='Bureau & Fournitures' ? 'selected' : '' }}>Bureau & Fournitures</option>
             </select>
         </div>
 
@@ -85,11 +80,17 @@
             <label for="type">Statut (Donner ou Prêter):</label><br>
             <select id="type" name="type" required>
                 <option value="">-- Sélectionner le statut --</option>
-                <option value="0" {{ parseInt(flashMessages.get('type') || object.type) === 0 ? 'selected' : '' }}>Donner</option>
-                <option value="1" {{ parseInt(flashMessages.get('type') || object.type) === 1 ? 'selected' : '' }}>Prêter</option>
+                <option value="0" {{ parseInt(flashMessages.get('type') || object.type)===0 ? 'selected' : '' }}>Donner
+                </option>
+                <option value="1" {{ parseInt(flashMessages.get('type') || object.type)===1 ? 'selected' : '' }}>Prêter
+                </option>
             </select>
         </div>
-
+        <div class="field">
+            <label>Durée du prêt (en heures)</label>
+            <input type="number" name="reservation_duration"
+                value="{{ old('reservation_duration') || object?.reservationDuration || '' }}">
+        </div>
         <br>
 
         <div>
@@ -104,24 +105,24 @@
     <p><a href="/home">Retour à la page d'accueil</a></p>
 </main>
 <script>
-const imageSelector = document.getElementById('image');
-const imageDisplay = document.getElementById('imageDisplay');
+    const imageSelector = document.getElementById('image');
+    const imageDisplay = document.getElementById('imageDisplay');
 
-imageSelector.addEventListener('change', function(event) {
+    imageSelector.addEventListener('change', function (event) {
 
-    if (event.target.files && event.target.files[0]) {
+        if (event.target.files && event.target.files[0]) {
 
-        const reader = new FileReader();
+            const reader = new FileReader();
 
-        reader.onload = function(e) {
+            reader.onload = function (e) {
 
-            imageDisplay.src = e.target.result;
-            imageDisplay.style.display = 'block';
-        };
+                imageDisplay.src = e.target.result;
+                imageDisplay.style.display = 'block';
+            };
 
 
-        reader.readAsDataURL(event.target.files[0]);
-    }
-});
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    });
 </script>
 @include('partials/footer')

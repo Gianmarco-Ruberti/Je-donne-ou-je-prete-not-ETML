@@ -89,6 +89,7 @@ export default class DonationObjectsController {
       categorie: payload.categorie,
       imagePath: fileName,
       status: 1,
+      reservationDuration: payload.reservation_duration || null,
     })
 
     return response.redirect().toPath(`/item/${object.id}`)
@@ -129,6 +130,7 @@ export default class DonationObjectsController {
       description: payload.description,
       type: payload.type === 1,
       categorie: payload.categorie,
+      reservationDuration: payload.reservation_duration || null, // Mise à jour de la durée
     }
 
     // Si une nouvelle image est envoyée
@@ -183,15 +185,21 @@ export default class DonationObjectsController {
 
 
   async reserve({ params, auth, response, session }: HttpContext) {
-
     try {
       const item = await DonationObject.query()
         .where('id', params.id)
         .preload('user')
         .firstOrFail()
 
+      // Sécurité : On ne réserve pas un truc déjà pris
+      if (item.status === 0) {
+        session.flash('error', 'Cet objet est déjà réservé.')
+        return response.redirect().back()
+      }
 
-
+      // On passe le statut à 0 (Réservé/Indisponible)
+      item.status = 0
+      await item.save()
       await mail.send((message) => {
         message
           .to(`${item.user.email}`) // Ton mail de test
@@ -227,13 +235,10 @@ export default class DonationObjectsController {
         `)
       })
 
-      session.flash('success', 'Email envoyé au propriétaire !')
-
+      session.flash('success', 'Objet réservé et email envoyé !')
     } catch (error) {
-      console.log('ERREUR CAPTURÉE :', error)
-      session.flash('error', "L'envoi a échoué : " + error.message)
+      session.flash('error', "L'action a échoué.")
     }
-
     return response.redirect().back()
   }
 }

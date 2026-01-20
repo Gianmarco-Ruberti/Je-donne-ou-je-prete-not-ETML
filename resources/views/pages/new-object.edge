@@ -9,14 +9,12 @@
         {{ csrfField() }}
 
         <div >
-            <div>
                 @!component('components/input', {
                 name : 'image',
                 label : "Image de l'objet",
                 type : 'file',
                 attributes: { onchange: 'previewImage(event)' }
                 })
-            </div>
         <img id="imageDisplay" src="" alt="Aperçu de l'image sélectionnée">
         </div>
 

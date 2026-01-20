@@ -40,7 +40,7 @@ input[type="text"]:focus,
 textarea:focus,
 select:focus,
 input[type="file"]:focus {
-    border-color: #6d8aff;
+    border-color: #007bff;
     background-color: #ffffff;
 }
 
@@ -67,7 +67,7 @@ form div:last-of-type {
 button {
     width: 180px;
     padding: 12px;
-    background-color: #3e5bff;
+    background-color: #007bff;
     color: white;
     border: none;
     border-radius: 20px;
@@ -79,7 +79,7 @@ button {
 }
 
 button:hover {
-    background-color: #2e46d5;
+    background-color: #007bff;
 }
 
 
@@ -90,7 +90,7 @@ form div:last-of-type a {
 }
 
 form div:last-of-type a:hover {
-    color: #3e5bff;
+    color: #007bff;
     text-decoration: underline;
 }
 
@@ -100,7 +100,7 @@ p {
 }
 
 p a {
-    color: #3e5bff;
+    color: #007bff;
     text-decoration: none;
 }
 

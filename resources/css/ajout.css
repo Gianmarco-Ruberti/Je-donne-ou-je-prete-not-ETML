@@ -21,6 +21,11 @@ form div {
     padding: 0 20px; /* Ajout d'un padding pour les champs */
 }
 
+form div:last-of-type{
+    display: flex;
+    align-items: center;
+}
+
 .form-group{
     padding-left: 0;
 }
@@ -43,7 +48,7 @@ select {
 input[type="text"]:focus,
 textarea:focus,
 select:focus {
-    border-color: #6d8aff;
+    border-color: #007bff;
     background-color: #ffffff;
 }
 
@@ -54,7 +59,7 @@ select:focus {
 button {
     width: 180px;
     padding: 12px;
-    background-color: #3e5bff;
+    background-color: #007bff;
     color: white;
     border: none;
     border-radius: 20px;
@@ -69,7 +74,7 @@ button {
 }
 
 button:hover {
-    background-color: #2e46d5;
+    background-color: #007bff;
 }
 
 p {
@@ -80,7 +85,7 @@ p {
 }
 
 p a {
-    color: #3e5bff;
+    color: #007bff;
     text-decoration: none;
 }
 
@@ -110,6 +115,8 @@ p a:hover {
     
     form div {
         padding: 0 15px; /* Réduction du padding sur les bords pour l'alignement */
+        display: flex;
+        align-items: center;
     }
 
     button {

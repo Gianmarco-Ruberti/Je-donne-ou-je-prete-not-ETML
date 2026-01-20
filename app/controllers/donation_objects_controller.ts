@@ -20,7 +20,8 @@ export default class DonationObjectsController {
     const filterType = request.input('filter_type')
     const filterCategorie = request.input('filter_categorie')
 
-    let query = DonationObject.query().orderBy('created_at', 'desc')
+    // On ajoute direct le filtre sur le status 1 ici
+    let query = DonationObject.query().where('status', 1).orderBy('created_at', 'desc')
 
     if (filterType === '0') {
       query = query.where('type', false)
@@ -34,9 +35,10 @@ export default class DonationObjectsController {
 
     const objects = await query
 
-    // Récupération des catégories uniques pour le filtre
+    // Pour les filtres, on ne veut aussi que les catégories des objets dispos
     const categoriesResult = await db
       .from('donation_objects')
+      .where('status', 1) // Optionnel: pour ne pas afficher des catégories vides
       .distinct('categorie')
       .orderBy('categorie', 'asc')
 
@@ -93,7 +95,6 @@ export default class DonationObjectsController {
       availableFrom: payload.available_from ? DateTime.fromJSDate(payload.available_from) : null,
       availableUntil: payload.available_until ? DateTime.fromJSDate(payload.available_until) : null,
     })
-
 
     return response.redirect().toPath(`/item/${object.id}`)
   }
@@ -189,8 +190,16 @@ export default class DonationObjectsController {
 
   async reserve({ params, auth, response, session }: HttpContext) {
     try {
+      // 1. On récupère l'objet
       const item = await DonationObject.query().where('id', params.id).preload('user').firstOrFail()
 
+      // 2. Sécurité : On vérifie s'il n'est pas déjà réservé (status 2)
+      if (item.status === 2) {
+        session.flash('error', 'Cet objet est déjà en cours de réservation.')
+        return response.redirect().back()
+      }
+
+      // 3. Envoi du mail (ton code actuel)
       await mail.send((message) => {
         message
           .to(`${item.user.email}`)
@@ -201,11 +210,18 @@ export default class DonationObjectsController {
             requester: auth.user,
           })
       })
-      console.log('Email de réservation envoyé avec succès.')
-      session.flash('success', 'Email envoyé au propriétaire !')
+
+      // 4. MAJ du status à 2 et sauvegarde en DB
+      item.status = 2
+      await item.save()
+
+      console.log('Email envoyé et status mis à jour à 2.')
+      session.flash('success', "Demande envoyée ! L'objet est maintenant réservé.")
     } catch (error) {
+      console.error(error)
       session.flash('error', "L'action a échoué.")
     }
+
     return response.redirect().back()
   }
 }

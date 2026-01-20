@@ -21,17 +21,40 @@
                     @each(object in donations)
                     <div class="item-wrapper">
                         <a class="item" href="/item/{{object.id}}">
-                            <img src="{{ `/uploads/items/${object.imagePath}` }}" loading="lazy" alt="{{ object.name }}">
-                            <p class="item-name">{{ object.name }}</p>
+                            <img src="{{ `/uploads/items/${object.imagePath}` }}" loading="lazy"
+                                alt="{{ object.name }}">
+                            <p class="item-name">
+                                {{ object.name }}
+                                @if(object.status === 2)
+                                <span style="color: orange; font-size: 0.8rem;">(Réservé)</span>
+                                @endif
+                            </p>
                             <p class="item-cat">{{ object.categorie }}</p>
                         </a>
 
                         <div class="item-actions">
-                            <a href="/item/{{object.id}}/edit" class="btn-edit">EDIT</a>
+                            <div style="display: flex; gap: 5px; margin-bottom: 5px;">
+                                @if(object.status === 2)
+                                <form action="{{ `/item/${object.id}/republish?_method=PATCH` }}" method="POST"
+                                    style="flex: 1;">
+                                    {{ csrfField() }}
+                                    <button type="submit" class="btn-republish"
+                                        style="width: 100%; background: #28a745; color: white; border: none; padding: 7px 0; cursor: pointer; border-radius: 4px; font-size: 10px; font-weight: bold;">
+                                        REPUBLIER
+                                    </button>
+                                </form>
+                                <a href="/item/{{object.id}}/edit" class="btn-edit"
+                                    style="flex: 1; text-align: center; padding: 7px 0;">EDIT</a>
+                                @else
+                                <a href="/item/{{object.id}}/edit" class="btn-edit"
+                                    style="flex: 1; text-align: center;">EDIT</a>
+                                @endif
+                            </div>
+
                             <form action="/item/{{ object.id }}?_method=DELETE" method="POST"
                                 onsubmit="return confirm('Supprimer ?')">
                                 {{ csrfField() }}
-                                <button type="submit" class="btn-delete">SUPPRIMER</button>
+                                <button type="submit" class="btn-delete" style="width: 100%;">SUPPRIMER</button>
                             </form>
                         </div>
                     </div>
@@ -40,26 +63,49 @@
                     @end
                 </div>
             </div>
+
             <div class="section">
                 <h2>Objets à prêter</h2>
                 <div class="items">
-
                     @let(loans = objects.filter(o => o.type))
 
                     @each(object in loans)
                     <div class="item-wrapper">
                         <a class="item" href="/item/{{object.id}}">
-                            <img src="{{ `/uploads/items/${object.imagePath}` }}" loading="lazy" alt="{{ object.name }}">
-                            <p class="item-name">{{ object.name }}</p>
+                            <img src="{{ `/uploads/items/${object.imagePath}` }}" loading="lazy"
+                                alt="{{ object.name }}">
+                            <p class="item-name">
+                                {{ object.name }}
+                                @if(object.status === 2)
+                                <span style="color: orange; font-size: 0.8rem;">(Réservé)</span>
+                                @endif
+                            </p>
                             <p class="item-cat">{{ object.categorie }}</p>
                         </a>
 
                         <div class="item-actions">
-                            <a href="/item/{{object.id}}/edit" class="btn-edit">EDIT</a>
+                            <div style="display: flex; gap: 5px; margin-bottom: 5px;">
+                                @if(object.status === 2)
+                                <form action="{{ `/item/${object.id}/republish?_method=PATCH` }}" method="POST"
+                                    style="flex: 1;">
+                                    {{ csrfField() }}
+                                    <button type="submit" class="btn-republish"
+                                        style="width: 100%; background: #28a745; color: white; border: none; padding: 7px 0; cursor: pointer; border-radius: 4px; font-size: 10px; font-weight: bold;">
+                                        REPUBLIER
+                                    </button>
+                                </form>
+                                <a href="/item/{{object.id}}/edit" class="btn-edit"
+                                    style="flex: 1; text-align: center; padding: 7px 0;">EDIT</a>
+                                @else
+                                <a href="/item/{{object.id}}/edit" class="btn-edit"
+                                    style="flex: 1; text-align: center;">EDIT</a>
+                                @endif
+                            </div>
+
                             <form action="/item/{{ object.id }}?_method=DELETE" method="POST"
                                 onsubmit="return confirm('Supprimer ?')">
                                 {{ csrfField() }}
-                                <button type="submit" class="btn-delete">SUPPRIMER</button>
+                                <button type="submit" class="btn-delete" style="width: 100%;">SUPPRIMER</button>
                             </form>
                         </div>
                     </div>
@@ -68,11 +114,10 @@
                     @end
                 </div>
             </div>
+
             <div class="section">
                 <h2>Historique</h2>
-                <div class="items">
-
-                </div>
+                <div class="items"></div>
             </div>
         </div>
     </div>

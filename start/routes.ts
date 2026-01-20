@@ -32,4 +32,5 @@ router.group(() => {
 
   
   router.post('/item/:id/reserve', [DonationObjectsController, 'reserve']).as('donation_objects.reserve')
+  router.patch('/item/:id/republish', [DonationObjectsController, 'republish']).as('item.republish')
 }).use(middleware.auth())

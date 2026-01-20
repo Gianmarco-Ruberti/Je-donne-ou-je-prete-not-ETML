@@ -132,7 +132,7 @@ export default class DonationObjectsController {
     const updateData: any = {
       name: payload.name,
       description: payload.description,
-      type: payload.type === 1,
+      type: payload.type === '1',
       categorie: payload.categorie,
       availableFrom: payload.available_from ? DateTime.fromJSDate(payload.available_from) : null,
       availableUntil: payload.available_until ? DateTime.fromJSDate(payload.available_until) : null,
@@ -224,4 +224,22 @@ export default class DonationObjectsController {
 
     return response.redirect().back()
   }
+
+
+  async republish({ params, auth, response, session }: HttpContext) {
+  const user = auth.user!
+  
+  // On récupère l'objet en vérifiant qu'il appartient bien au user
+  const object = await DonationObject.query()
+    .where('id', params.id)
+    .where('userId', user.id)
+    .firstOrFail()
+
+  object.status = 1 // On repasse en "Disponible"
+  await object.save()
+
+  session.flash('success', 'L\'objet est de nouveau disponible !')
+  return response.redirect().back()
+}
+
 }

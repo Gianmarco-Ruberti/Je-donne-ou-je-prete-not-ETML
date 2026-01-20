@@ -4,32 +4,49 @@
 SINCE="2026-01-13"
 OUTPUT_FILE="Doc/commits_mardi_matin.csv"
 
+# Créer le dossier Doc s'il n'existe pas
+mkdir -p Doc
+
 echo "--- Scan de TOUTES les branches (Mardi matin depuis le $SINCE) ---"
 
 # En-tête du CSV
-echo "Hash,Auteur,Jour,Heure,Message" > "$OUTPUT_FILE"
+echo "Hash,Branche,Auteur,Date,Jour,Heure,Message,Description" > "$OUTPUT_FILE"
 
-# --all : scanne toutes les refs (branches, tags, etc.)
-# sort -u : supprime les doublons si un commit est sur plusieurs branches
-git log --all --since="$SINCE" --date=format:'%A %H:%M' --pretty=format:"%h|%an|%ad|%s" | \
+# %h: hash, %D: ref names (branches), %an: auteur, %ad: date, %s: sujet, %b: body
+git log --all --since="$SINCE" --date=format:'%Y-%m-%d|%A|%H:%M' --pretty=format:"%h¤%D¤%an¤%ad¤%s¤%b" | \
 sort -u | \
-awk -F'|' '{
-    split($3, date_parts, " ");
-    day = date_parts[1];
-    hour_min = date_parts[2];
+awk -F'¤' '{
+    hash = $1;
+    refs = $2;
+    author = $3;
+    split($4, date_parts, "|");
+    full_date = date_parts[1];
+    day = date_parts[2];
+    hour_min = date_parts[3];
+    subject = $5;
+    body = $6;
+
+    # Nettoyage du nom de la branche (on prend la première info pertinente)
+    # On enlève "HEAD -> ", "tag: ", etc.
+    gsub(/HEAD -> /, "", refs);
+    split(refs, ref_list, ",");
+    branch = ref_list[1];
+    if (branch == "") branch = "N/A";
+
     hour = substr(hour_min, 1, 2);
 
     # Filtrage : Mardi et avant 12h
     if ((day ~ /[Tt]uesday/ || day ~ /[Mm]ardi/) && hour < 12) {
-        hash = $1;
-        author = $2;
-        message = $4;
-
-        # Nettoyage des virgules pour le CSV
+        
+        # Nettoyage CSV
         gsub(/,/, " ", author);
-        gsub(/,/, " ", message);
+        gsub(/,/, " ", branch);
+        gsub(/,/, " ", subject);
+        gsub(/,/, " ", body);
+        gsub(/\n/, " ", body);
+        gsub(/\r/, "", body);
 
-        print hash "," author "," day "," hour_min "," message
+        print hash "," branch "," author "," full_date "," day "," hour_min "," subject "," body
     }
 }' >> "$OUTPUT_FILE"
 

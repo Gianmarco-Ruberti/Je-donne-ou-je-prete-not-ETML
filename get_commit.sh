@@ -2,7 +2,7 @@
 
 # Configuration
 SINCE="2026-01-13"
-OUTPUT_FILE="commits_mardi_matin.csv"
+OUTPUT_FILE="Doc/commits_mardi_matin.csv"
 
 echo "--- Scan de TOUTES les branches (Mardi matin depuis le $SINCE) ---"
 

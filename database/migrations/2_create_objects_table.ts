@@ -9,13 +9,15 @@ export default class extends BaseSchema {
       table.integer('user_id').unsigned().references('id').inTable('users').onDelete('CASCADE')
       table.string('name').nullable()
       table.string('description', 5000).nullable()
-      
+
       // On imagine : type true = prêt, type false = don
-      table.boolean('type').notNullable() 
-      
+      table.boolean('type').notNullable()
+
       // Temps de réservation en minutes (nullable au niveau DB)
-      table.integer('reservation_duration').nullable()
-      
+      // Dans ta migration up()
+      table.timestamp('available_from').nullable()
+      table.timestamp('available_until').nullable()
+
       table.integer('status').notNullable().defaultTo(1)
       table.string('image_path').nullable()
       table.string('categorie').defaultTo('aucune')

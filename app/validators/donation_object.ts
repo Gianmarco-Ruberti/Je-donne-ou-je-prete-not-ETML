@@ -12,19 +12,20 @@ const categoriesList = [
   'Musique & Art',
   'Bureau & Fournitures',
 ]
-
 export const createDonationObjectValidator = vine.compile(
   vine.object({
     name: vine.string().trim().minLength(3).maxLength(255),
     description: vine.string().trim().escape().maxLength(5000).optional(),
+    type: vine.enum(['0', '1']), 
 
-    // Type : '0' pour Don, '1' pour Prêt
-    type: vine.enum(['0', '1']),
+    // Date de début : Obligatoire si Prêt ('1')
+    available_from: vine.date({ formats: ['iso8601', 'yyyy-MM-dd\'T\'HH:mm'] })
+      .optional()
+      .requiredWhen('type', '=', '1'),
 
-    // Durée de réservation (en heures ou jours selon ton choix)
-    // On la rend obligatoire seulement si type est '1'
-    reservation_duration: vine.number()
-      .positive()
+    // Date de fin : Obligatoire si Prêt ('1') + Doit être APRÈS le début
+    available_until: vine.date({ formats: ['iso8601', 'yyyy-MM-dd\'T\'HH:mm'] })
+      .afterField('available_from') 
       .optional()
       .requiredWhen('type', '=', '1'),
 
@@ -42,12 +43,14 @@ export const updateDonationObjectValidator = vine.compile(
   vine.object({
     name: vine.string().trim().minLength(3).maxLength(255),
     description: vine.string().trim().escape().maxLength(5000).optional(),
-
     type: vine.enum(['0', '1']),
 
-    // Idem pour l'update, on peut vouloir changer la durée
-    reservation_duration: vine.number()
-      .positive()
+    available_from: vine.date({ formats: ['iso8601', 'yyyy-MM-dd\'T\'HH:mm'] })
+      .optional()
+      .requiredWhen('type', '=', '1'),
+
+    available_until: vine.date({ formats: ['iso8601', 'yyyy-MM-dd\'T\'HH:mm'] })
+      .afterField('available_from')
       .optional()
       .requiredWhen('type', '=', '1'),
 

@@ -10,6 +10,7 @@ import sharp from 'sharp'
 import fs from 'node:fs/promises'
 import db from '@adonisjs/lucid/services/db'
 import mail from '@adonisjs/mail/services/main'
+import { DateTime } from 'luxon'
 
 export default class DonationObjectsController {
   /**
@@ -89,8 +90,10 @@ export default class DonationObjectsController {
       categorie: payload.categorie,
       imagePath: fileName,
       status: 1,
-      reservationDuration: payload.reservation_duration || null,
+      availableFrom: payload.available_from ? DateTime.fromJSDate(payload.available_from) : null,
+      availableUntil: payload.available_until ? DateTime.fromJSDate(payload.available_until) : null,
     })
+
 
     return response.redirect().toPath(`/item/${object.id}`)
   }
@@ -130,7 +133,8 @@ export default class DonationObjectsController {
       description: payload.description,
       type: payload.type === 1,
       categorie: payload.categorie,
-      reservationDuration: payload.reservation_duration || null, // Mise à jour de la durée
+      availableFrom: payload.available_from ? DateTime.fromJSDate(payload.available_from) : null,
+      availableUntil: payload.available_until ? DateTime.fromJSDate(payload.available_until) : null,
     }
 
     // Si une nouvelle image est envoyée

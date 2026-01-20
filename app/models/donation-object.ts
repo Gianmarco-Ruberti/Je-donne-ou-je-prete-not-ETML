@@ -29,8 +29,11 @@ export default class DonationObject extends BaseModel {
   declare imagePath: string | null
 
 
-  @column()
-  declare reservationDuration: number | null 
+  @column.dateTime()
+  declare availableFrom: DateTime | null
+
+  @column.dateTime()
+  declare availableUntil: DateTime | null
 
 
   @belongsTo(() => User)

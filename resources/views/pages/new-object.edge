@@ -8,17 +8,14 @@
     <form action="/items" method="POST" enctype="multipart/form-data">
         {{ csrfField() }}
 
-        {{-- Section Image --}}
-        <div class="field-group">
-            <div>
+        <div >
                 @!component('components/input', {
                     name : 'image',
                     label : "Image de l'objet",
                     type : 'file',
                     attributes: { id: 'image', onchange: 'previewImage(event)' }
                 })
-            </div>
-            <img id="imageDisplay" src="" alt="Aperçu" style="display: none; max-width: 200px; margin-top: 10px; border-radius: 8px;">
+        <img id="imageDisplay" src="" alt="Aperçu de l'image sélectionnée">
         </div>
 
         <br>

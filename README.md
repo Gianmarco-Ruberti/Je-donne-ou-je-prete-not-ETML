@@ -4,7 +4,7 @@
 ![Issues](https://img.shields.io/github/issues/BlackAngelTVdev/Je-donne-ou-je-prete?style=for-the-badge&color=orange)
 ![Forks](https://img.shields.io/github/forks/BlackAngelTVdev/Je-donne-ou-je-prete?style=for-the-badge&color=808080)
 ![Last Commit](https://img.shields.io/github/last-commit/BlackAngelTVdev/Je-donne-ou-je-prete?style=for-the-badge&color=blue)
-[![wakatime](https://wakatime.com/badge/user/9f961b8c-ad71-4e20-8963-98e4140790bc/project/13b52d35-18a9-4adc-8da5-32d3462e3960.svg)](https://wakatime.com/badge/user/9f961b8c-ad71-4e20-8963-98e4140790bc/project/13b52d35-18a9-4adc-8da5-32d3462e3960)
+
 
 **Une plateforme intuitive pour donner et prêter vos objets en toute simplicité.**
 ---

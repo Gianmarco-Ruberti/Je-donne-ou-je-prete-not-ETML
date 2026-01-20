@@ -187,59 +187,22 @@ export default class DonationObjectsController {
     return response.redirect().toPath('/account')
   }
 
-
   async reserve({ params, auth, response, session }: HttpContext) {
     try {
-      const item = await DonationObject.query()
-        .where('id', params.id)
-        .preload('user')
-        .firstOrFail()
+      const item = await DonationObject.query().where('id', params.id).preload('user').firstOrFail()
 
-      // Sécurité : On ne réserve pas un truc déjà pris
-      if (item.status === 0) {
-        session.flash('error', 'Cet objet est déjà réservé.')
-        return response.redirect().back()
-      }
-
-      // On passe le statut à 0 (Réservé/Indisponible)
-      item.status = 0
-      await item.save()
       await mail.send((message) => {
         message
-          .to(`${item.user.email}`) // Ton mail de test
-          .from('dami.scoot3@gmail.com') // Ton mail valide Brevo
+          .to(`${item.user.email}`)
+          .from('dami.scoot3@gmail.com')
           .subject(`Demande de réservation : ${item.name}`)
-          .html(`
-          <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; border: 1px solid #e1e1e1; border-radius: 8px; overflow: hidden;">
-            <div style="background-color: #4f46e5; color: white; padding: 20px; text-align: center;">
-              <h1 style="margin: 0; font-size: 24px;">Nouvelle demande !</h1>
-            </div>
-            
-            <div style="padding: 20px; line-height: 1.6;">
-              <p>Bonjour <strong>${item.user.Username}</strong>,</p>
-              
-              <p>Bonne nouvelle ! Un utilisateur est intéressé par votre objet : <strong>${item.name}</strong>.</p>
-              
-              <div style="background-color: #f9fafb; border-radius: 8px; padding: 15px; margin: 20px 0; border-left: 4px solid #4f46e5;">
-                <p style="margin: 0;"><strong>Demandeur :</strong> ${auth.user?.Username}</p>
-                <p style="margin: 5px 0 0 0;"><strong>Email :</strong> ${auth.user?.email}</p>
-              </div>
-
-              <p>Vous pouvez contacter cette personne directement en répondant à cet email.</p>
-              
-              <div style="text-align: center; margin-top: 30px;">
-                <a href="mailto:tkt}" style="background-color: #22c55e; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold;">Répondre au demandeur</a>
-              </div>
-            </div>
-
-            <div style="background-color: #f3f4f6; color: #6b7280; padding: 15px; text-align: center; font-size: 12px;">
-              <p style="margin: 0;">Ceci est un message automatique envoyé par JeDonneJePrete.</p>
-            </div>
-          </div>
-        `)
+          .htmlView('emails/reservation', {
+            item: item,
+            requester: auth.user,
+          })
       })
-
-      session.flash('success', 'Objet réservé et email envoyé !')
+      console.log('Email de réservation envoyé avec succès.')
+      session.flash('success', 'Email envoyé au propriétaire !')
     } catch (error) {
       session.flash('error', "L'action a échoué.")
     }

@@ -21,6 +21,10 @@ form div {
     padding: 0 20px; /* Ajout d'un padding pour les champs */
 }
 
+.form-group{
+    padding-left: 0;
+}
+
 input[type="text"],
 textarea,
 select {

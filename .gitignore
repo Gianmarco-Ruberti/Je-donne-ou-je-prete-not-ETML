@@ -8,7 +8,7 @@ tmp
 .env.local
 .env.production.local
 .env.development.local
-commits_mardi_matin.csv
+
 
 # Frontend assets compiled code
 public/assets

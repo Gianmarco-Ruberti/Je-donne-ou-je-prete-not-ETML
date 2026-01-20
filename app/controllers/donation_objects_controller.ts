@@ -10,6 +10,7 @@ import sharp from 'sharp'
 import fs from 'node:fs/promises'
 import db from '@adonisjs/lucid/services/db'
 import mail from '@adonisjs/mail/services/main'
+import { DateTime } from 'luxon'
 
 export default class DonationObjectsController {
   /**
@@ -89,7 +90,10 @@ export default class DonationObjectsController {
       categorie: payload.categorie,
       imagePath: fileName,
       status: 1,
+      availableFrom: payload.available_from ? DateTime.fromJSDate(payload.available_from) : null,
+      availableUntil: payload.available_until ? DateTime.fromJSDate(payload.available_until) : null,
     })
+
 
     return response.redirect().toPath(`/item/${object.id}`)
   }
@@ -129,6 +133,8 @@ export default class DonationObjectsController {
       description: payload.description,
       type: payload.type === 1,
       categorie: payload.categorie,
+      availableFrom: payload.available_from ? DateTime.fromJSDate(payload.available_from) : null,
+      availableUntil: payload.available_until ? DateTime.fromJSDate(payload.available_until) : null,
     }
 
     // Si une nouvelle image est envoyée
@@ -198,10 +204,8 @@ export default class DonationObjectsController {
       console.log('Email de réservation envoyé avec succès.')
       session.flash('success', 'Email envoyé au propriétaire !')
     } catch (error) {
-      console.log('ERREUR CAPTURÉE :', error)
-      session.flash('error', "L'envoi a échoué : " + error.message)
+      session.flash('error', "L'action a échoué.")
     }
-
     return response.redirect().back()
   }
 }

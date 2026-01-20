@@ -1,69 +1,99 @@
 @let(title = 'Proposer un nouvel objet')
 @let(css = 'ajout.css')
 @include('partials/header')
+
 <main>
     <h1>Proposer un nouvel objet</h1>
 
     <form action="/items" method="POST" enctype="multipart/form-data">
-
         {{ csrfField() }}
 
         <div >
                 @!component('components/input', {
-                name : 'image',
-                label : "Image de l'objet",
-                type : 'file',
-                attributes: { onchange: 'previewImage(event)' }
+                    name : 'image',
+                    label : "Image de l'objet",
+                    type : 'file',
+                    attributes: { id: 'image', onchange: 'previewImage(event)' }
                 })
         <img id="imageDisplay" src="" alt="Aperçu de l'image sélectionnée">
         </div>
 
-        <div>
-            <label for="name">Nom de l'objet:</label><br>
-            <input type="text" id="name" name="name" required placeholder="Ex: Étagère" />
+        <br>
+
+        {{-- Nom de l'objet --}}
+        <div class="field-group">
+            <label for="name">Nom de l'objet :</label><br>
+            <input type="text" id="name" name="name" value="{{ old('name') || '' }}" required placeholder="Ex: Étagère" />
+            @if(flashMessages.has('errors.name'))
+                <small style="color: red;">{{ flashMessages.get('errors.name') }}</small>
+            @endif
         </div>
 
         <br>
 
-        <div>
-            <label for="description">Description détaillée:</label><br>
-            <textarea id="description" name="description" rows="5" required
-                placeholder="Décrivez l'état et les caractéristiques."></textarea>
+        {{-- Description --}}
+        <div class="field-group">
+            <label for="description">Description détaillée :</label><br>
+            <textarea id="description" name="description" rows="5" required placeholder="Décrivez l'état et les caractéristiques.">{{ old('description') || '' }}</textarea>
+            @if(flashMessages.has('errors.description'))
+                <small style="color: red;">{{ flashMessages.get('errors.description') }}</small>
+            @endif
         </div>
 
         <br>
 
-        <div>
-            <label for="categorie">Catégorie:</label><br>
+        {{-- Catégorie --}}
+        <div class="field-group">
+            <label for="categorie">Catégorie :</label><br>
             <select id="categorie" name="categorie" required>
                 <option value="">-- Sélectionner une catégorie --</option>
-                <option value="Sport & Loisirs">Sport & Loisirs</option>
-                <option value="Culture & Livres">Culture & Livres</option>
-                <option value="Vêtements">Vêtements</option>
-                <option value="Informatique & Tech">Informatique & Tech</option>
-                <option value="Maison & Cuisine">Maison & Cuisine</option>
-                <option value="Jouets & Enfants">Jouets & Enfants</option>
-                <option value="Électroménager">Électroménager</option>
-                <option value="Musique & Art">Musique & Art</option>
-                <option value="Bureau & Fournitures">Bureau & Fournitures</option>
+                @each(cat in ['Sport & Loisirs', 'Culture & Livres', 'Vêtements', 'Informatique & Tech', 'Maison & Cuisine', 'Jouets & Enfants', 'Électroménager', 'Musique & Art', 'Bureau & Fournitures'])
+                    <option value="{{ cat }}" {{ old('categorie') == cat ? 'selected' : '' }}>{{ cat }}</option>
+                @endeach
             </select>
         </div>
 
         <br>
 
-        <div>
-            <label for="type">Statut (Donner ou Prêter):</label><br>
+        {{-- Type (Don/Prêt) --}}
+        <div class="field-group">
+            <label for="type">Statut (Donner ou Prêter) :</label><br>
             <select id="type" name="type" required>
                 <option value="">-- Sélectionner le statut --</option>
-                <option value="0">Donner</option>
-                <option value="1">Prêter</option>
+                <option value="0" {{ old('type') == '0' ? 'selected' : '' }}>Donner</option>
+                <option value="1" {{ old('type') == '1' ? 'selected' : '' }}>Prêter</option>
             </select>
         </div>
 
         <br>
 
+        {{-- Section Dates pour le prêt --}}
+        <div id="dates_section" style="display: none; background: #f9fafb; padding: 20px; border-radius: 10px; border-left: 4px solid #4f46e5;">
+            <p style="margin-top: 0; font-weight: bold; color: #4f46e5;">Détails du prêt</p>
+            
+            <div class="field">
+                <label for="available_from">Disponible à partir de :</label><br>
+                <input type="datetime-local" id="available_from" name="available_from" value="{{ old('available_from') || '' }}">
+                @if(flashMessages.has('errors.available_from'))
+                    <br><small style="color: red;">{{ flashMessages.get('errors.available_from') }}</small>
+                @endif
+            </div>
+
+            <br>
+
+            <div class="field">
+                <label for="available_until">Jusqu'à (date de fin) :</label><br>
+                <input type="datetime-local" id="available_until" name="available_until" value="{{ old('available_until') || '' }}">
+                @if(flashMessages.has('errors.available_until'))
+                    <br><small style="color: red;">{{ flashMessages.get('errors.available_until') }}</small>
+                @endif
+            </div>
+        </div>
+
+        <br>
+
         <div>
-            <button type="submit">
+            <button type="submit" style="background-color: #4f46e5; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
                 Ajouter l'objet
             </button>
         </div>
@@ -74,24 +104,36 @@
 </main>
 
 <script>
-const imageSelector = document.getElementById('image');
-const imageDisplay = document.getElementById('imageDisplay');
+    const typeSelector = document.getElementById('type');
+    const datesSection = document.getElementById('dates_section');
+    const imageSelector = document.getElementById('image');
+    const imageDisplay = document.getElementById('imageDisplay');
 
-imageSelector.addEventListener('change', function(event) {
-
-    if (event.target.files && event.target.files[0]) {
-
-        const reader = new FileReader();
-
-        reader.onload = function(e) {
-
-            imageDisplay.src = e.target.result;
-            imageDisplay.style.display = 'block';
-        };
-
-
-        reader.readAsDataURL(event.target.files[0]);
+    // Gestion de l'affichage dynamique des dates
+    function toggleDates() {
+        if (typeSelector.value === '1') {
+            datesSection.style.display = 'block';
+        } else {
+            datesSection.style.display = 'none';
+        }
     }
-});
+
+    typeSelector.addEventListener('change', toggleDates);
+    
+    // Au chargement (pour garder l'état si erreur de validation)
+    window.addEventListener('DOMContentLoaded', toggleDates);
+
+    // Aperçu de l'image
+    imageSelector.addEventListener('change', function (event) {
+        if (event.target.files && event.target.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                imageDisplay.src = e.target.result;
+                imageDisplay.style.display = 'block';
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    });
 </script>
+
 @include('partials/footer')

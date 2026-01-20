@@ -4,13 +4,11 @@ import type { BelongsTo } from '@adonisjs/lucid/types/relations'
 import User from './user.js'
 
 export default class DonationObject extends BaseModel {
-  public static $fillable = ['name', 'description', 'type', 'status', 'categorie', 'user_id']
-
   @column({ isPrimary: true })
   declare id: number
 
   @column()
-  declare userId: number // Correspond à 'user_id' dans la base de données
+  declare userId: number
 
   @column()
   declare name: string | null
@@ -27,10 +25,16 @@ export default class DonationObject extends BaseModel {
   @column()
   declare categorie: string | null
 
-  //Propriété pour l'image en Base64
-
   @column()
-  declare imagePath: string | null // Correspond à 'image_base_64' dans la base de données
+  declare imagePath: string | null
+
+
+  @column.dateTime()
+  declare availableFrom: DateTime | null
+
+  @column.dateTime()
+  declare availableUntil: DateTime | null
+
 
   @belongsTo(() => User)
   declare user: BelongsTo<typeof User>

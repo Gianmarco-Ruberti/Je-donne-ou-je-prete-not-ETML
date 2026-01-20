@@ -3,125 +3,134 @@
 @include('partials/header')
 
 <main>
-    <h1>Éditer l'Objet de Donation : {{ object.name }}</h1>
+    <h1>Éditer l'Objet : {{ object.name }}</h1>
 
-    <form 
-        action="{{ route('donation_objects.update', { id: object.id }) }}"
-        method="POST" 
-        enctype="multipart/form-data"
-    >
-        {{ csrfField() }} 
-        <input type="hidden" name="_method" value="PUT"> 
-        
+    <form action="{{ route('donation_objects.update', { id: object.id }) }}" method="POST" enctype="multipart/form-data">
+        {{ csrfField() }}
+        <input type="hidden" name="_method" value="PUT">
+
+        {{-- Section Image --}}
         <div>
             <div>
                 @!component('components/input', {
                     name : 'image',
                     label : "Image de l'objet (laisser vide pour garder l'ancienne)",
                     type : 'file',
-                    attributes: { onchange: 'previewImage(event)' } 
+                    attributes: { id: 'image' }
                 })
-                
             </div>
-            <img id="imageDisplay" src="{{object.imageBase64}}" alt="Aperçu de l'image sélectionnée">
-
+            @if(object.imagePath)
+                <img id="imageDisplay" src="/uploads/items/{{ object.imagePath }}" alt="Aperçu" style="max-width: 200px; margin-top: 10px; border-radius: 8px;">
+            @else
+                <img id="imageDisplay" src="" alt="Aperçu" style="display: none; max-width: 200px; margin-top: 10px; border-radius: 8px;">
+            @endif
         </div>
-        
+
         <br>
 
+        {{-- Nom --}}
         <div>
             <label for="name">Nom de l'objet:</label><br>
-            <input 
-                id="name" 
-                type="text" 
-                name="name" 
-                value="{{ flashMessages.get('name') || object.name }}"
-                placeholder="Ex: Livre de cuisine"
-                required
-            >
+            <input id="name" type="text" name="name" value="{{ old('name') || object.name }}" required>
             @if(flashMessages.has('errors.name'))
-                <p style="color: red;">Erreur: {{ flashMessages.get('errors.name') }}</p>
+                <p style="color: red;">{{ flashMessages.get('errors.name') }}</p>
             @endif
         </div>
-        
+
         <br>
 
+        {{-- Description --}}
         <div>
             <label for="description">Description détaillée:</label><br>
-            <textarea 
-                id="description"
-                name="description"
-                rows="5"
-                required
-                placeholder="Décrivez l'état et les caractéristiques."
-            >{{ flashMessages.get('description') || object.description }}</textarea>
-
+            <textarea id="description" name="description" rows="5" required>{{ old('description') || object.description }}</textarea>
             @if(flashMessages.has('errors.description'))
-                <p style="color: red;">Erreur: {{ flashMessages.get('errors.description') }}</p>
+                <p style="color: red;">{{ flashMessages.get('errors.description') }}</p>
             @endif
         </div>
-        
+
         <br>
 
+        {{-- Catégorie --}}
         <div>
             <label for="categorie">Catégorie:</label><br>
             <select id="categorie" name="categorie" required>
-                <option value="">-- Sélectionner une catégorie --</option>
-                <option value="Sport & Loisirs" {{ (flashMessages.get('categorie') || object.categorie) === 'Sport & Loisirs' ? 'selected' : '' }}>Sport & Loisirs</option>
-                <option value="Culture & Livres" {{ (flashMessages.get('categorie') || object.categorie) === 'Culture & Livres' ? 'selected' : '' }}>Culture & Livres</option>
-                <option value="Vêtements" {{ (flashMessages.get('categorie') || object.categorie) === 'Vêtements' ? 'selected' : '' }}>Vêtements</option>
-                <option value="Informatique & Tech" {{ (flashMessages.get('categorie') || object.categorie) === 'Informatique & Tech' ? 'selected' : '' }}>Informatique & Tech</option>
-                <option value="Maison & Cuisine" {{ (flashMessages.get('categorie') || object.categorie) === 'Maison & Cuisine' ? 'selected' : '' }}>Maison & Cuisine</option>
-                <option value="Jouets & Enfants" {{ (flashMessages.get('categorie') || object.categorie) === 'Jouets & Enfants' ? 'selected' : '' }}>Jouets & Enfants</option>
-                <option value="Électroménager" {{ (flashMessages.get('categorie') || object.categorie) === 'Électroménager' ? 'selected' : '' }}>Électroménager</option>
-                <option value="Musique & Art" {{ (flashMessages.get('categorie') || object.categorie) === 'Musique & Art' ? 'selected' : '' }}>Musique & Art</option>
-                <option value="Bureau & Fournitures" {{ (flashMessages.get('categorie') || object.categorie) === 'Bureau & Fournitures' ? 'selected' : '' }}>Bureau & Fournitures</option>
+                @each(cat in ['Sport & Loisirs', 'Culture & Livres', 'Vêtements', 'Informatique & Tech', 'Maison & Cuisine', 'Jouets & Enfants', 'Électroménager', 'Musique & Art', 'Bureau & Fournitures'])
+                    <option value="{{ cat }}" {{ (old('categorie') || object.categorie) === cat ? 'selected' : '' }}>{{ cat }}</option>
+                @endeach
             </select>
         </div>
 
         <br>
 
+        {{-- Type (Don/Prêt) --}}
         <div>
-            <label for="type">Statut (Donner ou Prêter):</label><br>
+            <label for="type">Statut (Donner ou Prêter) :</label><br>
             <select id="type" name="type" required>
-                <option value="">-- Sélectionner le statut --</option>
-                <option value="0" {{ parseInt(flashMessages.get('type') || object.type) === 0 ? 'selected' : '' }}>Donner</option>
-                <option value="1" {{ parseInt(flashMessages.get('type') || object.type) === 1 ? 'selected' : '' }}>Prêter</option>
+                {{-- On compare à 0/1 pour le formulaire, mais object.type est souvent un boolean --}}
+                <option value="0" {{ (old('type') == '0' || object.type == false) ? 'selected' : '' }}>Donner</option>
+                <option value="1" {{ (old('type') == '1' || object.type == true) ? 'selected' : '' }}>Prêter</option>
             </select>
         </div>
 
         <br>
 
+        {{-- Section Dates --}}
+        <div id="dates_section" style="display: none; background: #f9fafb; padding: 20px; border-radius: 10px; border-left: 4px solid #4f46e5;">
+            <p style="margin-top: 0; font-weight: bold; color: #4f46e5;">Détails du prêt</p>
+            
+            <div>
+                <label for="available_from">Disponible à partir de :</label><br>
+                {{-- Formatage de la date Luxon pour l'input HTML --}}
+                <input type="datetime-local" id="available_from" name="available_from" 
+                    value="{{ old('available_from') || (object.availableFrom ? object.availableFrom.toFormat('yyyy-MM-dd\'T\'HH:mm') : '') }}">
+            </div>
+
+            <br>
+
+            <div>
+                <label for="available_until">Jusqu'à (date de fin) :</label><br>
+                <input type="datetime-local" id="available_until" name="available_until" 
+                    value="{{ old('available_until') || (object.availableUntil ? object.availableUntil.toFormat('yyyy-MM-dd\'T\'HH:mm') : '') }}">
+            </div>
+        </div>
+
+        <br>
+
         <div>
-            <button type="submit">
-                Sauvegarder les modifications
-            </button>
-            <a href="{{ route('donation_objects.show', { id: object.id }) }}">
-                Annuler
-            </a>
+            <button type="submit">Sauvegarder les modifications</button>
+            <a href="{{ route('donation_objects.show', { id: object.id }) }}">Annuler</a>
         </div>
     </form>
-    <p><a href="/home">Retour à la page d'accueil</a></p>
 </main>
+
 <script>
-const imageSelector = document.getElementById('image');
-const imageDisplay = document.getElementById('imageDisplay');
+    const typeSelector = document.getElementById('type');
+    const datesSection = document.getElementById('dates_section');
+    const imageSelector = document.getElementById('image');
+    const imageDisplay = document.getElementById('imageDisplay');
 
-imageSelector.addEventListener('change', function(event) {
-
-    if (event.target.files && event.target.files[0]) {
-
-        const reader = new FileReader();
-
-        reader.onload = function(e) {
-
-            imageDisplay.src = e.target.result;
-            imageDisplay.style.display = 'block';
-        };
-
-
-        reader.readAsDataURL(event.target.files[0]);
+    function toggleDates() {
+        // '1' est la valeur string du select pour le prêt
+        if (typeSelector.value === '1') {
+            datesSection.style.display = 'block';
+        } else {
+            datesSection.style.display = 'none';
+        }
     }
-});
+
+    typeSelector.addEventListener('change', toggleDates);
+    window.addEventListener('DOMContentLoaded', toggleDates);
+
+    imageSelector.addEventListener('change', function (event) {
+        if (event.target.files && event.target.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                imageDisplay.src = e.target.result;
+                imageDisplay.style.display = 'block';
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    });
 </script>
+
 @include('partials/footer')

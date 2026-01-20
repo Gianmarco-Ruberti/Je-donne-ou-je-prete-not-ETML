@@ -21,7 +21,15 @@
     </h2>
 
     <h3>Publié par : {{ object.user.Username }}</h3>
-    
+    <h3 class="item-date">
+      @if(!object.type)
+      @else
+        Disponible du 
+        <strong>{{ object.availableFrom.toFormat('dd LLL yyyy') }}</strong> 
+        au 
+        <strong>{{ object.availableUntil.toFormat('dd LLL yyyy') }}</strong>
+      @end
+    </h3>
     <p class="description">
       {{ object.description }}
     </p>

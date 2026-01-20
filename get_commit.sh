@@ -4,14 +4,15 @@
 SINCE="2026-01-13"
 OUTPUT_FILE="commits_mardi_matin.csv"
 
-echo "--- Extraction des commits (avec auteur) vers $OUTPUT_FILE ---"
+echo "--- Scan de TOUTES les branches (Mardi matin depuis le $SINCE) ---"
 
 # En-tête du CSV
 echo "Hash,Auteur,Jour,Heure,Message" > "$OUTPUT_FILE"
 
-# Format Git : 
-# %h : hash | %an : nom de l'auteur | %ad : date formatée | %s : sujet
-git log --since="$SINCE" --date=format:'%A %H:%M' --pretty=format:"%h|%an|%ad|%s" | \
+# --all : scanne toutes les refs (branches, tags, etc.)
+# sort -u : supprime les doublons si un commit est sur plusieurs branches
+git log --all --since="$SINCE" --date=format:'%A %H:%M' --pretty=format:"%h|%an|%ad|%s" | \
+sort -u | \
 awk -F'|' '{
     split($3, date_parts, " ");
     day = date_parts[1];
@@ -24,13 +25,12 @@ awk -F'|' '{
         author = $2;
         message = $4;
 
-        # Sécurité : on nettoie les virgules pour ne pas casser les colonnes CSV
+        # Nettoyage des virgules pour le CSV
         gsub(/,/, " ", author);
         gsub(/,/, " ", message);
 
-        # Ecriture dans le fichier
         print hash "," author "," day "," hour_min "," message
     }
 }' >> "$OUTPUT_FILE"
 
-echo "Check terminé ! Ton fichier est prêt : $OUTPUT_FILE"
+echo "Scan complet terminé ! Fichier : $OUTPUT_FILE"

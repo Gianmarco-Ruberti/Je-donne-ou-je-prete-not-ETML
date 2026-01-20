@@ -97,6 +97,15 @@ label[for="filter_type"] {
     padding: 5px 0;
 }
 
+label[for="filter_categorie"] {
+    font-size: 1.1em;
+    font-weight: 500;
+    color: #343a40;
+    margin-left: 5px;
+    margin-right: 15px;
+    padding: 5px 0;
+}
+
 #filter_type , #filter_categorie{
     background-color: #ffffff;
     color: #007bff;

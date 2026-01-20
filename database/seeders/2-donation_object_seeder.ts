@@ -1,5 +1,6 @@
 import DonationObject from '#models/donation-object'
 import { BaseSeeder } from '@adonisjs/lucid/seeders'
+import { DateTime } from 'luxon'
 
 export default class extends BaseSeeder {
   async run() {
@@ -12,6 +13,8 @@ export default class extends BaseSeeder {
         categorie: 'Sport & Loisirs',
         user_id: 1,
         imagePath: 'l0omffpcb7howtrp6b3htyzi.webp',
+        availableFrom: DateTime.now(),
+        availableUntil: DateTime.now().plus({ days: 7 }),
       },
       {
         name: 'Ballon de basket',
@@ -30,6 +33,8 @@ export default class extends BaseSeeder {
         categorie: 'Culture & Livres',
         user_id: 1,
         imagePath: 'l0omffpcb7howtrp6b3htyzi.webp',
+        availableFrom: DateTime.now(),
+        availableUntil: DateTime.now().plus({ days: 7 }),
       },
       {
         name: "Veste d'hiver",
@@ -39,6 +44,8 @@ export default class extends BaseSeeder {
         categorie: 'Vêtements',
         user_id: 1,
         imagePath: 'l0omffpcb7howtrp6b3htyzi.webp',
+        availableFrom: DateTime.now(),
+        availableUntil: DateTime.now().plus({ days: 7 }),
       },
       {
         name: 'Console de jeu (ancienne génération)',
@@ -57,6 +64,8 @@ export default class extends BaseSeeder {
         categorie: 'Maison & Cuisine',
         user_id: 1,
         imagePath: 'l0omffpcb7howtrp6b3htyzi.webp',
+        availableFrom: DateTime.now(),
+        availableUntil: DateTime.now().plus({ days: 7 }),
       },
       {
         name: 'Tapis de yoga',
@@ -66,6 +75,8 @@ export default class extends BaseSeeder {
         categorie: 'Sport & Loisirs',
         user_id: 1,
         imagePath: 'l0omffpcb7howtrp6b3htyzi.webp',
+        availableFrom: DateTime.now(),
+        availableUntil: DateTime.now().plus({ days: 7 }),
       },
       {
         name: 'Ordinateur portable',
@@ -84,6 +95,8 @@ export default class extends BaseSeeder {
         categorie: 'Jouets & Enfants',
         user_id: 1,
         imagePath: 'l0omffpcb7howtrp6b3htyzi.webp',
+        availableFrom: DateTime.now(),
+        availableUntil: DateTime.now().plus({ days: 7 }),
       },
       {
         name: 'Chaussures de randonnée',
@@ -93,6 +106,8 @@ export default class extends BaseSeeder {
         categorie: 'Vêtements',
         user_id: 1,
         imagePath: 'l0omffpcb7howtrp6b3htyzi.webp',
+        availableFrom: DateTime.now(),
+        availableUntil: DateTime.now().plus({ days: 7 }),
       },
       {
         name: 'Micro-ondes',
@@ -111,6 +126,8 @@ export default class extends BaseSeeder {
         categorie: 'Musique & Art',
         user_id: 1,
         imagePath: 'l0omffpcb7howtrp6b3htyzi.webp',
+        availableFrom: DateTime.now(),
+        availableUntil: DateTime.now().plus({ days: 7 }),
       },
       {
         name: 'Lot de stylos et crayons',
@@ -120,6 +137,8 @@ export default class extends BaseSeeder {
         categorie: 'Bureau & Fournitures',
         user_id: 1,
         imagePath: 'l0omffpcb7howtrp6b3htyzi.webp',
+        availableFrom: DateTime.now(),
+        availableUntil: DateTime.now().plus({ days: 7 }),
       },
       {
         name: 'Écran PC 24 pouces',
@@ -138,6 +157,8 @@ export default class extends BaseSeeder {
         categorie: 'Informatique & Tech',
         user_id: 1,
         imagePath: 'l0omffpcb7howtrp6b3htyzi.webp',
+        availableFrom: DateTime.now(),
+        availableUntil: DateTime.now().plus({ days: 7 }),
       },
     ]
 

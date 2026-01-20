@@ -76,7 +76,7 @@ main {
     /* Styles spécifiques aux boutons de la barre */
     padding: 8px 15px;
     margin-left: 10px;
-    background-color: #3e5bff;
+    background-color: #007bff;
     color: white;
     border: none;
     border-radius: 5px;
@@ -202,5 +202,8 @@ main {
     main {
         padding: 15px;
         width: 100%;
+    }
+    .footer-projet{
+        margin-bottom: 40px;
     }
 }

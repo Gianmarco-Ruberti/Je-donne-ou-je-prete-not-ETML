@@ -1,14 +1,27 @@
 Hash,Branche,Auteur,Date,Jour,Heure,Message,Description
-0fb1c93,N/A,Damien Rochat,2026-01-20,Tuesday,08:13,Merge branch 'Réservation' of https://github.com/BlackAngelTVdev/Je-donne-ou-je-prete into Réservation,
-13ae5fd,N/A,Damien Rochat,2026-01-13,Tuesday,10:04,ROLBACK,
-17c88c7,N/A,Damien Rochat,2026-01-13,Tuesday,09:58,Fix(host): db host on server,
-238347b,origin/main,Damien Rochat,2026-01-20,Tuesday,08:27,Fix(get_commit): add all barnche tracker,
-32d3090,N/A,Damien Rochat,2026-01-13,Tuesday,11:17,Feat(email): envoie un email pour réservé,
-44b8a6d,N/A,Damien Rochat,2026-01-13,Tuesday,10:03,Test(Deploy),
-6e71bda,N/A,Damien Rochat,2026-01-20,Tuesday,08:14,Merge pull request #32 from BlackAngelTVdev/Réservation,Réservation
-7d99b56,N/A,Gianmarco-Ruberti,2026-01-13,Tuesday,11:25,feat(account) : ajout du css responsive pour les items,[DONE]
-8bbce62,N/A,Damien Rochat,2026-01-20,Tuesday,08:20,Fix(name): on git log,
-9c8ff74,Réservation,Damien Rochat,2026-01-20,Tuesday,08:23,Fix(getcommit),
-b9f75d0,N/A,Damien Rochat,2026-01-20,Tuesday,08:12,Feat(autoCSV) : git log jnr,
+135f9a1,mainorigin/mainorigin/HEAD,Damien Rochat,2026-01-20,Tuesday,09:52,Fix(seeder): add date for item,
+a9be1fd,N/A,Damien Rochat,2026-01-20,Tuesday,09:32,Merge pull request #33 from BlackAngelTVdev/Réservation,Réservation
+a7e48d9,origin/Réservation,Damien Rochat,2026-01-20,Tuesday,09:32,Merge branch 'main' into Réservation,
+bd7d0e6,Réservation,Damien Rochat,2026-01-20,Tuesday,09:29,Feat(affiche) : du au dans le detail,
+ae566ba,N/A,Damien Rochat,2026-01-20,Tuesday,09:23,Fix(date) : page édite,[10][DONE]
+5ff2bad,N/A,Damien Rochat,2026-01-20,Tuesday,09:18,Feat(date): ajoute une date de debut et de fin,
+8e8b681,N/A,Gianmarco-Ruberti,2026-01-20,Tuesday,09:15,fix(css) : label pour filter_categorie,[5min][DONE]
+b654b81,N/A,Gianmarco-Ruberti,2026-01-20,Tuesday,09:09,fix(CSS) : alignement dans édit et ajout,[20min][DONE]
+c2347eb,N/A,Damien Rochat,2026-01-20,Tuesday,09:08,Feat(temps) : add reservation temps,
+4b2873c,N/A,Damien Rochat,2026-01-20,Tuesday,08:58,Update get_commit.sh,
+62b3b1d,N/A,Damien Rochat,2026-01-20,Tuesday,08:53,Update get_commit.sh,
+808a8fc,N/A,Damien Rochat,2026-01-20,Tuesday,08:52,Update .gitignore,
+93d9a71,N/A,Gianmarco-Ruberti,2026-01-20,Tuesday,08:44,Merge branch 'main' of https://github.com/BlackAngelTVdev/Je-donne-ou-je-prete,
+df26103,N/A,Gianmarco-Ruberti,2026-01-20,Tuesday,08:43,fix(CSS) : mettre un max sur les page pour pas que les box soient étirées,[10min][DONE]
+238347b,N/A,Damien Rochat,2026-01-20,Tuesday,08:27,Fix(get_commit): add all barnche tracker,
 ce17622,N/A,Damien Rochat,2026-01-20,Tuesday,08:25,Fix(getcommit) : add name,
-f82bab0,N/A,Damien Rochat,2026-01-13,Tuesday,08:59,Fix(compose):indentation,
+9c8ff74,N/A,Damien Rochat,2026-01-20,Tuesday,08:23,Fix(getcommit),
+8bbce62,N/A,Damien Rochat,2026-01-20,Tuesday,08:20,Fix(name): on git log,
+6e71bda,N/A,Damien Rochat,2026-01-20,Tuesday,08:14,Merge pull request #32 from BlackAngelTVdev/Réservation,Réservation
+0fb1c93,N/A,Damien Rochat,2026-01-20,Tuesday,08:13,Merge branch 'Réservation' of https://github.com/BlackAngelTVdev/Je-donne-ou-je-prete into Réservation,
+b9f75d0,N/A,Damien Rochat,2026-01-20,Tuesday,08:12,Feat(autoCSV) : git log jnr,
+7d99b56,N/A,Gianmarco-Ruberti,2026-01-13,Tuesday,11:25,feat(account) : ajout du css responsive pour les items,[DONE]
+32d3090,N/A,Damien Rochat,2026-01-13,Tuesday,11:17,Feat(email): envoie un email pour réservé,
+13ae5fd,N/A,Damien Rochat,2026-01-13,Tuesday,10:04,ROLBACK,
+44b8a6d,N/A,Damien Rochat,2026-01-13,Tuesday,10:03,Test(Deploy),
+17c88c7,N/A,Damien Rochat,2026-01-13,Tuesday,09:58,Fix(host): db host on server,

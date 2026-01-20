@@ -1,53 +1,50 @@
 #!/bin/bash
 
-# Configuration
+# Config
 SINCE="2026-01-13"
-OUTPUT_FILE="Doc/commits_mardi_matin.csv"
+OUTPUT_DIR="Doc"
+OUTPUT_FILE="$OUTPUT_DIR/commits_mardi_matin.csv"
 
-# Créer le dossier Doc s'il n'existe pas
-mkdir -p Doc
+# Sécurité : on crée le dossier proprement
+mkdir -p "$OUTPUT_DIR"
 
 echo "--- Scan de TOUTES les branches (Mardi matin depuis le $SINCE) ---"
 
 # En-tête du CSV
 echo "Hash,Branche,Auteur,Date,Jour,Heure,Message,Description" > "$OUTPUT_FILE"
 
-# %h: hash, %D: ref names (branches), %an: auteur, %ad: date, %s: sujet, %b: body
-git log --all --since="$SINCE" --date=format:'%Y-%m-%d|%A|%H:%M' --pretty=format:"%h¤%D¤%an¤%ad¤%s¤%b" | \
-sort -u | \
-awk -F'¤' '{
+# %h:hash, %D:branches, %an:auteur, %ad:date, %s:sujet, %b:corps
+# On utilise \x1f (Unit Separator) comme délimiteur temporaire, c'est ultra safe.
+git log --all --since="$SINCE" --date=format:'%Y-%m-%d|%A|%H:%M' --pretty=format:"%h%x1f%D%x1f%an%x1f%ad%x1f%s%x1f%b" | \
+awk -F'\x1f' '{
     hash = $1;
     refs = $2;
     author = $3;
-    split($4, date_parts, "|");
-    full_date = date_parts[1];
-    day = date_parts[2];
-    hour_min = date_parts[3];
+    split($4, d, "|"); # d[1]=Date, d[2]=Jour, d[3]=Heure
     subject = $5;
     body = $6;
 
-    # Nettoyage du nom de la branche (on prend la première info pertinente)
-    # On enlève "HEAD -> ", "tag: ", etc.
-    gsub(/HEAD -> /, "", refs);
-    split(refs, ref_list, ",");
-    branch = ref_list[1];
-    if (branch == "") branch = "N/A";
+    # Nettoyage propre de la branche
+    gsub(/HEAD -> |, |tag: /, "", refs);
+    split(refs, r, ",");
+    branch = (r[1] == "") ? "N/A" : r[1];
 
-    hour = substr(hour_min, 1, 2);
+    # Extraction de l heure pour le filtre
+    hour = substr(d[3], 1, 2);
 
-    # Filtrage : Mardi et avant 12h
-    if ((day ~ /[Tt]uesday/ || day ~ /[Mm]ardi/) && hour < 12) {
+    # Filtre : Mardi (FR ou EN) ET avant midi
+    if ((d[2] ~ /^[Tt]uesday/ || d[2] ~ /^[Mm]ardi/) && hour < 12) {
         
-        # Nettoyage CSV
+        # Fonction de nettoyage pour le CSV (enlève les virgules et sauts de ligne)
         gsub(/,/, " ", author);
         gsub(/,/, " ", branch);
         gsub(/,/, " ", subject);
         gsub(/,/, " ", body);
-        gsub(/\n/, " ", body);
-        gsub(/\r/, "", body);
+        gsub(/\n|\r/, " ", body);
 
-        print hash "," branch "," author "," full_date "," day "," hour_min "," subject "," body
+        # Print final
+        printf "%s,%s,%s,%s,%s,%s,%s,%s\n", hash, branch, author, d[1], d[2], d[3], subject, body
     }
 }' >> "$OUTPUT_FILE"
 
-echo "Scan complet terminé ! Fichier : $OUTPUT_FILE"
+echo "✅ Terminé ! Check ici : $OUTPUT_FILE"

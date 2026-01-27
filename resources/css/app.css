@@ -36,7 +36,7 @@ main {
 
 /* --- Navigation --- */
 .logo img{
-    width: 250px;
+    width: 350px;
 }
 
 .imgbutton{
@@ -196,8 +196,12 @@ main {
         padding: 15px 15px;
     }
     
+    .logo{
+        display: flex;
+        justify-content: center;
+    }
     .logo img{
-        width: 180px; 
+        width: 85%;
     }
     
     main {

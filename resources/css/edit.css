@@ -1,3 +1,4 @@
+@import url(variable.css);
 h1 {
     font-size: 26px;
     font-weight: 600;
@@ -8,7 +9,7 @@ h1 {
 
 form {
     max-width: 650px;
-    background: #fff;
+    background: var(--colorform);
     padding: 20px 0;
     margin: auto;
     box-sizing: border-box;
@@ -29,7 +30,7 @@ select {
     border: 1px solid #ccc;
     border-radius: 12px;
     font-size: 16px;
-    background-color: #f2f2f2;
+    background-color: var(--colorText);
     outline: none;
     resize: vertical;
     transition: 0.2s;
@@ -40,8 +41,8 @@ input[type="text"]:focus,
 textarea:focus,
 select:focus,
 input[type="file"]:focus {
-    border-color: #007bff;
-    background-color: #ffffff;
+    border-color: var(--colorback);
+    background-color: var(--colorFocus);
 }
 
 
@@ -67,7 +68,7 @@ form div:last-of-type {
 button {
     width: 180px;
     padding: 12px;
-    background-color: #007bff;
+    background-color: var(--colorButton);
     color: white;
     border: none;
     border-radius: 20px;
@@ -79,18 +80,18 @@ button {
 }
 
 button:hover {
-    background-color: #007bff;
+    background-color: var(--colorButton);
 }
 
 
 form div:last-of-type a {
-    color: #666; 
+    color: var(--colorButton); 
     text-decoration: none;
     font-size: 16px;
 }
 
 form div:last-of-type a:hover {
-    color: #007bff;
+    color: var(--colorback);
     text-decoration: underline;
 }
 
@@ -100,7 +101,7 @@ p {
 }
 
 p a {
-    color: #007bff;
+    color: var(--colorback);
     text-decoration: none;
 }
 

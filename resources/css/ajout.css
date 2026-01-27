@@ -1,3 +1,4 @@
+@import url(variable.css);
 h1 {
     font-size: 26px;
     font-weight: 600;
@@ -9,7 +10,7 @@ h1 {
 
 form {
     max-width: 650px;
-    background: #fff;
+    background: var(--colorform);
     padding: 20px 0;
     margin: auto;
     box-sizing: border-box;
@@ -35,10 +36,10 @@ textarea,
 select {
     width: 100%;
     padding: 12px 15px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--colorText);
     border-radius: 12px;
     font-size: 16px;
-    background-color: #f2f2f2;
+    background-color: var(--colorText);
     outline: none;
     resize: vertical;
     transition: 0.2s;
@@ -48,18 +49,18 @@ select {
 input[type="text"]:focus,
 textarea:focus,
 select:focus {
-    border-color: #007bff;
-    background-color: #ffffff;
+    border-color: var(--colorButton);
+    background-color: var(--colorFocus);
 }
 
 ::placeholder {
-    color: #999;
+    color: var(--colorlink);
 }
 
 button {
     width: 180px;
     padding: 12px;
-    background-color: #007bff;
+    background-color: var(--colorButton);
     color: white;
     border: none;
     border-radius: 20px;
@@ -74,7 +75,7 @@ button {
 }
 
 button:hover {
-    background-color: #007bff;
+    background-color: var(--colorButton);
 }
 
 p {
@@ -85,7 +86,7 @@ p {
 }
 
 p a {
-    color: #007bff;
+    color: var(--colorButton);
     text-decoration: none;
 }
 

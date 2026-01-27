@@ -66,7 +66,7 @@ main {
     padding: 10px 30px; 
     
     /* Apparence */
-    background-color: var(--colorButton); 
+    background-color: var(--colorback); 
     border-top: 1px solid #ddd;
     box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); 
     display: none;
@@ -78,7 +78,7 @@ main {
     padding: 8px 15px;
     margin-left: 10px;
     background-color: var(--colorButton);
-    color: var(--colorButton);
+    color: var(--colorlink);
     border: none;
     border-radius: 5px;
     text-decoration: none;

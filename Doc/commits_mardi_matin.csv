@@ -1,5 +1,18 @@
 Hash,Branche,Auteur,Date,Jour,Heure,Message,Description
-135f9a1,mainorigin/mainorigin/HEAD,Damien Rochat,2026-01-20,Tuesday,09:52,Fix(seeder): add date for item,
+fa661fc,origin/27-demo27-demo,Damien Rochat,2026-01-27,Tuesday,09:28,Chor(images): supprime les images inutiles,[5][DONE]
+ea0aa03,N/A,Damien Rochat,2026-01-27,Tuesday,09:22,Chor(image): ETML logo,
+9ffde46,N/A,Damien Rochat,2026-01-27,Tuesday,08:48,Fix(env) : db Host vol.3,
+a497e9c,N/A,Damien Rochat,2026-01-27,Tuesday,08:44,Fix(env) : dev host vol.2,[4][DONE]
+eac5e2e,N/A,Damien Rochat,2026-01-27,Tuesday,08:43,fix(env):db host,[40][DONE]
+984fe1f,N/A,Damien Rochat,2026-01-27,Tuesday,08:08,Chor(email): enlève l'email de réservation,
+0ed2b20,N/A,Gianmarco-Ruberti,2026-01-20,Tuesday,11:23,fix(css) : mise de la même couleur sur tout le site,[15min][DONE]
+65d10be,N/A,Gianmarco-Ruberti,2026-01-20,Tuesday,10:12,Merge branch 'main' of https://github.com/BlackAngelTVdev/Je-donne-ou-je-prete,
+2b9417b,N/A,Gianmarco-Ruberti,2026-01-20,Tuesday,10:11,fix(css) : mise d'un CSS cohérant avec le site,[20min][DONE]
+f446b1a,N/A,Damien Rochat,2026-01-20,Tuesday,10:01,Merge branch 'main' of https://github.com/BlackAngelTVdev/Je-donne-ou-je-prete,
+62bbcee,N/A,Damien Rochat,2026-01-20,Tuesday,10:00,Fix(username) : correcte username on email,
+1e0dc49,N/A,Gianmarco-Ruberti,2026-01-20,Tuesday,09:54,Merge branch 'main' of https://github.com/BlackAngelTVdev/Je-donne-ou-je-prete,
+47ca8a3,N/A,Gianmarco-Ruberti,2026-01-20,Tuesday,09:54,fix(CSS) : amelioré la nav en mobile,[20min][DONE]
+135f9a1,N/A,Damien Rochat,2026-01-20,Tuesday,09:52,Fix(seeder): add date for item,
 a9be1fd,N/A,Damien Rochat,2026-01-20,Tuesday,09:32,Merge pull request #33 from BlackAngelTVdev/Réservation,Réservation
 a7e48d9,origin/Réservation,Damien Rochat,2026-01-20,Tuesday,09:32,Merge branch 'main' into Réservation,
 bd7d0e6,Réservation,Damien Rochat,2026-01-20,Tuesday,09:29,Feat(affiche) : du au dans le detail,
@@ -22,6 +35,3 @@ ce17622,N/A,Damien Rochat,2026-01-20,Tuesday,08:25,Fix(getcommit) : add name,
 b9f75d0,N/A,Damien Rochat,2026-01-20,Tuesday,08:12,Feat(autoCSV) : git log jnr,
 7d99b56,N/A,Gianmarco-Ruberti,2026-01-13,Tuesday,11:25,feat(account) : ajout du css responsive pour les items,[DONE]
 32d3090,N/A,Damien Rochat,2026-01-13,Tuesday,11:17,Feat(email): envoie un email pour réservé,
-13ae5fd,N/A,Damien Rochat,2026-01-13,Tuesday,10:04,ROLBACK,
-44b8a6d,N/A,Damien Rochat,2026-01-13,Tuesday,10:03,Test(Deploy),
-17c88c7,N/A,Damien Rochat,2026-01-13,Tuesday,09:58,Fix(host): db host on server,

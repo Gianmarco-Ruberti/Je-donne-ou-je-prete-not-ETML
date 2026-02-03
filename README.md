@@ -17,6 +17,7 @@
 - ✅ **Donner des objets** : Permettez aux utilisateurs de céder définitivement des objets dont ils n'ont plus l'utilité.
 - ✅ **Prêter des objets** : Gérez facilement les prêts temporaires avec un suivi des dates de retour pour ne plus rien perdre.
 - ✅ **Gestion par catégorie** : Organisé de manière intuitive (Électronique, Outils, Loisirs) pour une recherche ultra-rapide.
+- ✅ **multilingue** : Peut prendre en charge toutes les lange du monde.
 - ❌ **Système de recherche** : Trouvez instantanément ce dont vous avez besoin grâce à des filtres avancés et une barre de recherche performante.
 
 ## 🛠 Tech Stack
@@ -36,7 +37,7 @@
    cd Je-donne-ou-je-prete
    ```
 2. **Installation et Configuration**
-   Installez les dépendances, copiez et renommez le fichier d'environnement, puis générez la clé :
+   Installez les dépendances, copiez et renommez le fichier d'environnement, puis générez la clé (une version sans serveur SMTP est disponnible sur la branche 27-demo):
    ```bash
    npm install
    cp .env.example .env

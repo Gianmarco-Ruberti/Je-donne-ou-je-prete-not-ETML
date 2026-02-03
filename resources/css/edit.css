@@ -133,6 +133,10 @@ p a:hover {
         max-width: none;
         padding: 0;
     }
+
+    .form-group{
+        padding-top: 15px;
+    }
     
     form div {
         padding: 0 15px; /* Réduction du padding sur les bords pour l'alignement */

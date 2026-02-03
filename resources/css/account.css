@@ -5,6 +5,18 @@ p{
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.btn-republish{
+    width: 100%; 
+    background-color: var(--colorButton); 
+    color: var(--colorlink); 
+    border: none; 
+    padding: 10px 0; 
+    cursor: pointer; 
+    border-radius: 4px; 
+    font-size: 10px; 
+    font-weight: bold;
+}
 .profile-icon {
     width: 40px;
     height: 40px;

@@ -106,6 +106,7 @@ p a:hover {
     h1 {
         max-width: 100%;
         padding: 0 15px;
+        text-align: center;
     }
 
     form {
@@ -116,18 +117,18 @@ p a:hover {
     
     form div {
         padding: 0 15px; /* Réduction du padding sur les bords pour l'alignement */
-        display: flex;
-        align-items: center;
     }
 
     button {
         width: 100%; /* Le bouton prend toute la largeur */
         margin-left: 0;
         margin-right: 0;
+        margin-bottom: 15px;
     }
 
     p {
         max-width: 100%;
         padding: 0 15px;
+        margin-bottom: 15px;
     }
 }

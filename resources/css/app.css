@@ -186,11 +186,17 @@ main {
     }
 }
 @media (max-width: 600px) {
+
+    header a{
+        display: none;
+    }
+
     .bottom-action-bar {
         padding: 10px 15px;
         display: flex;
         justify-content: space-around; 
     }
+    
     .bottom-action-bar .action-button {
         flex-grow: 1; 
         text-align: center;

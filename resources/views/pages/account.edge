@@ -38,9 +38,8 @@
                                 <form action="{{ `/item/${object.id}/republish?_method=PATCH` }}" method="POST"
                                     style="flex: 1;">
                                     {{ csrfField() }}
-                                    <button type="submit" class="btn-republish"
-                                        style="width: 100%; background: #28a745; color: white; border: none; padding: 7px 0; cursor: pointer; border-radius: 4px; font-size: 10px; font-weight: bold;">
-                                        {{ t('messages.account.btn_republish') }}
+                                    <button type="submit" class="btn-republish">
+                                        REPUBLIER
                                     </button>
                                 </form>
                                 <a href="/item/{{object.id}}/edit" class="btn-edit"

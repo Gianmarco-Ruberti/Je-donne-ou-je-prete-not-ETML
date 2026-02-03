@@ -1,6 +1,18 @@
 @let(title = t('messages.show_item.reserve'))
 @let(css = 'details.css')
 @include('partials/header')
+@let(catMap = {
+'Sport & Loisirs': 'sport',
+'Culture & Livres': 'books',
+'Vêtements': 'clothes',
+'Informatique & Tech': 'tech',
+'Maison & Cuisine': 'home',
+'Jouets & Enfants': 'toys',
+'Électroménager': 'appliances',
+'Musique & Art': 'art',
+'Bureau & Fournitures': 'office'
+})
+
 
 <main>
   <div class="gauche">
@@ -13,21 +25,22 @@
 
     <h2 class="item-status">
       @if(!object.type)
-        {{ t('messages.common.give') }}
+      {{ t('messages.common.give') }}
       @else
-        {{ t('messages.common.lend') }}
+      {{ t('messages.common.lend') }}
       @end
-      | {{ object.categorie }}
+      @let(currentKey = catMap[object.categorie] || object.categorie)
+      | {{ t(`messages.add_item.categories.${currentKey}`, {}, object.categorie) }}
     </h2>
 
     <h3>{{ t('messages.show_item.published_by') }} {{ object.user.Username }}</h3>
 
     <h3 class="item-date">
       @if(object.type)
-        {{ t('messages.show_item.available_from') }}
-        <strong>{{ object.availableFrom.toFormat('dd LLL yyyy') }}</strong>
-        {{ t('messages.show_item.to') }}
-        <strong>{{ object.availableUntil.toFormat('dd LLL yyyy') }}</strong>
+      {{ t('messages.show_item.available_from') }}
+      <strong>{{ object.availableFrom.toFormat('dd LLL yyyy') }}</strong>
+      {{ t('messages.show_item.to') }}
+      <strong>{{ object.availableUntil.toFormat('dd LLL yyyy') }}</strong>
       @end
     </h3>
 
@@ -37,14 +50,14 @@
 
     {{-- Logique de réservation --}}
     @if(auth.isAuthenticated)
-      <form action="{{ route('donation_objects.reserve', { id: object.id }) }}" method="POST">
-        {{ csrfField() }}
-        <button type="submit" class="reservButton">{{ t('messages.show_item.reserve') }}</button>
-      </form>
+    <form action="{{ route('donation_objects.reserve', { id: object.id }) }}" method="POST">
+      {{ csrfField() }}
+      <button type="submit" class="reservButton">{{ t('messages.show_item.reserve') }}</button>
+    </form>
     @else
-      <a href="{{ route('auth.login.show') }}" class="reservButton">
-        {{ t('messages.show_item.login_to_reserve') }}
-      </a>
+    <a href="{{ route('auth.login.show') }}" class="reservButton">
+      {{ t('messages.show_item.login_to_reserve') }}
+    </a>
     @end
 
   </div>

@@ -1,6 +1,17 @@
 @let(title = 'Home')
 @let(css = 'home.css')
 @include('partials/header')
+@let(catMap = {
+'Sport & Loisirs': 'sport',
+'Culture & Livres': 'books',
+'Vêtements': 'clothes',
+'Informatique & Tech': 'tech',
+'Maison & Cuisine': 'home',
+'Jouets & Enfants': 'toys',
+'Électroménager': 'appliances',
+'Musique & Art': 'art',
+'Bureau & Fournitures': 'office'
+})
 
 <main>
   <form action="home" method="GET" class="filter-form">
@@ -27,17 +38,6 @@
 
       @each(categorie in categories)
       {{-- On crée un objet de correspondance direct --}}
-      @let(catMap = {
-      'Sport & Loisirs': 'sport',
-      'Culture & Livres': 'books',
-      'Vêtements': 'clothes',
-      'Informatique & Tech': 'tech',
-      'Maison & Cuisine': 'home',
-      'Jouets & Enfants': 'toys',
-      'Électroménager': 'appliances',
-      'Musique & Art': 'art',
-      'Bureau & Fournitures': 'office'
-      })
 
       {{-- On récupère la clé pour le JSON, sinon on garde la catégorie telle quelle --}}
       @let(currentKey = catMap[categorie] || categorie)
@@ -68,7 +68,9 @@
             @else
             {{ t('messages.common.lend') }}
             @end
-            | {{ object.categorie }}
+
+            @let(currentKey = catMap[object.categorie] || object.categorie)
+            | {{ t(`messages.add_item.categories.${currentKey}`, {}, object.categorie) }}
           </p>
         </div>
       </a>

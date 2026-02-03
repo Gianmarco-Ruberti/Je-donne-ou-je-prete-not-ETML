@@ -1,6 +1,17 @@
 @let(title = t('messages.add_item.title'))
 @let(css = 'ajout.css')
 @include('partials/header')
+@let(catMap = {
+'Sport & Loisirs': 'sport',
+'Culture & Livres': 'books',
+'Vêtements': 'clothes',
+'Informatique & Tech': 'tech',
+'Maison & Cuisine': 'home',
+'Jouets & Enfants': 'toys',
+'Électroménager': 'appliances',
+'Musique & Art': 'art',
+'Bureau & Fournitures': 'office'
+})
 
 <main>
   <h1>{{ t('messages.add_item.title') }}</h1>
@@ -53,21 +64,10 @@
         </option>
 
         {{-- 1. On définit le dictionnaire qui lie tes clés JSON aux noms de ta BDD --}}
-        @let(dbNames = {
-        'sport': 'Sport & Loisirs',
-        'books': 'Culture & Livres',
-        'clothes': 'Vêtements',
-        'tech': 'Informatique & Tech',
-        'home': 'Maison & Cuisine',
-        'toys': 'Jouets & Enfants',
-        'appliances': 'Électroménager',
-        'art': 'Musique & Art',
-        'office': 'Bureau & Fournitures'
-        })
 
         {{-- 2. On boucle sur les clés --}}
         @each(key in ['sport', 'books', 'clothes', 'tech', 'home', 'toys', 'appliances', 'art', 'office'])
-        @let(databaseValue = dbNames[key])
+        @let(databaseValue = catMap[key])
 
         <option value="{{ databaseValue }}" {{ (old('categorie')===databaseValue) ? 'selected' : '' }}>
           {{-- Affiche la traduction du JSON (Français si i18n est sur 'fr') --}}

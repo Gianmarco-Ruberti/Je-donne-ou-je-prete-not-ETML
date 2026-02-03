@@ -47,14 +47,16 @@
     {{-- Catégorie --}}
     <div class="field-group">
       <label for="categorie">{{ t('messages.add_item.cat_label') }}</label><br>
-      <select name="filter_categorie" id="filter_categorie" onchange="this.form.submit()">
-        <option value="" {{ !filterCategorie ? 'selected' : '' }}>
-          {{ t('messages.common.all_categories') }}
+      <select name="categorie" id="categorie" required>
+        <option value="" disabled {{ !old('categorie') ? 'selected' : '' }}>
+          {{ t('messages.add_item.cat_select') }}
         </option>
 
-        @each((label, key) in t('messages.add_item.categories'))
-        <option value="{{ label }}" {{ filterCategorie===label ? 'selected' : '' }}>
-          {{ label }}
+        {{-- On définit les clés manuellement pour être sûr que ça boucle --}}
+        @each(key in ['sport', 'books', 'clothes', 'tech', 'home', 'toys', 'appliances', 'art', 'office'])
+        <option value="{{ key }}" {{ old('categorie')===key ? 'selected' : '' }}>
+          {{-- On appelle la traduction précise pour cette clé --}}
+          {{ t(`messages.add_item.categories.${key}`) }}
         </option>
         @end
       </select>

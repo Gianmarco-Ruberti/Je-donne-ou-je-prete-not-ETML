@@ -3,136 +3,143 @@
 @include('partials/header')
 
 <main>
-    <h1>{{ t('messages.edit_item.title') }} {{ object.name }}</h1>
+  <h1>{{ t('messages.edit_item.title') }} {{ object.name }}</h1>
 
-    <form action="{{ route('donation_objects.update', { id: object.id }) }}" method="POST" enctype="multipart/form-data">
-        {{ csrfField() }}
-        <input type="hidden" name="_method" value="PUT">
+  <form action="{{ route('donation_objects.update', { id: object.id }) }}" method="POST" enctype="multipart/form-data">
+    {{ csrfField() }}
+    <input type="hidden" name="_method" value="PUT">
 
-        {{-- Section Image --}}
-        <div>
-            @!component('components/input', {
-                name : 'image',
-                label : t('messages.edit_item.image_placeholder'),
-                type : 'file',
-                attributes: { id: 'image' }
-            })
-            @if(object.imagePath)
-                <img id="imageDisplay" src="/uploads/items/{{ object.imagePath }}" alt="Aperçu" style="max-width: 200px; margin-top: 10px; border-radius: 8px;">
-            @else
-                <img id="imageDisplay" src="" alt="Aperçu" style="display: none; max-width: 200px; margin-top: 10px; border-radius: 8px;">
-            @endif
-        </div>
+    {{-- Section Image --}}
+    <div>
+      @!component('components/input', {
+      name : 'image',
+      label : t('messages.edit_item.image_placeholder'),
+      type : 'file',
+      attributes: { id: 'image' }
+      })
+      @if(object.imagePath)
+      <img id="imageDisplay" src="/uploads/items/{{ object.imagePath }}" alt="Aperçu"
+        style="max-width: 200px; margin-top: 10px; border-radius: 8px;">
+      @else
+      <img id="imageDisplay" src="" alt="Aperçu"
+        style="display: none; max-width: 200px; margin-top: 10px; border-radius: 8px;">
+      @endif
+    </div>
 
-        <br>
+    <br>
 
-        {{-- Nom --}}
-        <div>
-            <label for="name">{{ t('messages.add_item.name_label') }}</label><br>
-            <input id="name" type="text" name="name" value="{{ old('name') || object.name }}" required>
-            @if(flashMessages.has('errors.name'))
-                <p style="color: red;">{{ flashMessages.get('errors.name') }}</p>
-            @endif
-        </div>
+    {{-- Nom --}}
+    <div>
+      <label for="name">{{ t('messages.add_item.name_label') }}</label><br>
+      <input id="name" type="text" name="name" value="{{ old('name') || object.name }}" required>
+      @if(flashMessages.has('errors.name'))
+      <p style="color: red;">{{ flashMessages.get('errors.name') }}</p>
+      @endif
+    </div>
 
-        <br>
+    <br>
 
-        {{-- Description --}}
-        <div>
-            <label for="description">{{ t('messages.add_item.desc_label') }}</label><br>
-            <textarea id="description" name="description" rows="5" required>{{ old('description') || object.description }}</textarea>
-            @if(flashMessages.has('errors.description'))
-                <p style="color: red;">{{ flashMessages.get('errors.description') }}</p>
-            @endif
-        </div>
+    {{-- Description --}}
+    <div>
+      <label for="description">{{ t('messages.add_item.desc_label') }}</label><br>
+      <textarea id="description" name="description" rows="5"
+        required>{{ old('description') || object.description }}</textarea>
+      @if(flashMessages.has('errors.description'))
+      <p style="color: red;">{{ flashMessages.get('errors.description') }}</p>
+      @endif
+    </div>
 
-        <br>
+    <br>
 
-        {{-- Catégorie --}}
-        <div>
-            <label for="categorie">{{ t('messages.add_item.cat_label') }}</label><br>
-            <select id="categorie" name="categorie" required>
-                @each((label, key) in t('messages.add_item.categories'))
-                    <option value="{{ label }}" {{ (old('categorie') || object.categorie) === label ? 'selected' : '' }}>
-                        {{ label }}
-                    </option>
-                @end
-            </select>
-        </div>
+    {{-- Catégorie --}}
+    <div>
+      <label for="categorie">{{ t('messages.add_item.cat_label') }}</label><br>
+      <select id="categorie" name="categorie" required>
+        {{-- On définit la liste des clés pour forcer l'ordre et la détection --}}
+        @let(keys = ['sport', 'books', 'clothes', 'tech', 'home', 'toys', 'appliances', 'art', 'office'])
 
-        <br>
+        @each(key in keys)
+        @let(translation = t(`messages.add_item.categories.${key}`))
+        <option value="{{ translation }}" {{ (old('categorie') || object.categorie)===translation ? 'selected' : '' }}>
+          {{ translation }}
+        </option>
+        @end
+      </select>
+    </div>
+    <br>
 
-        {{-- Type (Don/Prêt) --}}
-        <div>
-            <label for="type">{{ t('messages.add_item.status_label') }}</label><br>
-            <select id="type" name="type" required>
-                <option value="0" {{ (old('type') == '0' || object.type == false) ? 'selected' : '' }}>
-                    {{ t('messages.add_item.status_give') }}
-                </option>
-                <option value="1" {{ (old('type') == '1' || object.type == true) ? 'selected' : '' }}>
-                    {{ t('messages.add_item.status_lend') }}
-                </option>
-            </select>
-        </div>
+    {{-- Type (Don/Prêt) --}}
+    <div>
+      <label for="type">{{ t('messages.add_item.status_label') }}</label><br>
+      <select id="type" name="type" required>
+        <option value="0" {{ (old('type')=='0' || object.type==false) ? 'selected' : '' }}>
+          {{ t('messages.add_item.status_give') }}
+        </option>
+        <option value="1" {{ (old('type')=='1' || object.type==true) ? 'selected' : '' }}>
+          {{ t('messages.add_item.status_lend') }}
+        </option>
+      </select>
+    </div>
 
-        <br>
+    <br>
 
-        {{-- Section Dates --}}
-        <div id="dates_section" style="display: none; background: #f9fafb; padding: 20px; border-radius: 10px; border-left: 4px solid #007bff;">
-            <p style="margin-top: 0; font-weight: bold; color: #007bff;">{{ t('messages.add_item.loan_details') }}</p>
+    {{-- Section Dates --}}
+    <div id="dates_section"
+      style="display: none; background: #f9fafb; padding: 20px; border-radius: 10px; border-left: 4px solid #007bff;">
+      <p style="margin-top: 0; font-weight: bold; color: #007bff;">{{ t('messages.add_item.loan_details') }}</p>
 
-            <div>
-                <label for="available_from">{{ t('messages.add_item.from') }}</label><br>
-                <input type="datetime-local" id="available_from" name="available_from"
-                    value="{{ old('available_from') || (object.availableFrom ? object.availableFrom.toFormat('yyyy-MM-dd\'T\'HH:mm') : '') }}">
-            </div>
+      <div>
+        <label for="available_from">{{ t('messages.add_item.from') }}</label><br>
+        <input type="datetime-local" id="available_from" name="available_from"
+          value="{{ old('available_from') || (object.availableFrom ? object.availableFrom.toFormat('yyyy-MM-dd\'T\'HH:mm') : '') }}">
+      </div>
 
-            <br>
+      <br>
 
-            <div>
-                <label for="available_until">{{ t('messages.add_item.until') }}</label><br>
-                <input type="datetime-local" id="available_until" name="available_until"
-                    value="{{ old('available_until') || (object.availableUntil ? object.availableUntil.toFormat('yyyy-MM-dd\'T\'HH:mm') : '') }}">
-            </div>
-        </div>
+      <div>
+        <label for="available_until">{{ t('messages.add_item.until') }}</label><br>
+        <input type="datetime-local" id="available_until" name="available_until"
+          value="{{ old('available_until') || (object.availableUntil ? object.availableUntil.toFormat('yyyy-MM-dd\'T\'HH:mm') : '') }}">
+      </div>
+    </div>
 
-        <br>
+    <br>
 
-        <div>
-            <button type="submit">{{ t('messages.edit_item.submit') }}</button>
-            <a href="{{ route('donation_objects.show', { id: object.id }) }}">{{ t('messages.edit_item.cancel') }}</a>
-        </div>
-    </form>
+    <div>
+      <button type="submit">{{ t('messages.edit_item.submit') }}</button>
+      <a href="{{ route('donation_objects.show', { id: object.id }) }}">{{ t('messages.edit_item.cancel') }}</a>
+    </div>
+  </form>
 </main>
 
 <script>
-    const typeSelector = document.getElementById('type');
-    const datesSection = document.getElementById('dates_section');
-    const imageSelector = document.getElementById('image');
-    const imageDisplay = document.getElementById('imageDisplay');
+  const typeSelector = document.getElementById('type');
+  const datesSection = document.getElementById('dates_section');
+  const imageSelector = document.getElementById('image');
+  const imageDisplay = document.getElementById('imageDisplay');
 
-    function toggleDates() {
-        // '1' est la valeur string du select pour le prêt
-        if (typeSelector.value === '1') {
-            datesSection.style.display = 'block';
-        } else {
-            datesSection.style.display = 'none';
-        }
+  function toggleDates() {
+    // '1' est la valeur string du select pour le prêt
+    if (typeSelector.value === '1') {
+      datesSection.style.display = 'block';
+    } else {
+      datesSection.style.display = 'none';
     }
+  }
 
-    typeSelector.addEventListener('change', toggleDates);
-    window.addEventListener('DOMContentLoaded', toggleDates);
+  typeSelector.addEventListener('change', toggleDates);
+  window.addEventListener('DOMContentLoaded', toggleDates);
 
-    imageSelector.addEventListener('change', function (event) {
-        if (event.target.files && event.target.files[0]) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                imageDisplay.src = e.target.result;
-                imageDisplay.style.display = 'block';
-            };
-            reader.readAsDataURL(event.target.files[0]);
-        }
-    });
+  imageSelector.addEventListener('change', function (event) {
+    if (event.target.files && event.target.files[0]) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        imageDisplay.src = e.target.result;
+        imageDisplay.style.display = 'block';
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
+  });
 </script>
 
 @include('partials/footer')

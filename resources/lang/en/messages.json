@@ -1,0 +1,86 @@
+{
+  "auth": {
+    "login_title": "Login",
+    "username": "Username",
+    "password": "Password",
+    "login_button": "Login"
+  },
+
+  "add_item": {
+    "title": "Propose a new item",
+    "image_label": "Item Image",
+    "name_label": "Item Name:",
+    "name_placeholder": "Ex: Shelf",
+    "desc_label": "Detailed Description:",
+    "desc_placeholder": "Describe condition and features.",
+    "cat_label": "Category:",
+    "cat_select": "-- Select a category --",
+    "status_label": "Status (Give or Lend):",
+    "status_select": "-- Select status --",
+    "status_give": "Give",
+    "status_lend": "Lend",
+    "loan_details": "Loan Details",
+    "from": "Available from:",
+    "until": "Until (end date):",
+    "submit": "Add Item",
+    "back": "Back to home page",
+    "categories": {
+      "sport": "Sports & Leisure",
+      "books": "Culture & Books",
+      "clothes": "Clothing",
+      "tech": "IT & Tech",
+      "home": "Home & Kitchen",
+      "toys": "Toys & Kids",
+      "appliances": "Appliances",
+      "art": "Music & Art",
+      "office": "Office & Supplies"
+    }
+  },
+  "common": {
+    "give": "To give",
+    "lend": "To lend",
+    "all": "All",
+    "all_categories": "All categories"
+  },
+
+  "home": {
+    "filter_type": "Filter by type",
+    "filter_cat": "Filter by category"
+  },
+  "edit_item": {
+    "title": "Edit Item:",
+    "image_placeholder": "Item image (leave empty to keep current)",
+    "submit": "Save changes",
+    "cancel": "Cancel"
+  },
+  "show_item": {
+    "published_by": "Published by:",
+    "available_from": "Available from",
+    "to": "to",
+    "reserve": "Reserve now",
+    "login_to_reserve": "Log in to reserve"
+  },
+  "account": {
+    "logout": "Logout",
+    "title_give": "Items to give",
+    "title_lend": "Items to lend",
+    "title_reservations": "My reservations (History)",
+    "empty_give": "You don't have any items to give yet.",
+    "empty_lend": "You don't have any items to lend yet.",
+    "empty_reservations": "You haven't reserved anything yet!",
+    "reserved_label": "(Reserved)",
+    "status_reserved": "Status: Reserved",
+    "btn_republish": "REPUBLISH",
+    "btn_edit": "EDIT",
+    "btn_delete": "DELETE",
+    "confirm_delete": "Delete this item?"
+  },
+  "footer": {
+    "rights": "All rights reserved",
+    "view_github": "View on GitHub"
+  },
+  "nav": {
+    "add": "Add",
+    "account": "Account"
+  }
+}

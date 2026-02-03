@@ -1,29 +1,29 @@
-@let(title = 'Proposer un nouvel objet')
+@let(title = t('messages.add_item.title'))
 @let(css = 'ajout.css')
 @include('partials/header')
 
 <main>
-    <h1>Proposer un nouvel objet</h1>
+    <h1>{{ t('messages.add_item.title') }}</h1>
 
     <form action="/items" method="POST" enctype="multipart/form-data">
         {{ csrfField() }}
 
-        <div >
-                @!component('components/input', {
-                    name : 'image',
-                    label : "Image de l'objet",
-                    type : 'file',
-                    attributes: { id: 'image', onchange: 'previewImage(event)' }
-                })
-        <img id="imageDisplay" src="" alt="Aperçu de l'image sélectionnée">
+        <div>
+            @!component('components/input', {
+                name : 'image',
+                label : t('messages.add_item.image_label'),
+                type : 'file',
+                attributes: { id: 'image', onchange: 'previewImage(event)' }
+            })
+            <img id="imageDisplay" src="" alt="Preview" style="display:none; max-width: 200px;">
         </div>
 
         <br>
 
         {{-- Nom de l'objet --}}
         <div class="field-group">
-            <label for="name">Nom de l'objet :</label><br>
-            <input type="text" id="name" name="name" value="{{ old('name') || '' }}" required placeholder="Ex: Étagère" />
+            <label for="name">{{ t('messages.add_item.name_label') }}</label><br>
+            <input type="text" id="name" name="name" value="{{ old('name') || '' }}" required placeholder="{{ t('messages.add_item.name_placeholder') }}" />
             @if(flashMessages.has('errors.name'))
                 <small style="color: red;">{{ flashMessages.get('errors.name') }}</small>
             @endif
@@ -33,8 +33,8 @@
 
         {{-- Description --}}
         <div class="field-group">
-            <label for="description">Description détaillée :</label><br>
-            <textarea id="description" name="description" rows="5" required placeholder="Décrivez l'état et les caractéristiques.">{{ old('description') || '' }}</textarea>
+            <label for="description">{{ t('messages.add_item.desc_label') }}</label><br>
+            <textarea id="description" name="description" rows="5" required placeholder="{{ t('messages.add_item.desc_placeholder') }}">{{ old('description') || '' }}</textarea>
             @if(flashMessages.has('errors.description'))
                 <small style="color: red;">{{ flashMessages.get('errors.description') }}</small>
             @endif
@@ -44,11 +44,11 @@
 
         {{-- Catégorie --}}
         <div class="field-group">
-            <label for="categorie">Catégorie :</label><br>
+            <label for="categorie">{{ t('messages.add_item.cat_label') }}</label><br>
             <select id="categorie" name="categorie" required>
-                <option value="">-- Sélectionner une catégorie --</option>
-                @each(cat in ['Sport & Loisirs', 'Culture & Livres', 'Vêtements', 'Informatique & Tech', 'Maison & Cuisine', 'Jouets & Enfants', 'Électroménager', 'Musique & Art', 'Bureau & Fournitures'])
-                    <option value="{{ cat }}" {{ old('categorie') == cat ? 'selected' : '' }}>{{ cat }}</option>
+                <option value="">{{ t('messages.add_item.cat_select') }}</option>
+                @each((label, key) in t('messages.add_item.categories'))
+                    <option value="{{ label }}" {{ old('categorie') == label ? 'selected' : '' }}>{{ label }}</option>
                 @endeach
             </select>
         </div>
@@ -57,11 +57,11 @@
 
         {{-- Type (Don/Prêt) --}}
         <div class="field-group">
-            <label for="type">Statut (Donner ou Prêter) :</label><br>
+            <label for="type">{{ t('messages.add_item.status_label') }}</label><br>
             <select id="type" name="type" required>
-                <option value="">-- Sélectionner le statut --</option>
-                <option value="0" {{ old('type') == '0' ? 'selected' : '' }}>Donner</option>
-                <option value="1" {{ old('type') == '1' ? 'selected' : '' }}>Prêter</option>
+                <option value="">{{ t('messages.add_item.status_select') }}</option>
+                <option value="0" {{ old('type') == '0' ? 'selected' : '' }}>{{ t('messages.add_item.status_give') }}</option>
+                <option value="1" {{ old('type') == '1' ? 'selected' : '' }}>{{ t('messages.add_item.status_lend') }}</option>
             </select>
         </div>
 
@@ -69,39 +69,33 @@
 
         {{-- Section Dates pour le prêt --}}
         <div id="dates_section" style="display: none; background: #f9fafb; padding: 20px; border-radius: 10px; border-left: 4px solid #007bff;">
-            <p style="margin-top: 0; font-weight: bold; color: #007bff;">Détails du prêt</p>
-            
+            <p style="margin-top: 0; font-weight: bold; color: #007bff;">{{ t('messages.add_item.loan_details') }}</p>
+
             <div class="field">
-                <label for="available_from">Disponible à partir de :</label><br>
+                <label for="available_from">{{ t('messages.add_item.from') }}</label><br>
                 <input type="datetime-local" id="available_from" name="available_from" value="{{ old('available_from') || '' }}">
-                @if(flashMessages.has('errors.available_from'))
-                    <br><small style="color: red;">{{ flashMessages.get('errors.available_from') }}</small>
-                @endif
             </div>
 
             <br>
 
             <div class="field">
-                <label for="available_until">Jusqu'à (date de fin) :</label><br>
+                <label for="available_until">{{ t('messages.add_item.until') }}</label><br>
                 <input type="datetime-local" id="available_until" name="available_until" value="{{ old('available_until') || '' }}">
-                @if(flashMessages.has('errors.available_until'))
-                    <br><small style="color: red;">{{ flashMessages.get('errors.available_until') }}</small>
-                @endif
             </div>
         </div>
 
         <br>
 
         <div>
-            <button type="submit" style="color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
-                Ajouter l'objet
+            <button type="submit" >
+                {{ t('messages.add_item.submit') }}
             </button>
-            <p><a href="/home">Retour à la page d'accueil</a></p>
+            <p><a href="/home">{{ t('messages.add_item.back') }}</a></p>
         </div>
     </form>
-
 </main>
 
+{{-- Ton script reste identique, il n'a pas besoin de traduction car il gère la logique --}}
 <script>
     const typeSelector = document.getElementById('type');
     const datesSection = document.getElementById('dates_section');
@@ -118,7 +112,7 @@
     }
 
     typeSelector.addEventListener('change', toggleDates);
-    
+
     // Au chargement (pour garder l'état si erreur de validation)
     window.addEventListener('DOMContentLoaded', toggleDates);
 

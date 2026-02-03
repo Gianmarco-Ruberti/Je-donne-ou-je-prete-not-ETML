@@ -1,16 +1,15 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="{{ i18n.locale }}">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="icon" type="image/x-icon" href="resources/img/logo.png">
+  <link rel="icon" type="image/x-icon" href="/resources/img/logo.png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   @vite([`resources/css/${css}`,'resources/css/app.css', 'resources/js/app.js'])
-  <title>{{title || '404'}} | Je donne, je prête</title>
+  <title>{{ title || '404' }} | {{ t('messages.test') ? 'Je donne, je prête' : 'Give or Lend' }}</title>
 </head>
-
 
 <body>
   <header>
@@ -18,13 +17,14 @@
       <img src="/resources/img/logo.png">
     </a>
     <div class="bouton">
-      <a href="/new" class="action-button">Ajouter</a>
+      <a href="/new" class="action-button">{{ t('messages.nav.add') }}</a>
       <a href="/account" class="textdeco">
         <img src="/resources/img/user.png" class="imgbutton">
       </a>
     </div>
   </header>
-<div class="bottom-action-bar">
-    <a href="/new" class="action-button">Ajouter</a>
-    <a href="/account" class="action-button">Compte</a>
-</div>
+
+  <div class="bottom-action-bar">
+    <a href="/new" class="action-button">{{ t('messages.nav.add') }}</a>
+    <a href="/account" class="action-button">{{ t('messages.nav.account') }}</a>
+  </div>

@@ -5,58 +5,58 @@
 <main>
   <form action="home" method="GET" class="filter-form">
 
-    <label for="filter_type">Filtrer par type </label>
+    <label for="filter_type">{{ t('messages.home.filter_type') }}</label>
     <select name="filter_type" id="filter_type" onchange="this.form.submit()">
-      <option value="" {{ (filterType==='' || filterType===null || filterType===undefined) ? 'selected' : '' }}>
-        Tous
+      <option value="" {{ !filterType ? 'selected' : '' }}>
+        {{ t('messages.common.all') }}
       </option>
-      <option value="0" {{ filterType==='0' ? 'selected' : '' }}>
-        À donner
+      <option value="0" {{ filterType === '0' ? 'selected' : '' }}>
+        {{ t('messages.common.give') }}
       </option>
-      <option value="1" {{ filterType==='1' ? 'selected' : '' }}>
-        À prêter
+      <option value="1" {{ filterType === '1' ? 'selected' : '' }}>
+        {{ t('messages.common.lend') }}
       </option>
     </select>
 
-    <label for="filter_categorie" >Filtrer par catégorie </label>
+    <label for="filter_categorie">{{ t('messages.home.filter_cat') }}</label>
     <select name="filter_categorie" id="filter_categorie" onchange="this.form.submit()">
-
-      <option value="" {{ (filterCategorie==='' || filterCategorie===null || filterCategorie===undefined) ? 'selected'
-        : '' }}>
-        Toutes les catégories
+      <option value="" {{ !filterCategorie ? 'selected' : '' }}>
+        {{ t('messages.common.all_categories') }}
       </option>
 
       @each(categorie in categories)
-      <option value="{{ categorie }}" {{ filterCategorie===categorie ? 'selected' : '' }}>
-        {{ categorie }}
-      </option>
+        <option value="{{ categorie }}" {{ filterCategorie === categorie ? 'selected' : '' }}>
+          {{-- Si tes catégories en BDD sont en FR, on les affiche telles quelles --}}
+          {{ categorie }}
+        </option>
       @end
     </select>
   </form>
 
   <div class="midle">
     @each(object in objects)
+      <div class="item">
+        <a href="/item/{{ object.id }}" class="flexResponse">
+          @if(object.imagePath)
+            <img src="{{ `/uploads/items/${object.imagePath}` }}" loading="lazy" alt="{{ object.name }}" class="item-image-thumbnail">
+          @end
 
-    <div class="item">
-      <a href="/item/{{ object.id }}" class="flexResponse">
-        @if(object.imagePath)
-        <img src="{{ `/uploads/items/${object.imagePath}` }}" loading="lazy" alt="Image de {{ object.name }}" class="item-image-thumbnail">
-        @else
-        @end
-        <div class="item-info">
-          <h2 class="item-name">{{ object.name }}</h2>
+          <div class="item-info">
+            <h2 class="item-name">{{ object.name }}</h2>
 
-          <p class="item-status">
-            @if(!object.type)
-            À donner
-            @else
-            À prêter
-            @end
-            | {{object.categorie}}
-          </p>
-        </div>
-      </a>
-    </div>
+            <p class="item-status">
+              @if(!object.type)
+                {{ t('messages.common.give') }}
+              @else
+                {{ t('messages.common.lend') }}
+              @end
+              | {{ object.categorie }}
+            </p>
+          </div>
+        </a>
+      </div>
+    @else
+      <p>Aucun objet trouvé.</p>
     @end
   </div>
 </main>

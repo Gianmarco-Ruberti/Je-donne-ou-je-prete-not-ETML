@@ -1,6 +1,7 @@
 <footer class="footer-projet">
-    <div class="footer-content container"> <div class="footer-left">
-            <p>&copy; 2025 - Projet ETML - Tous droits réservés</p>
+    <div class="footer-content container">
+        <div class="footer-left">
+            <p>&copy; {{ new Date().getFullYear() }} - Projet ETML - {{ t('messages.footer.rights') }}</p>
         </div>
 
         <div class="footer-right">
@@ -8,7 +9,7 @@
                 <img src="https://img.shields.io/github/last-commit/BlackAngelTVdev/Je-donne-ou-je-prete?style=for-the-badge&color=blue" alt="Last Commit">
             </div>
             <a href="https://github.com/BlackAngelTVdev/Je-donne-ou-je-prete" target="_blank" class="github-link">
-                <i class="fab fa-github"></i> Voir sur GitHub
+                <i class="fab fa-github"></i> {{ t('messages.footer.view_github') }}
             </a>
         </div>
     </div>

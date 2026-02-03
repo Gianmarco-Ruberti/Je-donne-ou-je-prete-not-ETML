@@ -1,0 +1,85 @@
+{
+  "test": "Le moteur de trad marche !",
+  "auth": {
+    "login_title": "Connexion",
+    "username": "Nom d'utilisateur",
+    "password": "Mot de passe",
+    "login_button": "Se connecter"
+  },
+  "add_item": {
+    "title": "Proposer un nouvel objet",
+    "image_label": "Image de l'objet",
+    "name_label": "Nom de l'objet :",
+    "name_placeholder": "Ex: Étagère",
+    "desc_label": "Description détaillée :",
+    "desc_placeholder": "Décrivez l'état et les caractéristiques.",
+    "cat_label": "Catégorie :",
+    "cat_select": "-- Sélectionner une catégorie --",
+    "status_label": "Statut (Donner ou Prêter) :",
+    "status_select": "-- Sélectionner le statut --",
+    "status_give": "Donner",
+    "status_lend": "Prêter",
+    "loan_details": "Détails du prêt",
+    "from": "Disponible à partir de :",
+    "until": "Jusqu'à (date de fin) :",
+    "submit": "Ajouter l'objet",
+    "back": "Retour à la page d'accueil",
+    "categories": {
+      "sport": "Sport & Loisirs",
+      "books": "Culture & Livres",
+      "clothes": "Vêtements",
+      "tech": "Informatique & Tech",
+      "home": "Maison & Cuisine",
+      "toys": "Jouets & Enfants",
+      "appliances": "Électroménager",
+      "art": "Musique & Art",
+      "office": "Bureau & Fournitures"
+    }
+  },
+  "common": {
+    "give": "À donner",
+    "lend": "À prêter",
+    "all": "Tous",
+    "all_categories": "Toutes les catégories"
+  },
+  "home": {
+    "filter_type": "Filtrer par type",
+    "filter_cat": "Filtrer par catégorie"
+  },
+  "edit_item": {
+    "title": "Éditer l'objet :",
+    "image_placeholder": "Image de l'objet (laisser vide pour garder l'ancienne)",
+    "submit": "Sauvegarder les modifications",
+    "cancel": "Annuler"
+  },
+  "show_item": {
+    "published_by": "Publié par :",
+    "available_from": "Disponible du",
+    "to": "au",
+    "reserve": "Je réserve",
+    "login_to_reserve": "Connectez-vous pour réserver"
+  },
+  "account": {
+    "logout": "Se déconnecter",
+    "title_give": "Objets à donner",
+    "title_lend": "Objets à prêter",
+    "title_reservations": "Mes réservations (Historique)",
+    "empty_give": "Vous n'avez pas encore d'objets à donner.",
+    "empty_lend": "Vous n'avez pas encore d'objets à prêter.",
+    "empty_reservations": "Tu n'as encore rien réservé de beau !",
+    "reserved_label": "(Réservé)",
+    "status_reserved": "Statut : Réservé",
+    "btn_republish": "REPUBLIER",
+    "btn_edit": "MODIFIER",
+    "btn_delete": "SUPPRIMER",
+    "confirm_delete": "Supprimer ?"
+  },
+  "footer": {
+    "rights": "Tous droits réservés",
+    "view_github": "Voir sur GitHub"
+  },
+  "nav": {
+    "add": "Ajouter",
+    "account": "Compte"
+  }
+}

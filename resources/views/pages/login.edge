@@ -4,17 +4,32 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   @vite([`resources/css/login.css`,'resources/css/app.css', 'resources/js/app.js'])
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <title>Je donne, je prête</title>
+  <title>{{ t('messages.auth.login_title') }} | Je donne, je prête</title>
 </head>
 
 <body>
   <main>
     <form action="/login" method="post">
       <img src="resources/img/logo.png">
-      {{csrfField()}}
-      @!component('components/input', { name : 'Username', label : 'Username', type : 'text'})
-      @!component('components/input', { name : 'password', label : 'Password', type : 'password' })
-      <button class="btn btn-outline-info mt-2" type="submit">Login</button>
+      {{ csrfField() }}
+
+      {{-- Pour les composants, on passe la traduction dans l'objet --}}
+      @!component('components/input', {
+        name: 'Username',
+        label: t('messages.auth.username'),
+        type: 'text'
+      })
+
+      @!component('components/input', {
+        name: 'password',
+        label: t('messages.auth.password'),
+        type: 'password'
+      })
+
+      <button class="btn btn-outline-info mt-2" type="submit">
+        {{ t('messages.auth.login_button') }}
+      </button>
     </form>
   </main>
   @include('partials/footer')
+</body>

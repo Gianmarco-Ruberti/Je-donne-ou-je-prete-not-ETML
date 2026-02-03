@@ -1,9 +1,9 @@
-@let(title = 'Éditer l\'Objet')
+@let(title = t('messages.edit_item.title'))
 @let(css = 'edit.css')
 @include('partials/header')
 
 <main>
-    <h1>Éditer l'Objet : {{ object.name }}</h1>
+    <h1>{{ t('messages.edit_item.title') }} {{ object.name }}</h1>
 
     <form action="{{ route('donation_objects.update', { id: object.id }) }}" method="POST" enctype="multipart/form-data">
         {{ csrfField() }}
@@ -11,12 +11,12 @@
 
         {{-- Section Image --}}
         <div>
-                @!component('components/input', {
-                    name : 'image',
-                    label : "Image de l'objet (laisser vide pour garder l'ancienne)",
-                    type : 'file',
-                    attributes: { id: 'image' }
-                })
+            @!component('components/input', {
+                name : 'image',
+                label : t('messages.edit_item.image_placeholder'),
+                type : 'file',
+                attributes: { id: 'image' }
+            })
             @if(object.imagePath)
                 <img id="imageDisplay" src="/uploads/items/{{ object.imagePath }}" alt="Aperçu" style="max-width: 200px; margin-top: 10px; border-radius: 8px;">
             @else
@@ -28,7 +28,7 @@
 
         {{-- Nom --}}
         <div>
-            <label for="name">Nom de l'objet:</label><br>
+            <label for="name">{{ t('messages.add_item.name_label') }}</label><br>
             <input id="name" type="text" name="name" value="{{ old('name') || object.name }}" required>
             @if(flashMessages.has('errors.name'))
                 <p style="color: red;">{{ flashMessages.get('errors.name') }}</p>
@@ -39,7 +39,7 @@
 
         {{-- Description --}}
         <div>
-            <label for="description">Description détaillée:</label><br>
+            <label for="description">{{ t('messages.add_item.desc_label') }}</label><br>
             <textarea id="description" name="description" rows="5" required>{{ old('description') || object.description }}</textarea>
             @if(flashMessages.has('errors.description'))
                 <p style="color: red;">{{ flashMessages.get('errors.description') }}</p>
@@ -50,11 +50,13 @@
 
         {{-- Catégorie --}}
         <div>
-            <label for="categorie">Catégorie:</label><br>
+            <label for="categorie">{{ t('messages.add_item.cat_label') }}</label><br>
             <select id="categorie" name="categorie" required>
-                @each(cat in ['Sport & Loisirs', 'Culture & Livres', 'Vêtements', 'Informatique & Tech', 'Maison & Cuisine', 'Jouets & Enfants', 'Électroménager', 'Musique & Art', 'Bureau & Fournitures'])
-                    <option value="{{ cat }}" {{ (old('categorie') || object.categorie) === cat ? 'selected' : '' }}>{{ cat }}</option>
-                @endeach
+                @each((label, key) in t('messages.add_item.categories'))
+                    <option value="{{ label }}" {{ (old('categorie') || object.categorie) === label ? 'selected' : '' }}>
+                        {{ label }}
+                    </option>
+                @end
             </select>
         </div>
 
@@ -62,11 +64,14 @@
 
         {{-- Type (Don/Prêt) --}}
         <div>
-            <label for="type">Statut (Donner ou Prêter) :</label><br>
+            <label for="type">{{ t('messages.add_item.status_label') }}</label><br>
             <select id="type" name="type" required>
-                {{-- On compare à 0/1 pour le formulaire, mais object.type est souvent un boolean --}}
-                <option value="0" {{ (old('type') == '0' || object.type == false) ? 'selected' : '' }}>Donner</option>
-                <option value="1" {{ (old('type') == '1' || object.type == true) ? 'selected' : '' }}>Prêter</option>
+                <option value="0" {{ (old('type') == '0' || object.type == false) ? 'selected' : '' }}>
+                    {{ t('messages.add_item.status_give') }}
+                </option>
+                <option value="1" {{ (old('type') == '1' || object.type == true) ? 'selected' : '' }}>
+                    {{ t('messages.add_item.status_lend') }}
+                </option>
             </select>
         </div>
 
@@ -74,20 +79,19 @@
 
         {{-- Section Dates --}}
         <div id="dates_section" style="display: none; background: #f9fafb; padding: 20px; border-radius: 10px; border-left: 4px solid #007bff;">
-            <p style="margin-top: 0; font-weight: bold; color: #007bff;">Détails du prêt</p>
-            
+            <p style="margin-top: 0; font-weight: bold; color: #007bff;">{{ t('messages.add_item.loan_details') }}</p>
+
             <div>
-                <label for="available_from">Disponible à partir de :</label><br>
-                {{-- Formatage de la date Luxon pour l'input HTML --}}
-                <input type="datetime-local" id="available_from" name="available_from" 
+                <label for="available_from">{{ t('messages.add_item.from') }}</label><br>
+                <input type="datetime-local" id="available_from" name="available_from"
                     value="{{ old('available_from') || (object.availableFrom ? object.availableFrom.toFormat('yyyy-MM-dd\'T\'HH:mm') : '') }}">
             </div>
 
             <br>
 
             <div>
-                <label for="available_until">Jusqu'à (date de fin) :</label><br>
-                <input type="datetime-local" id="available_until" name="available_until" 
+                <label for="available_until">{{ t('messages.add_item.until') }}</label><br>
+                <input type="datetime-local" id="available_until" name="available_until"
                     value="{{ old('available_until') || (object.availableUntil ? object.availableUntil.toFormat('yyyy-MM-dd\'T\'HH:mm') : '') }}">
             </div>
         </div>
@@ -95,8 +99,8 @@
         <br>
 
         <div>
-            <button type="submit">Sauvegarder les modifications</button>
-            <a href="{{ route('donation_objects.show', { id: object.id }) }}">Annuler</a>
+            <button type="submit">{{ t('messages.edit_item.submit') }}</button>
+            <a href="{{ route('donation_objects.show', { id: object.id }) }}">{{ t('messages.edit_item.cancel') }}</a>
         </div>
     </form>
 </main>

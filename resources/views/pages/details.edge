@@ -1,4 +1,4 @@
-@let(title = 'Détails de l\'objet')
+@let(title = t('messages.show_item.reserve'))
 @let(css = 'details.css')
 @include('partials/header')
 
@@ -10,41 +10,42 @@
   <div class="droit">
     {{-- Informations de l'objet --}}
     <h1>{{ object.name }}</h1>
-    
+
     <h2 class="item-status">
       @if(!object.type)
-        À donner
+        {{ t('messages.common.give') }}
       @else
-        À prêter
+        {{ t('messages.common.lend') }}
       @end
       | {{ object.categorie }}
     </h2>
 
-    <h3>Publié par : {{ object.user.Username }}</h3>
+    <h3>{{ t('messages.show_item.published_by') }} {{ object.user.Username }}</h3>
+
     <h3 class="item-date">
-      @if(!object.type)
-      @else
-        Disponible du 
-        <strong>{{ object.availableFrom.toFormat('dd LLL yyyy') }}</strong> 
-        au 
+      @if(object.type)
+        {{ t('messages.show_item.available_from') }}
+        <strong>{{ object.availableFrom.toFormat('dd LLL yyyy') }}</strong>
+        {{ t('messages.show_item.to') }}
         <strong>{{ object.availableUntil.toFormat('dd LLL yyyy') }}</strong>
       @end
     </h3>
+
     <p class="description">
       {{ object.description }}
     </p>
 
     {{-- Logique de réservation --}}
-
-      @if(auth.isAuthenticated)
-        {{-- Formulaire réel pour traiter la réservation en base de données --}}
-        <form action="{{ route('donation_objects.reserve', { id: object.id }) }}" method="POST">
-          {{ csrfField() }}
-          <button type="submit" class="reservButton">Je réserve</button>
-        </form>
-      @else
-        <a href="{{ route('auth.login.show') }}" class="reservButton">Connectez-vous pour réserver</a>
-      @end
+    @if(auth.isAuthenticated)
+      <form action="{{ route('donation_objects.reserve', { id: object.id }) }}" method="POST">
+        {{ csrfField() }}
+        <button type="submit" class="reservButton">{{ t('messages.show_item.reserve') }}</button>
+      </form>
+    @else
+      <a href="{{ route('auth.login.show') }}" class="reservButton">
+        {{ t('messages.show_item.login_to_reserve') }}
+      </a>
+    @end
 
   </div>
 </main>

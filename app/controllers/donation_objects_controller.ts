@@ -143,15 +143,6 @@ export default class DonationObjectsController {
       const fileName = `${cuid()}.webp`
       const uploadPath = app.makePath('public/uploads/items', fileName)
 
-      // Supprimer l'ancienne image physiquement du disque
-      if (object.imagePath) {
-        try {
-          await fs.unlink(app.makePath('public/uploads/items', object.imagePath))
-        } catch (e) {
-          // On ignore si le fichier n'existait pas déjà
-        }
-      }
-
       // Compression de la nouvelle image
       if (payload.image.tmpPath) {
         await sharp(payload.image.tmpPath)

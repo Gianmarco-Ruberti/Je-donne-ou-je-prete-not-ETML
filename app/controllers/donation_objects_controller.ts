@@ -180,7 +180,7 @@ export default class DonationObjectsController {
       try {
         await fs.unlink(app.makePath('public/uploads/items', object.imagePath))
       } catch (e) {
-        // Erreur ignorée
+
       }
     }
 
@@ -190,16 +190,20 @@ export default class DonationObjectsController {
 
   async reserve({ params, auth, response, session }: HttpContext) {
     try {
-      // 1. On récupère l'objet
+      const user = auth.user! // On récupère l'user connecté
       const item = await DonationObject.query().where('id', params.id).preload('user').firstOrFail()
 
-      // 2. Sécurité : On vérifie s'il n'est pas déjà réservé (status 2)
       if (item.status === 2) {
-        session.flash('error', 'Cet objet est déjà en cours de réservation.')
+        session.flash('error', 'Cet objet est déjà réservé.')
         return response.redirect().back()
       }
 
-      // 3. Envoi du mail (ton code actuel)
+
+      item.status = 2
+      item.reservedBy = user.id
+      await item.save()
+      // -----------------------------
+
       await mail.send((message) => {
         message
           .to(`${item.user.email}`)
@@ -207,16 +211,11 @@ export default class DonationObjectsController {
           .subject(`Demande de réservation : ${item.name}`)
           .htmlView('emails/reservation', {
             item: item,
-            requester: auth.user,
+            requester: user,
           })
       })
 
-      // 4. MAJ du status à 2 et sauvegarde en DB
-      item.status = 2
-      await item.save()
-
-      console.log('Email envoyé et status mis à jour à 2.')
-      session.flash('success', "Demande envoyée ! L'objet est maintenant réservé.")
+      session.flash('success', "Demande envoyée ! Retrouve-la dans ton historique.")
     } catch (error) {
       console.error(error)
       session.flash('error', "L'action a échoué.")
@@ -226,16 +225,16 @@ export default class DonationObjectsController {
   }
 
 
-  async republish({ params, auth, response, session }: HttpContext) {
+ async republish({ params, auth, response, session }: HttpContext) {
   const user = auth.user!
-  
-  // On récupère l'objet en vérifiant qu'il appartient bien au user
+
   const object = await DonationObject.query()
     .where('id', params.id)
     .where('userId', user.id)
     .firstOrFail()
 
-  object.status = 1 // On repasse en "Disponible"
+  object.status = 1
+  object.reservedBy = null
   await object.save()
 
   session.flash('success', 'L\'objet est de nouveau disponible !')

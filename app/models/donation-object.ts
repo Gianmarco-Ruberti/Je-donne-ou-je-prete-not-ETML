@@ -35,6 +35,11 @@ export default class DonationObject extends BaseModel {
   @column.dateTime()
   declare availableUntil: DateTime | null
 
+  @column()
+  declare reservedBy: number | null
+
+  @belongsTo(() => User, { foreignKey: 'reservedBy' })
+  declare reserver: BelongsTo<typeof User>
 
   @belongsTo(() => User)
   declare user: BelongsTo<typeof User>

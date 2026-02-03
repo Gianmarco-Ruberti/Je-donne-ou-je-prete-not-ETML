@@ -11,14 +11,12 @@
 
         {{-- Section Image --}}
         <div>
-            <div>
                 @!component('components/input', {
                     name : 'image',
                     label : "Image de l'objet (laisser vide pour garder l'ancienne)",
                     type : 'file',
                     attributes: { id: 'image' }
                 })
-            </div>
             @if(object.imagePath)
                 <img id="imageDisplay" src="/uploads/items/{{ object.imagePath }}" alt="Aperçu" style="max-width: 200px; margin-top: 10px; border-radius: 8px;">
             @else

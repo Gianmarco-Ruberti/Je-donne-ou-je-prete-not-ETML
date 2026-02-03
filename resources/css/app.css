@@ -87,6 +87,14 @@ main {
     transition: background-color 0.2s;
 }
 
+    .bouton{
+        display: grid;
+        place-items: center;
+        grid-template-columns: 1fr 1fr;
+        text-align: center;
+        font-size: 150%;
+    }
+
  .action-button:hover {
     background-color: var(--colorButton);
 
@@ -183,9 +191,6 @@ main {
         display: flex;
         justify-content: space-around; 
     }
-    .bouton{
-        display: none;
-    }
     .bottom-action-bar .action-button {
         flex-grow: 1; 
         text-align: center;
@@ -194,6 +199,7 @@ main {
 
     header {
         padding: 15px 15px;
+        display: block;
     }
     
     .logo{

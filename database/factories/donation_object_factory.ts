@@ -15,6 +15,7 @@ export const DonationObjectFactory = factory
     ]
     return {
       name: faker.commerce.productName(),
+      user_id : 1,
       description: faker.commerce.productDescription(),
       // 'type' est un boolean dans ton modèle
       type: faker.datatype.boolean(),

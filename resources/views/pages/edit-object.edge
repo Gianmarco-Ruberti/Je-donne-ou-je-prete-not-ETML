@@ -55,13 +55,27 @@
     <div>
       <label for="categorie">{{ t('messages.add_item.cat_label') }}</label><br>
       <select id="categorie" name="categorie" required>
-        {{-- On définit la liste des clés pour forcer l'ordre et la détection --}}
-        @let(keys = ['sport', 'books', 'clothes', 'tech', 'home', 'toys', 'appliances', 'art', 'office'])
+        {{-- 1. On mappe les clés JSON vers les noms exacts de ta BDD --}}
+        @let(dbNames = {
+        'sport': 'Sport & Loisirs',
+        'books': 'Culture & Livres',
+        'clothes': 'Vêtements',
+        'tech': 'Informatique & Tech',
+        'home': 'Maison & Cuisine',
+        'toys': 'Jouets & Enfants',
+        'appliances': 'Électroménager',
+        'art': 'Musique & Art',
+        'office': 'Bureau & Fournitures'
+        })
 
-        @each(key in keys)
-        @let(translation = t(`messages.add_item.categories.${key}`))
-        <option value="{{ translation }}" {{ (old('categorie') || object.categorie)===translation ? 'selected' : '' }}>
-          {{ translation }}
+        {{-- 2. On boucle sur les clés pour générer les options --}}
+        @each(key in ['sport', 'books', 'clothes', 'tech', 'home', 'toys', 'appliances', 'art', 'office'])
+        @let(databaseValue = dbNames[key])
+        @let(label = t(`messages.add_item.categories.${key}`))
+
+        <option value="{{ databaseValue }}" {{ (old('categorie') || object.categorie)===databaseValue ? 'selected' : ''
+          }}>
+          {{ label }}
         </option>
         @end
       </select>

@@ -52,10 +52,25 @@
           {{ t('messages.add_item.cat_select') }}
         </option>
 
-        {{-- On définit les clés manuellement pour être sûr que ça boucle --}}
+        {{-- 1. On définit le dictionnaire qui lie tes clés JSON aux noms de ta BDD --}}
+        @let(dbNames = {
+        'sport': 'Sport & Loisirs',
+        'books': 'Culture & Livres',
+        'clothes': 'Vêtements',
+        'tech': 'Informatique & Tech',
+        'home': 'Maison & Cuisine',
+        'toys': 'Jouets & Enfants',
+        'appliances': 'Électroménager',
+        'art': 'Musique & Art',
+        'office': 'Bureau & Fournitures'
+        })
+
+        {{-- 2. On boucle sur les clés --}}
         @each(key in ['sport', 'books', 'clothes', 'tech', 'home', 'toys', 'appliances', 'art', 'office'])
-        <option value="{{ key }}" {{ old('categorie')===key ? 'selected' : '' }}>
-          {{-- On appelle la traduction précise pour cette clé --}}
+        @let(databaseValue = dbNames[key])
+
+        <option value="{{ databaseValue }}" {{ (old('categorie')===databaseValue) ? 'selected' : '' }}>
+          {{-- Affiche la traduction du JSON (Français si i18n est sur 'fr') --}}
           {{ t(`messages.add_item.categories.${key}`) }}
         </option>
         @end

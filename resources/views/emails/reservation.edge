@@ -1,14 +1,20 @@
+<<<<<<< HEAD
 <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; border: 1px solid #e1e1e1; border-radius: 8px; overflow: hidden;">
   <div style="background-color: #007bff; color: white; padding: 20px; text-align: center;">
+=======
+
+<div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; border: 1px solid #edeec9; border-radius: 8px; overflow: hidden;">
+  <div style="background-color: #dde7c7; color: black; padding: 20px; text-align: center;">
+>>>>>>> cfb81fd7632d37f0173e26d042a63b73103ed50b
     <h1 style="margin: 0; font-size: 24px;">Nouvelle demande !</h1>
   </div>
   
-  <div style="padding: 20px; line-height: 1.6;">
+  <div style="padding: 20px; line-height: 1.6; background-color: #edeec9">
     <p>Bonjour <strong>{{ item.user.Username }}</strong>,</p>
     
     <p>Bonne nouvelle ! Un utilisateur est intéressé par votre <strong>{{ item.name }}</strong>.</p>
     
-    <div style="background-color: #f9fafb; border-radius: 8px; padding: 15px; margin: 20px 0; border-left: 4px solid #007bff;">
+    <div style="background-color: #bfd8bd; border-radius: 8px; padding: 15px; margin: 20px 0; border-left: 4px solid #dde7c7;">
       <p style="margin: 0;"><strong>Demandeur :</strong> {{ requester.Username }}</p>
       <p style="margin: 5px 0 0 0;"><strong>Email :</strong> {{ requester.email }}</p>
     </div>
@@ -16,11 +22,11 @@
     <p>Vous pouvez contacter cette personne directement en répondant à cet email.</p>
     
     <div style="text-align: center; margin-top: 30px;">
-      <a href="mailto:{{ requester.email }}" style="background-color: #00aa41; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold;">Répondre au demandeur</a>
+      <a href="mailto:{{ requester.email }}" style="background-color: #98c9a3; color: edeec9; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold;">Répondre au demandeur</a>
     </div>
   </div>
 
-  <div style="background-color: #f3f4f6; color: #6b7280; padding: 15px; text-align: center; font-size: 12px;">
+  <div style="background-color: #dde7c7; color: #6b7280; padding: 15px; text-align: center; font-size: 12px;">
     <p style="margin: 0;">Ceci est un message automatique merci de ne pas y envoyer un email</p>
   </div>
 </div>

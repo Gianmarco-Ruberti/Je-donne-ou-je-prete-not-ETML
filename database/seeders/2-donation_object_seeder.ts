@@ -68,7 +68,7 @@ export default class extends BaseSeeder {
         availableUntil: DateTime.now().plus({ days: 7 }),
       },
       {
-        name: 'Tapis de yoga',
+        name: 'Tapis de Yoda',
         description: 'Neuf, couleur verte, épaisseur 5mm',
         type: true,
         status: 1,

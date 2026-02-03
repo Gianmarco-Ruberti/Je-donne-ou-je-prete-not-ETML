@@ -6,12 +6,12 @@ export const DonationObjectFactory = factory
   .define(DonationObject, async ({ faker }) => {
     const availableImages = [
       'jf6ae3md1vx5rpeb7wuctf8s.webp',
-      'jtzr9kb8vf98szbiohc8wma5.webp',
-      'l0omffpcb7howtrp6b3htyzi.webp',
-      'nrcvmnldl7922uq9yhwj3mqp.webp',
-      'r7cced5ai4kvjqirf8g5r4bw.webp',
-      'wfabt9ybrsro9pdzja3ns2br.webp',
-      'x822ydtkt4avju6s6mx1go1v.webp'
+      'gfr4xhhw37hflfjt5fi35tm9.webp',
+      'x822ydtkt4avju6s6mx1go1v.webp',
+      'qrchvdqd4c47wkjoadwsm8o9.webp',
+      't4n41e8b0sbcerfn7rxgwz4y.webp',
+      'xe2pa2n1c1wktcdcp7sq95hh.webp',
+      'j89qhtguaz4dl04o2u523bhy.webp',
     ]
     return {
       name: faker.commerce.productName(),

@@ -13,7 +13,7 @@ export default class extends BaseSeeder {
         status: 1,
         categorie: 'Sport & Loisirs',
         user_id: 1,
-        imagePath: 'l0omffpcb7howtrp6b3htyzi.webp',
+        imagePath: 't4n41e8b0sbcerfn7rxgwz4y.webp',
         availableFrom: DateTime.now(),
         availableUntil: DateTime.now().plus({ days: 7 }),
       },
@@ -24,7 +24,7 @@ export default class extends BaseSeeder {
         status: 1,
         categorie: 'Sport & Loisirs',
         user_id: 1,
-        imagePath: 'l0omffpcb7howtrp6b3htyzi.webp',
+        imagePath: 't4n41e8b0sbcerfn7rxgwz4y.webp',
       },
       {
         name: 'Livre - Le Seigneur des Anneaux',
@@ -33,7 +33,7 @@ export default class extends BaseSeeder {
         status: 1,
         categorie: 'Culture & Livres',
         user_id: 1,
-        imagePath: 'l0omffpcb7howtrp6b3htyzi.webp',
+        imagePath: 't4n41e8b0sbcerfn7rxgwz4y.webp',
         availableFrom: DateTime.now(),
         availableUntil: DateTime.now().plus({ days: 7 }),
       },
@@ -44,7 +44,7 @@ export default class extends BaseSeeder {
         status: 1,
         categorie: 'Vêtements',
         user_id: 1,
-        imagePath: 'l0omffpcb7howtrp6b3htyzi.webp',
+        imagePath: 't4n41e8b0sbcerfn7rxgwz4y.webp',
         availableFrom: DateTime.now(),
         availableUntil: DateTime.now().plus({ days: 7 }),
       },
@@ -55,7 +55,7 @@ export default class extends BaseSeeder {
         status: 2,
         categorie: 'Informatique & Tech',
         user_id: 1,
-        imagePath: 'l0omffpcb7howtrp6b3htyzi.webp',
+        imagePath: 't4n41e8b0sbcerfn7rxgwz4y.webp',
       },
       {
         name: 'Assiettes en porcelaine',
@@ -64,7 +64,7 @@ export default class extends BaseSeeder {
         status: 1,
         categorie: 'Maison & Cuisine',
         user_id: 1,
-        imagePath: 'l0omffpcb7howtrp6b3htyzi.webp',
+        imagePath: 't4n41e8b0sbcerfn7rxgwz4y.webp',
         availableFrom: DateTime.now(),
         availableUntil: DateTime.now().plus({ days: 7 }),
       },
@@ -75,7 +75,7 @@ export default class extends BaseSeeder {
         status: 1,
         categorie: 'Sport & Loisirs',
         user_id: 1,
-        imagePath: 'l0omffpcb7howtrp6b3htyzi.webp',
+        imagePath: 't4n41e8b0sbcerfn7rxgwz4y.webp',
         availableFrom: DateTime.now(),
         availableUntil: DateTime.now().plus({ days: 7 }),
       },
@@ -86,7 +86,7 @@ export default class extends BaseSeeder {
         status: 3,
         categorie: 'Informatique & Tech',
         user_id: 1,
-        imagePath: 'l0omffpcb7howtrp6b3htyzi.webp',
+        imagePath: 't4n41e8b0sbcerfn7rxgwz4y.webp',
       },
       {
         name: 'Jeu de construction pour enfants',
@@ -95,7 +95,7 @@ export default class extends BaseSeeder {
         status: 1,
         categorie: 'Jouets & Enfants',
         user_id: 1,
-        imagePath: 'l0omffpcb7howtrp6b3htyzi.webp',
+        imagePath: 't4n41e8b0sbcerfn7rxgwz4y.webp',
         availableFrom: DateTime.now(),
         availableUntil: DateTime.now().plus({ days: 7 }),
       },
@@ -106,7 +106,7 @@ export default class extends BaseSeeder {
         status: 1,
         categorie: 'Vêtements',
         user_id: 1,
-        imagePath: 'l0omffpcb7howtrp6b3htyzi.webp',
+        imagePath: 't4n41e8b0sbcerfn7rxgwz4y.webp',
         availableFrom: DateTime.now(),
         availableUntil: DateTime.now().plus({ days: 7 }),
       },
@@ -117,7 +117,7 @@ export default class extends BaseSeeder {
         status: 1,
         categorie: 'Électroménager',
         user_id: 1,
-        imagePath: 'l0omffpcb7howtrp6b3htyzi.webp',
+        imagePath: 't4n41e8b0sbcerfn7rxgwz4y.webp',
       },
       {
         name: 'Guitare acoustique',
@@ -126,7 +126,7 @@ export default class extends BaseSeeder {
         status: 2,
         categorie: 'Musique & Art',
         user_id: 1,
-        imagePath: 'l0omffpcb7howtrp6b3htyzi.webp',
+        imagePath: 't4n41e8b0sbcerfn7rxgwz4y.webp',
         availableFrom: DateTime.now(),
         availableUntil: DateTime.now().plus({ days: 7 }),
       },
@@ -137,7 +137,7 @@ export default class extends BaseSeeder {
         status: 1,
         categorie: 'Bureau & Fournitures',
         user_id: 1,
-        imagePath: 'l0omffpcb7howtrp6b3htyzi.webp',
+        imagePath: 't4n41e8b0sbcerfn7rxgwz4y.webp',
         availableFrom: DateTime.now(),
         availableUntil: DateTime.now().plus({ days: 7 }),
       },
@@ -148,7 +148,7 @@ export default class extends BaseSeeder {
         status: 1,
         categorie: 'Informatique & Tech',
         user_id: 1,
-        imagePath: 'l0omffpcb7howtrp6b3htyzi.webp',
+        imagePath: 't4n41e8b0sbcerfn7rxgwz4y.webp',
       },
       {
         name: 'AMD EPYC 9965',
@@ -157,13 +157,13 @@ export default class extends BaseSeeder {
         status: 1,
         categorie: 'Informatique & Tech',
         user_id: 1,
-        imagePath: 'l0omffpcb7howtrp6b3htyzi.webp',
+        imagePath: 't4n41e8b0sbcerfn7rxgwz4y.webp',
         availableFrom: DateTime.now(),
         availableUntil: DateTime.now().plus({ days: 7 }),
       },
     ]
-    await DonationObjectFactory.createMany(500)
-    
+    await DonationObjectFactory.createMany(10000)
+
     await DonationObject.createMany(objects)
   }
 }

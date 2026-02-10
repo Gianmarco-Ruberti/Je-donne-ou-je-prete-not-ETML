@@ -120,28 +120,6 @@ p a:hover {
     border-radius: 8px; /* Ajout d'un petit border-radius pour l'image */
 }
 
-.errors{
-    color: rgb(0, 26, 255);
-}
-
-.CACHER{
-    display: none;
-}
-
-#dates_section{
-    display: none; 
-    background: #f9fafb; 
-    padding: 20px; 
-    border-radius: 10px; 
-    border-left: 4px solid #007bff;
-}
-
-#dates_section p{
-    margin-top: 0; 
-    font-weight: bold; 
-    color: #007bff;
-}
-
 /* RESPONSIVE MOBILE (max-width: 650px) */
 @media (max-width: 650px) {
     h1 {

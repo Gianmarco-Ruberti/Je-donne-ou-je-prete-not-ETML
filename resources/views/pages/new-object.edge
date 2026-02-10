@@ -28,7 +28,7 @@
         type : 'file',
         attributes: { id: 'image', onchange: 'previewImage(event)' }
       })
-      <img id="imageDisplay" src="" alt="Preview" style="display:none; max-width: 200px; margin-top: 10px;">
+      <img class="CACHER" id="imageDisplay" src="" alt="Preview">
     </div>
 
     <br>
@@ -39,7 +39,7 @@
       <input type="text" id="name" name="name" value="{{ old('name') || '' }}" required
         placeholder="{{ t('messages.add_item.name_placeholder') }}" />
       @if(flashMessages.has('errors.name'))
-        <small style="color: red;">{{ flashMessages.get('errors.name') }}</small>
+        <small class="errors">{{ flashMessages.get('errors.name') }}</small>
       @endif
     </div>
 
@@ -51,7 +51,7 @@
       <textarea id="description" name="description" rows="5" required
         placeholder="{{ t('messages.add_item.desc_placeholder') }}">{{ old('description') || '' }}</textarea>
       @if(flashMessages.has('errors.description'))
-        <small style="color: red;">{{ flashMessages.get('errors.description') }}</small>
+        <small class="errors">{{ flashMessages.get('errors.description') }}</small>
       @endif
     </div>
 
@@ -89,7 +89,7 @@
     <br>
 
     {{-- Section Dates pour le prêt --}}
-    <div id="dates_section" style="display: none;">
+    <div id="dates_section">
       <p>{{ t('messages.add_item.loan_details') }}</p>
       <div class="field">
         <label for="available_from">{{ t('messages.add_item.from') }}</label><br>

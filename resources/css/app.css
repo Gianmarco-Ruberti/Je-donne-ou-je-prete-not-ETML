@@ -170,6 +170,27 @@ main {
     box-shadow: 0 5px 15px rgba(62, 91, 255, 0.3);
 }
 
+.CACHER{
+    display: none;
+}
+
+.errors{
+    color: rgb(0, 26, 255);
+}
+
+#dates_section{
+    display: none; 
+    background: #f9fafb; 
+    padding: 20px; 
+    border-radius: 10px; 
+    border-left: 4px solid #007bff;
+}
+
+#dates_section p{
+    margin-top: 0; 
+    font-weight: bold; 
+    color: #007bff;
+}
 
 /* ------------------------------
     RESPONSIVE POUR LA BARRE D'ACTION

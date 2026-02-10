@@ -54,7 +54,7 @@ select:focus {
 }
 
 ::placeholder {
-    color: var(--colorlink);
+    color: black;
 }
 
 button {

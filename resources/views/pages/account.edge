@@ -10,9 +10,11 @@
             <div class="user-photo"></div>
 
             <br>
-            <a href="/logout">{{ t('messages.account.logout') }}</a>
+            <a href="{{ route('logout') }}">{{ t('messages.account.logout') }}</a>
         </div>
+
         <div>
+            {{-- SECTION DONS --}}
             <div class="section">
                 <h2>{{ t('messages.account.title_give') }}</h2>
                 <div class="items">
@@ -20,9 +22,8 @@
 
                     @each(object in donations)
                     <div class="item-wrapper">
-                        <a class="item" href="/item/{{object.id}}">
-                            <img src="{{ `/uploads/items/${object.imagePath}` }}" loading="lazy"
-                                alt="{{ object.name }}">
+                        <a class="item" href="{{ route('donation_objects.show', { id: object.id }) }}">
+                            <img src="{{ `/uploads/items/${object.imagePath}` }}" loading="lazy" alt="{{ object.name }}">
                             <p class="item-name">
                                 {{ object.name }}
                                 @if(object.status === 2)
@@ -35,22 +36,21 @@
                         <div class="item-actions">
                             <div style="display: flex; gap: 5px; margin-bottom: 5px;">
                                 @if(object.status === 2)
-                                <form action="{{ `/item/${object.id}/republish?_method=PATCH` }}" method="POST"
-                                    style="flex: 1;">
+                                <form action="{{ route('item.republish', { id: object.id }) }}?_method=PATCH" method="POST" style="flex: 1;">
                                     {{ csrfField() }}
                                     <button type="submit" class="btn-republish">
                                         REPUBLIER
                                     </button>
                                 </form>
-                                <a href="/item/{{object.id}}/edit" class="btn-edit"
+                                <a href="{{ route('donation_objects.edit', { id: object.id }) }}" class="btn-edit"
                                     style="flex: 1; text-align: center; padding: 7px 0;">{{ t('messages.account.btn_edit') }}</a>
                                 @else
-                                <a href="/item/{{object.id}}/edit" class="btn-edit"
+                                <a href="{{ route('donation_objects.edit', { id: object.id }) }}" class="btn-edit"
                                     style="flex: 1; text-align: center;">{{ t('messages.account.btn_edit') }}</a>
                                 @endif
                             </div>
 
-                            <form action="/item/{{ object.id }}?_method=DELETE" method="POST"
+                            <form action="{{ route('donation_objects.destroy', { id: object.id }) }}?_method=DELETE" method="POST"
                                 onsubmit="return confirm('{{ t('messages.account.confirm_delete') }}')">
                                 {{ csrfField() }}
                                 <button type="submit" class="btn-delete" style="width: 100%;">{{ t('messages.account.btn_delete') }}</button>
@@ -63,6 +63,7 @@
                 </div>
             </div>
 
+            {{-- SECTION PRÊTS --}}
             <div class="section">
                 <h2>{{ t('messages.account.title_lend') }}</h2>
                 <div class="items">
@@ -70,9 +71,8 @@
 
                     @each(object in loans)
                     <div class="item-wrapper">
-                        <a class="item" href="/item/{{object.id}}">
-                            <img src="{{ `/uploads/items/${object.imagePath}` }}" loading="lazy"
-                                alt="{{ object.name }}">
+                        <a class="item" href="{{ route('donation_objects.show', { id: object.id }) }}">
+                            <img src="{{ `/uploads/items/${object.imagePath}` }}" loading="lazy" alt="{{ object.name }}">
                             <p class="item-name">
                                 {{ object.name }}
                                 @if(object.status === 2)
@@ -85,23 +85,21 @@
                         <div class="item-actions">
                             <div style="display: flex; gap: 5px; margin-bottom: 5px;">
                                 @if(object.status === 2)
-                                <form action="{{ `/item/${object.id}/republish?_method=PATCH` }}" method="POST"
-                                    style="flex: 1;">
+                                <form action="{{ route('item.republish', { id: object.id }) }}?_method=PATCH" method="POST" style="flex: 1;">
                                     {{ csrfField() }}
-                                    <button type="submit" class="btn-republish"
-                                        style="width: 100%; background: #28a745; color: white; border: none; padding: 7px 0; cursor: pointer; border-radius: 4px; font-size: 10px; font-weight: bold;">
+                                    <button type="submit" class="btn-republish">
                                         {{ t('messages.account.btn_republish') }}
                                     </button>
                                 </form>
-                                <a href="/item/{{object.id}}/edit" class="btn-edit"
+                                <a href="{{ route('donation_objects.edit', { id: object.id }) }}" class="btn-edit"
                                     style="flex: 1; text-align: center; padding: 7px 0;">{{ t('messages.account.btn_edit') }}</a>
                                 @else
-                                <a href="/item/{{object.id}}/edit" class="btn-edit"
+                                <a href="{{ route('donation_objects.edit', { id: object.id }) }}" class="btn-edit"
                                     style="flex: 1; text-align: center;">{{ t('messages.account.btn_edit') }}</a>
                                 @endif
                             </div>
 
-                            <form action="/item/{{ object.id }}?_method=DELETE" method="POST"
+                            <form action="{{ route('donation_objects.destroy', { id: object.id }) }}?_method=DELETE" method="POST"
                                 onsubmit="return confirm('{{ t('messages.account.confirm_delete') }}')">
                                 {{ csrfField() }}
                                 <button type="submit" class="btn-delete" style="width: 100%;">{{ t('messages.account.btn_delete') }}</button>
@@ -114,15 +112,16 @@
                 </div>
             </div>
 
+            {{-- SECTION RESERVATIONS --}}
             <div class="section">
               <h2>{{ t('messages.account.title_reservations') }}</h2>
               <div class="items">
                   @each(item in reservations)
                       <div class="item-wrapper">
-                          <a class="item" href="/item/{{ item.id }}">
+                          <a class="item" href="{{ route('donation_objects.show', { id: item.id }) }}">
                               <img src="{{ `/uploads/items/${item.imagePath}` }}" loading="lazy" alt="{{ item.name }}">
                               <p class="item-name">{{ item.name }}</p>
-                              <span style="color: #28a745; font-size: 0.8rem;">{{ t('messages.account.status_reserved') }}</span>
+                              <span>{{ t('messages.account.status_reserved') }}</span>
                           </a>
                       </div>
                   @else
@@ -133,4 +132,5 @@
         </div>
     </div>
 </main>
+
 @include('partials/footer')

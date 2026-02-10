@@ -24,21 +24,18 @@ p{
     line-height: 1.5;
 }
 .reservButton {
-    box-shadow:inset -1px 0px 0px 0px #97c4fe;
-    background:linear-gradient(to bottom, var(--colorButton) 5%, var(--colorButton) 100%);
     background-color:var(--colorButton);
     border-radius:5px;
     width: 100%;
     text-align: center;
     display:inline-block;
     cursor:pointer;
-    color:#ffffff;
+    color: var(--colorlink);
     font-family:Verdana;
     font-size:15px;
     font-weight:bold;
     padding:15px 50px;
     text-decoration:none;
-    text-shadow:0px 1px 0px var(--colorButton);
 
 }
 

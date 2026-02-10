@@ -16,7 +16,7 @@
       {{ csrfField() }}
 
       @if(flashMessages.has('errors.auth'))
-        <p style="color: red; text-align: center;">
+        <p class="errors">
           {{ flashMessages.get('errors.auth') }}
         </p>
       @endif

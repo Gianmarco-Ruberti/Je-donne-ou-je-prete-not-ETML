@@ -7,11 +7,15 @@ export const DonationObjectFactory = factory
     const availableImages = [
       'jf6ae3md1vx5rpeb7wuctf8s.webp',
       'gfr4xhhw37hflfjt5fi35tm9.webp',
+      'n6d4miadmzdh4r4ns5ryfx50.webp',
       'x822ydtkt4avju6s6mx1go1v.webp',
       'qrchvdqd4c47wkjoadwsm8o9.webp',
+      'n6d4miadmzdh4r4ns5ryfx50.webp',
       't4n41e8b0sbcerfn7rxgwz4y.webp',
       'xe2pa2n1c1wktcdcp7sq95hh.webp',
       'j89qhtguaz4dl04o2u523bhy.webp',
+      'n6d4miadmzdh4r4ns5ryfx50.webp',
+
     ]
     return {
       name: faker.commerce.productName(),
@@ -21,17 +25,7 @@ export const DonationObjectFactory = factory
       type: faker.datatype.boolean(),
       // 'status' est un nombre (ex: 0 pour dispo, 1 pour réservé)
       status: faker.number.int({ min: 0, max: 2 }),
-      categorie: faker.helpers.arrayElement([
-        'Sport & Loisirs',
-        'Culture & Livres',
-        'Vêtements',
-        'Informatique & Tech',
-        'Maison & Cuisine',
-        'Jouets & Enfants',
-        'Électroménager',
-        'Musique & Art',
-        'Bureau & Fournitures',
-      ]),
+      categorie: faker.helpers.arrayElement(['sport', 'books', 'clothes', 'tech', 'home', 'toys', 'appliances', 'art', 'office']),
       imagePath: faker.helpers.arrayElement(availableImages),
 
       // Dates de disponibilité

@@ -1,9 +1,9 @@
 :root{
-    --colorform : #dde7c7;
-    --colorback : #edeec9;
-    --colorItem : #bfd8bd;
-    --colorButton : #98c9a3;
-    --colorText : #77bfa3;
+    --colorform : #00986c;
+    --colorback : #d0fdd7;
+    --colorItem : #57bd9e;
+    --colorButton : #6ac6ab;
+    --colorText : #57bd6b;
     --colorFocus : #5fa78bd5;
     --colorlink : black;
 }

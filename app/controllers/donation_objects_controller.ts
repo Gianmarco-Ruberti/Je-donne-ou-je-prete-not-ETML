@@ -63,41 +63,34 @@ export default class DonationObjectsController {
    * Enregistre un nouvel objet (Compression WebP)
    */
   async store({ request, response, auth }: HttpContext) {
-    if (!auth.user) return response.unauthorized('Vous devez être connecté.')
+  if (!auth.user) return response.unauthorized('Vous devez être connecté.')
 
-    // 1. Validation des données
-    const payload = await request.validateUsing(createDonationObjectValidator)
+  const payload = await request.validateUsing(createDonationObjectValidator)
 
-    let fileName: string | null = null
-
-    // 2. Traitement de l'image avec Sharp
-    if (payload.image) {
-      fileName = `${cuid()}.webp`
-      const uploadPath = app.makePath('public/uploads/items', fileName)
-
-      if (payload.image.tmpPath) {
-        await sharp(payload.image.tmpPath)
-          .resize(1200, 1200, { fit: 'inside', withoutEnlargement: true })
-          .webp({ quality: 75 }) // Compression WebP optimisée
-          .toFile(uploadPath)
-      }
-    }
-
-    // 3. Création en base de données
-    const object = await DonationObject.create({
-      userId: auth.user.id,
-      name: payload.name,
-      description: payload.description,
-      type: payload.type === '1',
-      categorie: payload.categorie,
-      imagePath: fileName,
-      status: 1,
-      availableFrom: payload.available_from ? DateTime.fromJSDate(payload.available_from) : null,
-      availableUntil: payload.available_until ? DateTime.fromJSDate(payload.available_until) : null,
-    })
-
-    return response.redirect().toPath(`/item/${object.id}`)
+  let fileName: string | null = null
+  if (payload.image && payload.image.tmpPath) {
+    fileName = `${cuid()}.webp`
+    const uploadPath = app.makePath('public/uploads/items', fileName)
+    await sharp(payload.image.tmpPath)
+      .resize(1200, 1200, { fit: 'inside', withoutEnlargement: true })
+      .webp({ quality: 75 })
+      .toFile(uploadPath)
   }
+
+  const object = await DonationObject.create({
+    userId: auth.user.id,
+    name: payload.name,
+    description: payload.description,
+    type: payload.type === '1',
+    categorie: payload.categorie, // Ici 'sport', 'tech', etc.
+    imagePath: fileName,
+    status: 1,
+    availableFrom: payload.available_from ? DateTime.fromJSDate(payload.available_from) : null,
+    availableUntil: payload.available_until ? DateTime.fromJSDate(payload.available_until) : null,
+  })
+
+  return response.redirect().toRoute('donation_objects.show', { id: object.id })
+}
 
   /**
    * Affiche les détails d'un objet

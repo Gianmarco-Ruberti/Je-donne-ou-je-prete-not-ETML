@@ -71,12 +71,16 @@
     {{-- Catégorie --}}
     <div class="field-group">
       <label for="categorie">{{ t('messages.add_item.cat_label') }}</label><br>
-      <select id="categorie" name="categorie" required>
+      <select name="categorie" id="categorie" required>
+        <option value="" disabled {{ !old('categorie') ? 'selected' : '' }}>
+          {{ t('messages.add_item.cat_select') }}
+        </option>
+
+        {{-- Liste simple des clés techniques --}}
         @each(key in ['sport', 'books', 'clothes', 'tech', 'home', 'toys', 'appliances', 'art', 'office'])
-          @let(databaseValue = catMap[key])
-          <option value="{{ databaseValue }}" {{ (old('categorie') || object.categorie) === databaseValue ? 'selected' : '' }}>
-            {{ t(`messages.add_item.categories.${key}`) }}
-          </option>
+        <option value="{{ key }}" {{ (old('categorie')===key) ? 'selected' : '' }}>
+          {{ t(`messages.add_item.categories.${key}`) }}
+        </option>
         @end
       </select>
     </div>

@@ -27,6 +27,7 @@ export const DonationObjectFactory = factory
       status: faker.number.int({ min: 0, max: 2 }),
       categorie: faker.helpers.arrayElement(['sport', 'books', 'clothes', 'tech', 'home', 'toys', 'appliances', 'art', 'office']),
       imagePath: faker.helpers.arrayElement(availableImages),
+      urgent: false,
 
       // Dates de disponibilité
       availableFrom: DateTime.fromJSDate(faker.date.soon()),

@@ -39,7 +39,7 @@
                                 <form action="{{ route('item.republish', { id: object.id }) }}?_method=PATCH" method="POST" style="flex: 1;">
                                     {{ csrfField() }}
                                     <button type="submit" class="btn-republish">
-                                        REPUBLIER
+                                        {{ t('messages.account.btn_republish') }}
                                     </button>
                                 </form>
                                 <a href="{{ route('donation_objects.edit', { id: object.id }) }}" class="btn-edit"

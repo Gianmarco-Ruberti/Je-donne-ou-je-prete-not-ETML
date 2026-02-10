@@ -2,18 +2,25 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  @vite([`resources/css/login.css`,'resources/css/app.css', 'resources/js/app.js'])
+
+  @vite(['resources/css/login.css','resources/css/app.css', 'resources/js/app.js'])
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <title>{{ t('messages.auth.login_title') }} | Je donne, je prête</title>
 </head>
 
 <body>
   <main>
-    <form action="/login" method="post">
-      <img src="resources/img/logo.png">
+
+    <form action="{{ route('autenticate') }}" method="post">
+      <img src="{{ asset('resources/img/logo.png') }}">
       {{ csrfField() }}
 
-      {{-- Pour les composants, on passe la traduction dans l'objet --}}
+      @if(flashMessages.has('errors.auth'))
+        <p style="color: red; text-align: center;">
+          {{ flashMessages.get('errors.auth') }}
+        </p>
+      @endif
+
       @!component('components/input', {
         name: 'Username',
         label: t('messages.auth.username'),

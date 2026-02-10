@@ -32,16 +32,11 @@
         type : 'file',
         attributes: { id: 'image' }
       })
-      
-      <div class="preview-container" style="margin-top: 10px;">
-        @if(object.imagePath)
-          <img id="imageDisplay" src="/uploads/items/{{ object.imagePath }}" alt="Aperçu"
-            style="max-width: 200px; border-radius: 8px; border: 1px solid #ddd;">
-        @else
-          <img id="imageDisplay" src="" alt="Aperçu"
-            style="display: none; max-width: 200px; border-radius: 8px; border: 1px solid #ddd;">
-        @endif
-      </div>
+      @if(object.imagePath)
+      <img id="imageDisplay" src="/uploads/items/{{ object.imagePath }}" alt="Aperçu">
+      @else
+      <img class="CACHER" id="imageDisplay" src="" alt="Aperçu">
+      @endif
     </div>
 
     <br>
@@ -51,7 +46,7 @@
       <label for="name">{{ t('messages.add_item.name_label') }}</label><br>
       <input id="name" type="text" name="name" value="{{ old('name') || object.name }}" required>
       @if(flashMessages.has('errors.name'))
-        <small style="color: red;">{{ flashMessages.get('errors.name') }}</small>
+      <p class="errors">{{ flashMessages.get('errors.name') }}</p>
       @endif
     </div>
 
@@ -62,7 +57,7 @@
       <label for="description">{{ t('messages.add_item.desc_label') }}</label><br>
       <textarea id="description" name="description" rows="5" required>{{ old('description') || object.description }}</textarea>
       @if(flashMessages.has('errors.description'))
-        <small style="color: red;">{{ flashMessages.get('errors.description') }}</small>
+      <p class="errors">{{ flashMessages.get('errors.description') }}</p>
       @endif
     </div>
 
@@ -103,8 +98,8 @@
     <br>
 
     {{-- Section Dates --}}
-    <div id="dates_section" style="display: none; background: #f4f4f4; padding: 15px; border-radius: 8px;">
-      <p style="margin-top: 0; font-weight: bold;">{{ t('messages.add_item.loan_details') }}</p>
+    <div id="dates_section">
+      <p>{{ t('messages.add_item.loan_details') }}</p>
 
       <div class="field">
         <label for="available_from">{{ t('messages.add_item.from') }}</label><br>

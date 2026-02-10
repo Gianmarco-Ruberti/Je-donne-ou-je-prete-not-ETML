@@ -27,6 +27,32 @@ header {
     margin-bottom: 25px;
 }
 
+.lang-switcher{
+    display: flex; 
+    gap: 5px; 
+    align-items: center; 
+    margin-left: 10px; 
+    font-weight: bold; 
+    font-size: 0.9rem;
+}
+
+.lang-switcher span {
+    color: #eee;
+}
+
+/* Style de base pour les liens de langue */
+.lang-link {
+    text-decoration: none;
+    color: #ccc; /* Gris par défaut */
+    transition: color 0.3s;
+}
+
+/* Style quand la langue est active */
+.lang-link.active {
+    color: #007bff; /* Bleu */
+    font-weight: bold;
+}
+
 main {
     padding: 15px 30px;
     flex: 1;
@@ -178,6 +204,7 @@ main {
     color: rgb(0, 26, 255);
 }
 
+
 #dates_section{
     display: none; 
     background: #f9fafb; 
@@ -192,6 +219,18 @@ main {
     color: #007bff;
 }
 
+/* Style de base pour les liens de langue */
+.lang-link {
+    text-decoration: none;
+    color: #ccc; /* Gris par défaut */
+    transition: color 0.3s;
+}
+ 
+/* Style quand la langue est active */
+.lang-link.active {
+    color: #007bff; /* Bleu */
+    font-weight: bold;
+}
 /* ------------------------------
     RESPONSIVE POUR LA BARRE D'ACTION
 --------------------------------*/

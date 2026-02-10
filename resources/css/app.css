@@ -27,6 +27,32 @@ header {
     margin-bottom: 25px;
 }
 
+.lang-switcher{
+    display: flex; 
+    gap: 5px; 
+    align-items: center; 
+    margin-left: 10px; 
+    font-weight: bold; 
+    font-size: 0.9rem;
+}
+
+.lang-switcher span {
+    color: #eee;
+}
+
+/* Style de base pour les liens de langue */
+.lang-link {
+    text-decoration: none;
+    color: #ccc; /* Gris par défaut */
+    transition: color 0.3s;
+}
+
+/* Style quand la langue est active */
+.lang-link.active {
+    color: #007bff; /* Bleu */
+    font-weight: bold;
+}
+
 main {
     padding: 15px 30px;
     flex: 1;
@@ -170,8 +196,6 @@ main {
     box-shadow: 0 5px 15px rgba(62, 91, 255, 0.3);
 }
 
-<<<<<<< HEAD
-=======
 .CACHER{
     display: none;
 }
@@ -179,6 +203,7 @@ main {
 .errors{
     color: rgb(0, 26, 255);
 }
+
 
 #dates_section{
     display: none; 
@@ -194,7 +219,18 @@ main {
     color: #007bff;
 }
 
->>>>>>> f237ba6b0e0a07f446f090360628326929e361a0
+/* Style de base pour les liens de langue */
+.lang-link {
+    text-decoration: none;
+    color: #ccc; /* Gris par défaut */
+    transition: color 0.3s;
+}
+
+/* Style quand la langue est active */
+.lang-link.active {
+    color: #007bff; /* Bleu */
+    font-weight: bold;
+}
 /* ------------------------------
     RESPONSIVE POUR LA BARRE D'ACTION
 --------------------------------*/

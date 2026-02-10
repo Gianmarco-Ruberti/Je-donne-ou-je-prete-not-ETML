@@ -34,13 +34,10 @@
       </a>
 
       {{-- Sélecteur de langue Desktop --}}
-      <div class="lang-switcher"
-        style="display: flex; gap: 5px; align-items: center; margin-left: 10px; font-weight: bold; font-size: 0.9rem;">
-        <a href="?lang=fr"
-          style="text-decoration: none; {{ i18n.locale === 'fr' ? 'color: #007bff;' : 'color: #ccc;' }}">FR</a>
-        <span style="color: #eee;">|</span>
-        <a href="?lang=en"
-          style="text-decoration: none; {{ i18n.locale === 'en' ? 'color: #007bff;' : 'color: #ccc;' }}">EN</a>
+      <div class="lang-switcher">
+        <a href="?lang=fr" class="lang-link {{ i18n.locale === 'fr' ? 'active' : '' }}">FR</a>
+        <span>|</span>
+        <a href="?lang=en" class="lang-link {{ i18n.locale === 'en' ? 'active' : '' }}">EN</a>
       </div>
     </div>
   </header>
@@ -56,8 +53,8 @@
     </a>
 
     <div class="lang-switcher">
-      <a href="?lang=fr" style="{{ i18n.locale === 'fr' ? 'font-weight:bold; color:blue;' : '' }}">FR</a>
+      <a href="?lang=fr" class="lang-link {{ i18n.locale === 'fr' ? 'active' : '' }}">FR</a>
       <span>|</span>
-      <a href="?lang=en" style="{{ i18n.locale === 'en' ? 'font-weight:bold; color:blue;' : '' }}">EN</a>
+      <a href="?lang=en" class="lang-link {{ i18n.locale === 'en' ? 'active' : '' }}">EN</a>
     </div>
   </div>

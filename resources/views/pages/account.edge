@@ -27,33 +27,31 @@
                             <p class="item-name">
                                 {{ object.name }}
                                 @if(object.status === 2)
-                                <span style="color: orange; font-size: 0.8rem;">{{ t('messages.account.reserved_label') }}</span>
+                                <span>{{ t('messages.account.reserved_label') }}</span>
                                 @endif
                             </p>
                             <p class="item-cat">{{ object.categorie }}</p>
                         </a>
 
                         <div class="item-actions">
-                            <div style="display: flex; gap: 5px; margin-bottom: 5px;">
+                            <div>
                                 @if(object.status === 2)
-                                <form action="{{ route('item.republish', { id: object.id }) }}?_method=PATCH" method="POST" style="flex: 1;">
+                                <form action="{{ route('item.republish', { id: object.id }) }}?_method=PATCH" method="POST">
                                     {{ csrfField() }}
                                     <button type="submit" class="btn-republish">
-                                        REPUBLIER
+                                       {{ t('messages.account.btn_republish') }}
                                     </button>
                                 </form>
-                                <a href="{{ route('donation_objects.edit', { id: object.id }) }}" class="btn-edit"
-                                    style="flex: 1; text-align: center; padding: 7px 0;">{{ t('messages.account.btn_edit') }}</a>
+                                <a href="{{ route('donation_objects.edit', { id: object.id }) }}" class="btn-edit">{{ t('messages.account.btn_edit') }}</a>
                                 @else
-                                <a href="{{ route('donation_objects.edit', { id: object.id }) }}" class="btn-edit"
-                                    style="flex: 1; text-align: center;">{{ t('messages.account.btn_edit') }}</a>
+                                <a href="{{ route('donation_objects.edit', { id: object.id }) }}" class="btn-edit">{{ t('messages.account.btn_edit') }}</a>
                                 @endif
                             </div>
 
                             <form action="{{ route('donation_objects.destroy', { id: object.id }) }}?_method=DELETE" method="POST"
                                 onsubmit="return confirm('{{ t('messages.account.confirm_delete') }}')">
                                 {{ csrfField() }}
-                                <button type="submit" class="btn-delete" style="width: 100%;">{{ t('messages.account.btn_delete') }}</button>
+                                <button type="submit" class="btn-delete">{{ t('messages.account.btn_delete') }}</button>
                             </form>
                         </div>
                     </div>
@@ -76,33 +74,33 @@
                             <p class="item-name">
                                 {{ object.name }}
                                 @if(object.status === 2)
-                                <span style="color: orange; font-size: 0.8rem;">{{ t('messages.account.reserved_label') }}</span>
+                                <span >{{ t('messages.account.reserved_label') }}</span>
                                 @endif
                             </p>
                             <p class="item-cat">{{ object.categorie }}</p>
                         </a>
 
                         <div class="item-actions">
-                            <div style="display: flex; gap: 5px; margin-bottom: 5px;">
+                            <div>
                                 @if(object.status === 2)
-                                <form action="{{ route('item.republish', { id: object.id }) }}?_method=PATCH" method="POST" style="flex: 1;">
+                                <form action="{{ route('item.republish', { id: object.id }) }}?_method=PATCH" method="POST">
                                     {{ csrfField() }}
                                     <button type="submit" class="btn-republish">
                                         {{ t('messages.account.btn_republish') }}
                                     </button>
                                 </form>
                                 <a href="{{ route('donation_objects.edit', { id: object.id }) }}" class="btn-edit"
-                                    style="flex: 1; text-align: center; padding: 7px 0;">{{ t('messages.account.btn_edit') }}</a>
+                                    >{{ t('messages.account.btn_edit') }}</a>
                                 @else
                                 <a href="{{ route('donation_objects.edit', { id: object.id }) }}" class="btn-edit"
-                                    style="flex: 1; text-align: center;">{{ t('messages.account.btn_edit') }}</a>
+                                    >{{ t('messages.account.btn_edit') }}</a>
                                 @endif
                             </div>
 
                             <form action="{{ route('donation_objects.destroy', { id: object.id }) }}?_method=DELETE" method="POST"
                                 onsubmit="return confirm('{{ t('messages.account.confirm_delete') }}')">
                                 {{ csrfField() }}
-                                <button type="submit" class="btn-delete" style="width: 100%;">{{ t('messages.account.btn_delete') }}</button>
+                                <button type="submit" class="btn-delete">{{ t('messages.account.btn_delete') }}</button>
                             </form>
                         </div>
                     </div>

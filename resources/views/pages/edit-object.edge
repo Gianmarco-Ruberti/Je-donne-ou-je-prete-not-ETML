@@ -1,32 +1,36 @@
 @let(title = t('messages.edit_item.title'))
 @let(css = 'edit.css')
 @include('partials/header')
+
 @let(catMap = {
-'Sport & Loisirs': 'sport',
-'Culture & Livres': 'books',
-'Vêtements': 'clothes',
-'Informatique & Tech': 'tech',
-'Maison & Cuisine': 'home',
-'Jouets & Enfants': 'toys',
-'Électroménager': 'appliances',
-'Musique & Art': 'art',
-'Bureau & Fournitures': 'office'
+  'Sport & Loisirs': 'sport',
+  'Culture & Livres': 'books',
+  'Vêtements': 'clothes',
+  'Informatique & Tech': 'tech',
+  'Maison & Cuisine': 'home',
+  'Jouets & Enfants': 'toys',
+  'Électroménager': 'appliances',
+  'Musique & Art': 'art',
+  'Bureau & Fournitures': 'office'
 })
 
 <main>
-  <h1>{{ t('messages.edit_item.title') }} {{ object.name }}</h1>
+  <h1>{{ t('messages.edit_item.title') }} : {{ object.name }}</h1>
 
+  {{-- La route update avec l'ID de l'objet --}}
   <form action="{{ route('donation_objects.update', { id: object.id }) }}" method="POST" enctype="multipart/form-data">
     {{ csrfField() }}
-    <input type="hidden" name="_method" value="PUT">
+    
+    {{-- Pour Adonis, on utilise l'ID de route POST mais on simule le PUT ou PATCH --}}
+    <input type="hidden" name="_method" value="POST"> {{-- Ou PATCH selon ton controller --}}
 
     {{-- Section Image --}}
     <div>
       @!component('components/input', {
-      name : 'image',
-      label : t('messages.edit_item.image_placeholder'),
-      type : 'file',
-      attributes: { id: 'image' }
+        name : 'image',
+        label : t('messages.edit_item.image_placeholder'),
+        type : 'file',
+        attributes: { id: 'image' }
       })
       @if(object.imagePath)
       <img id="imageDisplay" src="/uploads/items/{{ object.imagePath }}" alt="Aperçu">
@@ -38,7 +42,7 @@
     <br>
 
     {{-- Nom --}}
-    <div>
+    <div class="field-group">
       <label for="name">{{ t('messages.add_item.name_label') }}</label><br>
       <input id="name" type="text" name="name" value="{{ old('name') || object.name }}" required>
       @if(flashMessages.has('errors.name'))
@@ -49,10 +53,9 @@
     <br>
 
     {{-- Description --}}
-    <div>
+    <div class="field-group">
       <label for="description">{{ t('messages.add_item.desc_label') }}</label><br>
-      <textarea id="description" name="description" rows="5"
-        required>{{ old('description') || object.description }}</textarea>
+      <textarea id="description" name="description" rows="5" required>{{ old('description') || object.description }}</textarea>
       @if(flashMessages.has('errors.description'))
       <p class="errors">{{ flashMessages.get('errors.description') }}</p>
       @endif
@@ -61,34 +64,28 @@
     <br>
 
     {{-- Catégorie --}}
-    <div>
+    <div class="field-group">
       <label for="categorie">{{ t('messages.add_item.cat_label') }}</label><br>
       <select id="categorie" name="categorie" required>
-        {{-- 1. On mappe les clés JSON vers les noms exacts de ta BDD --}}
-
-
-        {{-- 2. On boucle sur les clés pour générer les options --}}
         @each(key in ['sport', 'books', 'clothes', 'tech', 'home', 'toys', 'appliances', 'art', 'office'])
-        @let(databaseValue = catMap[key])
-        @let(label = t(`messages.add_item.categories.${key}`))
-
-        <option value="{{ databaseValue }}" {{ (old('categorie') || object.categorie)===databaseValue ? 'selected' : ''
-          }}>
-          {{ label }}
-        </option>
+          @let(databaseValue = catMap[key])
+          <option value="{{ databaseValue }}" {{ (old('categorie') || object.categorie) === databaseValue ? 'selected' : '' }}>
+            {{ t(`messages.add_item.categories.${key}`) }}
+          </option>
         @end
       </select>
     </div>
+
     <br>
 
     {{-- Type (Don/Prêt) --}}
-    <div>
+    <div class="field-group">
       <label for="type">{{ t('messages.add_item.status_label') }}</label><br>
       <select id="type" name="type" required>
-        <option value="0" {{ (old('type')=='0' || object.type==false) ? 'selected' : '' }}>
+        <option value="0" {{ (old('type') == '0' || object.type == false) ? 'selected' : '' }}>
           {{ t('messages.add_item.status_give') }}
         </option>
-        <option value="1" {{ (old('type')=='1' || object.type==true) ? 'selected' : '' }}>
+        <option value="1" {{ (old('type') == '1' || object.type == true) ? 'selected' : '' }}>
           {{ t('messages.add_item.status_lend') }}
         </option>
       </select>
@@ -100,7 +97,7 @@
     <div id="dates_section">
       <p>{{ t('messages.add_item.loan_details') }}</p>
 
-      <div>
+      <div class="field">
         <label for="available_from">{{ t('messages.add_item.from') }}</label><br>
         <input type="datetime-local" id="available_from" name="available_from"
           value="{{ old('available_from') || (object.availableFrom ? object.availableFrom.toFormat('yyyy-MM-dd\'T\'HH:mm') : '') }}">
@@ -108,7 +105,7 @@
 
       <br>
 
-      <div>
+      <div class="field">
         <label for="available_until">{{ t('messages.add_item.until') }}</label><br>
         <input type="datetime-local" id="available_until" name="available_until"
           value="{{ old('available_until') || (object.availableUntil ? object.availableUntil.toFormat('yyyy-MM-dd\'T\'HH:mm') : '') }}">
@@ -117,9 +114,11 @@
 
     <br>
 
-    <div>
-      <button type="submit">{{ t('messages.edit_item.submit') }}</button>
-      <a href="{{ route('donation_objects.show', { id: object.id }) }}">{{ t('messages.edit_item.cancel') }}</a>
+    <div class="actions">
+      <button type="submit" class="btn-save">{{ t('messages.edit_item.submit') }}</button>
+      <a href="{{ route('donation_objects.show', { id: object.id }) }}" class="btn-cancel">
+        {{ t('messages.edit_item.cancel') }}
+      </a>
     </div>
   </form>
 </main>
@@ -131,12 +130,7 @@
   const imageDisplay = document.getElementById('imageDisplay');
 
   function toggleDates() {
-    // '1' est la valeur string du select pour le prêt
-    if (typeSelector.value === '1') {
-      datesSection.style.display = 'block';
-    } else {
-      datesSection.style.display = 'none';
-    }
+    datesSection.style.display = (typeSelector.value === '1') ? 'block' : 'none';
   }
 
   typeSelector.addEventListener('change', toggleDates);

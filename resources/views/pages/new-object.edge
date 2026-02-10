@@ -1,32 +1,34 @@
 @let(title = t('messages.add_item.title'))
 @let(css = 'ajout.css')
 @include('partials/header')
+
 @let(catMap = {
-'Sport & Loisirs': 'sport',
-'Culture & Livres': 'books',
-'Vêtements': 'clothes',
-'Informatique & Tech': 'tech',
-'Maison & Cuisine': 'home',
-'Jouets & Enfants': 'toys',
-'Électroménager': 'appliances',
-'Musique & Art': 'art',
-'Bureau & Fournitures': 'office'
+  'Sport & Loisirs': 'sport',
+  'Culture & Livres': 'books',
+  'Vêtements': 'clothes',
+  'Informatique & Tech': 'tech',
+  'Maison & Cuisine': 'home',
+  'Jouets & Enfants': 'toys',
+  'Électroménager': 'appliances',
+  'Musique & Art': 'art',
+  'Bureau & Fournitures': 'office'
 })
 
 <main>
   <h1>{{ t('messages.add_item.title') }}</h1>
 
-  <form action="/items" method="POST" enctype="multipart/form-data">
+  {{-- Utilisation de route() pour l'action du formulaire --}}
+  <form action="{{ route('donation_objects.store') }}" method="POST" enctype="multipart/form-data">
     {{ csrfField() }}
 
     <div>
       @!component('components/input', {
-      name : 'image',
-      label : t('messages.add_item.image_label'),
-      type : 'file',
-      attributes: { id: 'image', onchange: 'previewImage(event)' }
+        name : 'image',
+        label : t('messages.add_item.image_label'),
+        type : 'file',
+        attributes: { id: 'image', onchange: 'previewImage(event)' }
       })
-      <img id="imageDisplay" src="" alt="Preview">
+      <img id="imageDisplay" src="" alt="Preview" style="display:none; max-width: 200px; margin-top: 10px;">
     </div>
 
     <br>
@@ -37,7 +39,7 @@
       <input type="text" id="name" name="name" value="{{ old('name') || '' }}" required
         placeholder="{{ t('messages.add_item.name_placeholder') }}" />
       @if(flashMessages.has('errors.name'))
-      <small style="color: red;">{{ flashMessages.get('errors.name') }}</small>
+        <small style="color: red;">{{ flashMessages.get('errors.name') }}</small>
       @endif
     </div>
 
@@ -49,7 +51,7 @@
       <textarea id="description" name="description" rows="5" required
         placeholder="{{ t('messages.add_item.desc_placeholder') }}">{{ old('description') || '' }}</textarea>
       @if(flashMessages.has('errors.description'))
-      <small style="color: red;">{{ flashMessages.get('errors.description') }}</small>
+        <small style="color: red;">{{ flashMessages.get('errors.description') }}</small>
       @endif
     </div>
 
@@ -63,16 +65,11 @@
           {{ t('messages.add_item.cat_select') }}
         </option>
 
-        {{-- 1. On définit le dictionnaire qui lie tes clés JSON aux noms de ta BDD --}}
-
-        {{-- 2. On boucle sur les clés --}}
         @each(key in ['sport', 'books', 'clothes', 'tech', 'home', 'toys', 'appliances', 'art', 'office'])
-        @let(databaseValue = catMap[key])
-
-        <option value="{{ databaseValue }}" {{ (old('categorie')===databaseValue) ? 'selected' : '' }}>
-          {{-- Affiche la traduction du JSON (Français si i18n est sur 'fr') --}}
-          {{ t(`messages.add_item.categories.${key}`) }}
-        </option>
+          @let(databaseValue = catMap[key])
+          <option value="{{ databaseValue }}" {{ (old('categorie') === databaseValue) ? 'selected' : '' }}>
+            {{ t(`messages.add_item.categories.${key}`) }}
+          </option>
         @end
       </select>
     </div>
@@ -84,25 +81,22 @@
       <label for="type">{{ t('messages.add_item.status_label') }}</label><br>
       <select id="type" name="type" required>
         <option value="">{{ t('messages.add_item.status_select') }}</option>
-        <option value="0" {{ old('type')=='0' ? 'selected' : '' }}>{{ t('messages.add_item.status_give') }}</option>
-        <option value="1" {{ old('type')=='1' ? 'selected' : '' }}>{{ t('messages.add_item.status_lend') }}</option>
+        <option value="0" {{ old('type') == '0' ? 'selected' : '' }}>{{ t('messages.add_item.status_give') }}</option>
+        <option value="1" {{ old('type') == '1' ? 'selected' : '' }}>{{ t('messages.add_item.status_lend') }}</option>
       </select>
     </div>
 
     <br>
 
     {{-- Section Dates pour le prêt --}}
-    <div id="dates_section">
+    <div id="dates_section" style="display: none;">
       <p>{{ t('messages.add_item.loan_details') }}</p>
-
       <div class="field">
         <label for="available_from">{{ t('messages.add_item.from') }}</label><br>
         <input type="datetime-local" id="available_from" name="available_from"
           value="{{ old('available_from') || '' }}">
       </div>
-
       <br>
-
       <div class="field">
         <label for="available_until">{{ t('messages.add_item.until') }}</label><br>
         <input type="datetime-local" id="available_until" name="available_until"
@@ -116,33 +110,27 @@
       <button type="submit">
         {{ t('messages.add_item.submit') }}
       </button>
-      <p><a href="/home">{{ t('messages.add_item.back') }}</a></p>
+      {{-- Lien retour vers Home via route() --}}
+      <p><a href="{{ route('donation_objects.index') }}">{{ t('messages.add_item.back') }}</a></p>
     </div>
   </form>
 </main>
 
-{{-- Ton script reste identique, il n'a pas besoin de traduction car il gère la logique --}}
 <script>
+  // Ton JS reste le même, il est déjà bien. 
+  // Juste une petite correction sur l'affichage initial du bloc dates :
   const typeSelector = document.getElementById('type');
   const datesSection = document.getElementById('dates_section');
   const imageSelector = document.getElementById('image');
   const imageDisplay = document.getElementById('imageDisplay');
 
-  // Gestion de l'affichage dynamique des dates
   function toggleDates() {
-    if (typeSelector.value === '1') {
-      datesSection.style.display = 'block';
-    } else {
-      datesSection.style.display = 'none';
-    }
+    datesSection.style.display = (typeSelector.value === '1') ? 'block' : 'none';
   }
 
   typeSelector.addEventListener('change', toggleDates);
-
-  // Au chargement (pour garder l'état si erreur de validation)
   window.addEventListener('DOMContentLoaded', toggleDates);
 
-  // Aperçu de l'image
   imageSelector.addEventListener('change', function (event) {
     if (event.target.files && event.target.files[0]) {
       const reader = new FileReader();

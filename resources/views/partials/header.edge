@@ -5,27 +5,61 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="icon" type="image/x-icon" href="/resources/img/logo.png">
+
+  {{-- Utilisation de asset() pour l'icône : sécurité max pour les chemins --}}
+  <link rel="icon" type="image/x-icon" href="{{ asset('resources/img/logo.png') }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  @vite([`resources/css/${css}`,'resources/css/app.css', 'resources/js/app.js'])
+
+  @vite([`resources/css/${css}`, 'resources/css/app.css', 'resources/js/app.js'])
+
   <title>{{ title || '404' }} | {{ t('messages.test') ? 'Je donne, je prête' : 'Give or Lend' }}</title>
 </head>
 
 <body>
   <header>
-    <a href="/home" class="logo">
-      <img src="/resources/img/logo.png">
+    {{-- Logo cliquable vers Home via route nommée --}}
+    <a href="{{ route('donation_objects.index') }}" class="logo">
+      <img src="{{ asset('resources/img/logo.png') }}" alt="Logo">
     </a>
+
     <div class="bouton">
-      <a href="/new" class="action-button">{{ t('messages.nav.add') }}</a>
-      <a href="/account" class="textdeco">
-        <img src="/resources/img/user.png" class="imgbutton">
+      {{-- Ajouter un objet --}}
+      <a href="{{ route('donation_objects.create') }}" class="action-button">
+        {{ t('messages.nav.add') }}
       </a>
+
+      {{-- Compte utilisateur --}}
+      <a href="{{ route('account') }}" class="textdeco">
+        <img src="{{ asset('resources/img/user.png') }}" class="imgbutton" alt="User">
+      </a>
+
+      {{-- Sélecteur de langue Desktop --}}
+      <div class="lang-switcher"
+        style="display: flex; gap: 5px; align-items: center; margin-left: 10px; font-weight: bold; font-size: 0.9rem;">
+        <a href="?lang=fr"
+          style="text-decoration: none; {{ i18n.locale === 'fr' ? 'color: #007bff;' : 'color: #ccc;' }}">FR</a>
+        <span style="color: #eee;">|</span>
+        <a href="?lang=en"
+          style="text-decoration: none; {{ i18n.locale === 'en' ? 'color: #007bff;' : 'color: #ccc;' }}">EN</a>
+      </div>
     </div>
   </header>
 
+  {{-- Barre d'action mobile --}}
   <div class="bottom-action-bar">
-    <a href="/new" class="action-button">{{ t('messages.nav.add') }}</a>
-    <a href="/account" class="action-button">{{ t('messages.nav.account') }}</a>
-  </div>
+    <a href="{{ route('donation_objects.create') }}" class="action-button">
+      {{ t('messages.nav.add') }}
+    </a>
 
+    <a href="{{ route('account') }}" class="action-button">
+      {{ t('messages.nav.account') }}
+    </a>
+
+    {{-- Sélecteur de langue Mobile --}}
+    <div class="lang-switcher">
+      {{-- On ajoute un paramètre à l'URL actuelle --}}
+      <a href="?lang=fr" style="{{ i18n.locale === 'fr' ? 'font-weight:bold; color:blue;' : '' }}">FR</a>
+      <span>|</span>
+      <a href="?lang=en" style="{{ i18n.locale === 'en' ? 'font-weight:bold; color:blue;' : '' }}">EN</a>
+    </div>
+  </div>

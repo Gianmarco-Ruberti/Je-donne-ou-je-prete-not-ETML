@@ -28,11 +28,11 @@ header {
 }
 
 .lang-switcher{
-    display: flex; 
-    gap: 5px; 
-    align-items: center; 
-    margin-left: 10px; 
-    font-weight: bold; 
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    margin-left: 10px;
+    font-weight: bold;
     font-size: 0.9rem;
 }
 
@@ -57,7 +57,7 @@ main {
     padding: 15px 30px;
     flex: 1;
     margin: auto;
-    min-height: calc(100vh - 180px); 
+    min-height: calc(100vh - 180px);
 }
 
 /* --- Navigation --- */
@@ -79,22 +79,22 @@ main {
 --------------------------------*/
 
 .bottom-action-bar{
-    
-    position: fixed; 
+
+    position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
-    
+
     /* Styles du conteneur */
     display: flex;
-    justify-content: flex-end; 
+    justify-content: flex-end;
     align-items: center;
-    padding: 10px 30px; 
-    
+    padding: 10px 30px;
+
     /* Apparence */
-    background-color: var(--colorback); 
+    background-color: var(--colorback);
     border-top: 1px solid #ddd;
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); 
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
     display: none;
 }
 
@@ -127,9 +127,9 @@ main {
 }
 
 .footer-projet {
-    background-color: #1a252f; 
+    background-color: #1a252f;
     color: #ecf0f1;
-    padding: 30px 50px; 
+    padding: 30px 50px;
     width: 100%;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     margin-top: auto;
@@ -137,10 +137,10 @@ main {
 
 .footer-content {
     display: flex;
-    flex-direction: row; 
-    justify-content: space-between; 
+    flex-direction: row;
+    justify-content: space-between;
     align-items: center;
-    max-width: 1200px; 
+    max-width: 1200px;
     margin: 0 auto;
 }
 
@@ -167,7 +167,7 @@ main {
 }
 
 .github-stats img {
-    height: auto; 
+    height: auto;
     border-radius: 4px;
 }
 
@@ -180,7 +180,7 @@ main {
     align-items: center;
     gap: 10px;
     padding: 8px 18px;
-    border-radius: 10px; 
+    border-radius: 10px;
     border: 1px solid rgba(255, 255, 255, 0.1);
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
@@ -192,7 +192,7 @@ main {
 .github-link:hover {
     background-color: var(--colorButton);
     border-color: var(--colorButton);
-    transform: translateY(-3px); 
+    transform: translateY(-3px);
     box-shadow: 0 5px 15px rgba(62, 91, 255, 0.3);
 }
 
@@ -206,16 +206,16 @@ main {
 
 
 #dates_section{
-    display: none; 
-    background: #f9fafb; 
-    padding: 20px; 
-    border-radius: 10px; 
+    display: none;
+    background: #f9fafb;
+    padding: 20px;
+    border-radius: 10px;
     border-left: 4px solid #007bff;
 }
 
 #dates_section p{
-    margin-top: 0; 
-    font-weight: bold; 
+    margin-top: 0;
+    font-weight: bold;
     color: #007bff;
 }
 
@@ -225,10 +225,10 @@ main {
     color: #ccc; /* Gris par défaut */
     transition: color 0.3s;
 }
- 
+
 /* Style quand la langue est active */
 .lang-link.active {
-    color: #007bff; /* Bleu */
+    color: var(--colorButton); /* Bleu */
     font-weight: bold;
 }
 /* ------------------------------
@@ -254,20 +254,20 @@ main {
     .bottom-action-bar {
         padding: 10px 15px;
         display: flex;
-        justify-content: space-around; 
+        justify-content: space-around;
     }
-    
+
     .bottom-action-bar .action-button {
-        flex-grow: 1; 
+        flex-grow: 1;
         text-align: center;
-        margin: 0 5px; 
+        margin: 0 5px;
     }
 
     header {
         padding: 15px 15px;
         display: block;
     }
-    
+
     .logo{
         display: flex;
         justify-content: center;
@@ -275,7 +275,7 @@ main {
     .logo img{
         width: 85%;
     }
-    
+
     main {
         padding: 15px;
         width: 100%;

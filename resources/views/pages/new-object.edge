@@ -39,7 +39,7 @@
       <input type="text" id="name" name="name" value="{{ old('name') || '' }}" required
         placeholder="{{ t('messages.add_item.name_placeholder') }}" />
       @if(flashMessages.has('errors.name'))
-        <small class="errors">{{ flashMessages.get('errors.name') }}</small>
+      <small class="errors">{{ flashMessages.get('errors.name') }}</small>
       @endif
     </div>
 
@@ -51,15 +51,15 @@
       <textarea id="description" name="description" rows="5" required
         placeholder="{{ t('messages.add_item.desc_placeholder') }}">{{ old('description') || '' }}</textarea>
       @if(flashMessages.has('errors.description'))
-        <small class="errors">{{ flashMessages.get('errors.description') }}</small>
+      <small class="errors">{{ flashMessages.get('errors.description') }}</small>
       @endif
     </div>
 
     <br>
 
     <div class="field-group">
-    <label for="IsUrgent">Urgent ?</label>
-    <input type="checkbox" id="IsUrgent" name="IsUrgent" value="1">
+      <label for="IsUrgent">Urgent ?</label>
+      <input type="checkbox" id="IsUrgent" name="IsUrgent" value="1">
     </div>
 
     {{-- Catégorie --}}
@@ -93,19 +93,25 @@
 
     <br>
 
-    {{-- Section Dates pour le prêt --}}
-    <div id="dates_section">
+    {{-- Section Dates --}}
+    <div id="availability_section" class="field-group" style="display: none;">
       <p>{{ t('messages.add_item.loan_details') }}</p>
+
+      {{-- Toujours visible si Don ou Prêt --}}
       <div class="field">
         <label for="available_from">{{ t('messages.add_item.from') }}</label><br>
         <input type="datetime-local" id="available_from" name="available_from"
           value="{{ old('available_from') || '' }}">
       </div>
-      <br>
-      <div class="field">
-        <label for="available_until">{{ t('messages.add_item.until') }}</label><br>
-        <input type="datetime-local" id="available_until" name="available_until"
-          value="{{ old('available_until') || '' }}">
+
+      {{-- Masqué si c'est un Don --}}
+      <div id="until_field">
+        <br>
+        <div class="field">
+          <label for="available_until">{{ t('messages.add_item.until') }}</label><br>
+          <input type="datetime-local" id="available_until" name="available_until"
+            value="{{ old('available_until') || '' }}">
+        </div>
       </div>
     </div>
 
@@ -122,30 +128,29 @@
 </main>
 
 <script>
-  // Ton JS reste le même, il est déjà bien. 
-  // Juste une petite correction sur l'affichage initial du bloc dates :
   const typeSelector = document.getElementById('type');
-  const datesSection = document.getElementById('dates_section');
-  const imageSelector = document.getElementById('image');
-  const imageDisplay = document.getElementById('imageDisplay');
+  const availabilitySection = document.getElementById('availability_section');
+  const untilField = document.getElementById('until_field');
 
   function toggleDates() {
-    datesSection.style.display = (typeSelector.value === '1') ? 'block' : 'none';
+    const val = typeSelector.value;
+
+    if (val === '0') {
+      // Cas : DON
+      availabilitySection.style.display = 'block';
+      untilField.style.display = 'none'; // Pas de date de fin pour un don
+    } else if (val === '1') {
+      // Cas : PRÊT
+      availabilitySection.style.display = 'block';
+      untilField.style.display = 'block'; // On affiche tout
+    } else {
+      // Cas : RIEN SÉLECTIONNÉ
+      availabilitySection.style.display = 'none';
+    }
   }
 
   typeSelector.addEventListener('change', toggleDates);
   window.addEventListener('DOMContentLoaded', toggleDates);
-
-  imageSelector.addEventListener('change', function (event) {
-    if (event.target.files && event.target.files[0]) {
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        imageDisplay.src = e.target.result;
-        imageDisplay.style.display = 'block';
-      };
-      reader.readAsDataURL(event.target.files[0]);
-    }
-  });
 </script>
 
 @include('partials/footer')

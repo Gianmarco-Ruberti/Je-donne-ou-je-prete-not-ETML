@@ -1,5 +1,11 @@
 Hash,Branche,Auteur,Date,Jour,Heure,Message,Description
-46ca17a,main,Damien Rochat,2026-02-24,Tuesday,08:52,Feat(message): add message on email,[45][DONE]
+6bbb33f,main,Damien Rochat,2026-02-24,Tuesday,10:09,Fix(email): demandereur,[10][DONE]
+6f5f73b,detached,Damien Rochat,2026-02-24,Tuesday,10:03,Fix(gitignore): add public on gitingore,[5][DONE]
+cf0c636,detached,Gianmarco-Ruberti,2026-02-24,Tuesday,09:57,feat(new/edit) : ajout  du mode urgent dans la création / edition des objets,[30min][DONE]
+72c9617,detached,Damien Rochat,2026-02-24,Tuesday,09:55,Fix(layout): color lang,[3][DONE]
+c320be8,detached,Damien Rochat,2026-02-24,Tuesday,09:33,Feat(HOME): ugrents qui son afficher,[33][DONE]
+42f2184,detached,Gianmarco-Ruberti,2026-02-24,Tuesday,09:05,feat(DB) : ajout du mode urgent,[40min][DONE]
+46ca17a,detached,Damien Rochat,2026-02-24,Tuesday,08:52,Feat(message): add message on email,[45][DONE]
 e4d1e3e,detached,Damien Rochat,2026-02-24,Tuesday,08:15,Merge branch 'main' of https://github.com/BlackAngelTVdev/Je-donne-ou-je-prete,
 d00101f,detached,Damien Rochat,2026-02-24,Tuesday,08:14,Fix(validateur) : quoi je sais plus,[2][DONE]
 ---,---,---,---,---,---,---,---
@@ -82,6 +88,3 @@ b9f75d0,detached,Damien Rochat,2026-01-20,Tuesday,08:12,Feat(autoCSV) : git log 
 ---,---,---,---,---,---,---,---
 7d99b56,detached,Gianmarco-Ruberti,2026-01-13,Tuesday,11:25,feat(account) : ajout du css responsive pour les items,[DONE]
 32d3090,detached,Damien Rochat,2026-01-13,Tuesday,11:17,Feat(email): envoie un email pour réservé,
-13ae5fd,detached,Damien Rochat,2026-01-13,Tuesday,10:04,ROLBACK,
-44b8a6d,detached,Damien Rochat,2026-01-13,Tuesday,10:03,Test(Deploy),
-17c88c7,detached,Damien Rochat,2026-01-13,Tuesday,09:58,Fix(host): db host on server,

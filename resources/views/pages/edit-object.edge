@@ -20,7 +20,7 @@
   {{-- La route update avec l'ID de l'objet --}}
   <form action="{{ route('donation_objects.update', { id: object.id }) }}" method="POST" enctype="multipart/form-data">
     {{ csrfField() }}
-    
+
     {{-- Pour Adonis, on utilise l'ID de route POST mais on simule le PUT ou PATCH --}}
     <input type="hidden" name="_method" value="POST"> {{-- Ou PATCH selon ton controller --}}
 
@@ -104,7 +104,7 @@
 
     {{-- Section Dates --}}
     <div id="dates_section">
-      <p>{{ t('messages.add_item.loan_details') }}</p>
+      <p id="loan_text">{{ t('messages.add_item.loan_details') }}</p>
 
       <div class="field">
         <label for="available_from">{{ t('messages.add_item.from') }}</label><br>
@@ -112,12 +112,14 @@
           value="{{ old('available_from') || (object.availableFrom ? object.availableFrom.toFormat('yyyy-MM-dd\'T\'HH:mm') : '') }}">
       </div>
 
-      <br>
-
-      <div class="field">
-        <label for="available_until">{{ t('messages.add_item.until') }}</label><br>
-        <input type="datetime-local" id="available_until" name="available_until"
-          value="{{ old('available_until') || (object.availableUntil ? object.availableUntil.toFormat('yyyy-MM-dd\'T\'HH:mm') : '') }}">
+      {{-- On isole cette partie pour pouvoir la cacher en cas de DON --}}
+      <div id="until_field">
+        <br>
+        <div class="field">
+          <label for="available_until">{{ t('messages.add_item.until') }}</label><br>
+          <input type="datetime-local" id="available_until" name="available_until"
+            value="{{ old('available_until') || (object.availableUntil ? object.availableUntil.toFormat('yyyy-MM-dd\'T\'HH:mm') : '') }}">
+        </div>
       </div>
     </div>
 
@@ -135,11 +137,29 @@
 <script>
   const typeSelector = document.getElementById('type');
   const datesSection = document.getElementById('dates_section');
+  const untilField = document.getElementById('until_field');
+  const loanText = document.getElementById('loan_text');
+
   const imageSelector = document.getElementById('image');
   const imageDisplay = document.getElementById('imageDisplay');
 
   function toggleDates() {
-    datesSection.style.display = (typeSelector.value === '1') ? 'block' : 'none';
+    const val = typeSelector.value;
+
+    if (val === '0') {
+      // Cas DON : on montre la section mais on cache la date de fin
+      datesSection.style.display = 'block';
+      untilField.style.display = 'none';
+      if(loanText) loanText.style.display = 'none'; // Optionnel: cache le texte "Détails du prêt"
+    } else if (val === '1') {
+      // Cas PRÊT : on montre tout
+      datesSection.style.display = 'block';
+      untilField.style.display = 'block';
+      if(loanText) loanText.style.display = 'block';
+    } else {
+      // Cas RIEN : on cache tout
+      datesSection.style.display = 'none';
+    }
   }
 
   typeSelector.addEventListener('change', toggleDates);

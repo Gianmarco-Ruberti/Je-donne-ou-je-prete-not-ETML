@@ -22,6 +22,8 @@ export const createDonationObjectValidator = vine.compile(
     // On valide que c'est bien une des clés techniques (ex: 'sport')
     categorie: vine.enum(categoriesList),
 
+    IsUrgent: vine.boolean().optional(),
+
     image: vine.file({
       size: '5mb',
       extnames: ['jpg', 'jpeg', 'png', 'webp'],
@@ -45,6 +47,9 @@ export const updateDonationObjectValidator = vine.compile(
       .requiredWhen('type', '=', '1'),
 
     categorie: vine.enum(categoriesList),
+
+    IsUrgent: vine.boolean().optional(),
+
     image: vine
       .file({
         size: '5mb',

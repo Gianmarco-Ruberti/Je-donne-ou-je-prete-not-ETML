@@ -86,6 +86,7 @@ export default class DonationObjectsController {
       categorie: payload.categorie,
       imagePath: fileName,
       status: 1,
+      urgent: !!payload.IsUrgent,
       availableFrom: payload.available_from ? DateTime.fromJSDate(payload.available_from) : null,
       availableUntil: payload.available_until ? DateTime.fromJSDate(payload.available_until) : null,
     })
@@ -126,6 +127,7 @@ export default class DonationObjectsController {
     const updateData: any = {
       name: payload.name,
       description: payload.description,
+      urgent: !!payload.IsUrgent,
       type: payload.type === '1',
       categorie: payload.categorie,
       availableFrom: payload.available_from ? DateTime.fromJSDate(payload.available_from) : null,

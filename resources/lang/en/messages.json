@@ -58,6 +58,7 @@
   "show_item": {
     "published_by": "Published by:",
     "available_from": "Available from",
+    "available_fromdon" : "Available since",
     "to": "to",
     "reserve": "Reserve now",
     "login_to_reserve": "Log in to reserve"

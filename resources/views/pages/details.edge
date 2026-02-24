@@ -36,11 +36,16 @@
     <h3>{{ t('messages.show_item.published_by') }} {{ object.user.Username }}</h3>
 
     <h3 class="item-date">
-      @if(object.type)
+      @if(object.type == 1)
+      {{-- Cas du PRÊT : On affiche du ... au ... --}}
       {{ t('messages.show_item.available_from') }}
       <strong>{{ object.availableFrom.toFormat('dd LLL yyyy') }}</strong>
       {{ t('messages.show_item.to') }}
       <strong>{{ object.availableUntil.toFormat('dd LLL yyyy') }}</strong>
+
+      @elseif(object.type == 0 && object.availableFrom)
+      {{ t('messages.show_item.available_fromdon') }}
+      <strong>{{ object.availableFrom.toFormat('dd LLL yyyy') }}</strong>
       @end
     </h3>
 

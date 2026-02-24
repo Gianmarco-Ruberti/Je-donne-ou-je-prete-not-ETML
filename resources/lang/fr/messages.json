@@ -56,6 +56,7 @@
   "show_item": {
     "published_by": "Publié par :",
     "available_from": "Disponible du",
+    "available_fromdon": "Disponible depuis le",
     "to": "au",
     "reserve": "Je réserve",
     "login_to_reserve": "Connectez-vous pour réserver"

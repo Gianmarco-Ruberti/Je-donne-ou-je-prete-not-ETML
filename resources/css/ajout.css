@@ -22,9 +22,9 @@ form div {
     padding: 0 20px; /* Ajout d'un padding pour les champs */
 }
 
-form div:last-of-type{
-    display: flex;
-    align-items: center;
+.field{
+    margin: 0;
+    margin-top: 15px;
 }
 
 .form-group{

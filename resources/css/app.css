@@ -207,16 +207,19 @@ main {
 
 #dates_section{
     display: none;
-    background: #f9fafb;
+    background: var(--colorform);
     padding: 20px;
     border-radius: 10px;
-    border-left: 4px solid #007bff;
 }
 
 #dates_section p{
     margin-top: 0;
     font-weight: bold;
-    color: #007bff;
+    color: var(--colorButton);
+}
+
+#dates_section input, #availability_section input{
+    background-color: var(--colorText);
 }
 
 /* Style de base pour les liens de langue */

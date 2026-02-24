@@ -107,7 +107,7 @@
       <p id="loan_text">{{ t('messages.add_item.loan_details') }}</p>
 
       <div class="field">
-        <label for="available_from">{{ t('messages.add_item.from') }}</label><br>
+        <label for="available_from">{{ t('messages.add_item.from') }}</label>
         <input type="datetime-local" id="available_from" name="available_from"
           value="{{ old('available_from') || (object.availableFrom ? object.availableFrom.toFormat('yyyy-MM-dd\'T\'HH:mm') : '') }}">
       </div>
@@ -116,7 +116,7 @@
       <div id="until_field">
         <br>
         <div class="field">
-          <label for="available_until">{{ t('messages.add_item.until') }}</label><br>
+          <label for="available_until">{{ t('messages.add_item.until') }}</label>
           <input type="datetime-local" id="available_until" name="available_until"
             value="{{ old('available_until') || (object.availableUntil ? object.availableUntil.toFormat('yyyy-MM-dd\'T\'HH:mm') : '') }}">
         </div>

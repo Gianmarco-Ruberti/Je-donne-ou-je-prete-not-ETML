@@ -22,7 +22,10 @@ export default class DonationObjectsController {
     const filterCategorie = request.input('filter_categorie')
 
     // On ajoute direct le filtre sur le status 1 ici
-    let query = DonationObject.query().where('status', 1).orderBy('urgent', 'desc').orderBy('created_at', 'desc')
+    let query = DonationObject.query()
+      .where('status', 1)
+      .orderBy('urgent', 'desc')
+      .orderBy('created_at', 'desc')
 
     if (filterType === '0') {
       query = query.where('type', false)
@@ -174,12 +177,16 @@ export default class DonationObjectsController {
   }
 
   async reserve({ params, auth, response, session, request }: HttpContext) {
-    // Retiré 'mail' d'ici
     try {
       const user = auth.user!
+      await user.refresh()
+
       const userMessage = request.input('user_message', 'Aucun message particulier.')
 
-      const item = await DonationObject.query().where('id', params.id).preload('user').firstOrFail()
+      const item = await DonationObject.query()
+        .where('id', params.id)
+        .preload('user')
+        .firstOrFail()
 
       if (item.status === 2) {
         session.flash('error', 'Cet objet est déjà réservé.')
@@ -190,16 +197,15 @@ export default class DonationObjectsController {
       item.reservedBy = user.id
       await item.save()
 
-      // Utilisation du service mail importé
+      // ENVOI DU MAIL
       await mail.send((message: Message) => {
-        // <--- Ajout du type : Message
         message
           .to(item.user.email)
           .from('dami.scoot3@gmail.com')
           .subject(`Demande de réservation : ${item.name}`)
           .htmlView('emails/reservation', {
-            item: item,
-            requester: user,
+            item: item.toJSON(),
+            requester: user.toJSON(),
             customMessage: userMessage,
           })
       })

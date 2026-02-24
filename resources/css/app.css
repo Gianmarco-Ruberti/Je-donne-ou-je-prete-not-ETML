@@ -190,8 +190,8 @@ main {
 }
 
 .github-link:hover {
-    background-color: var(--colorButton);
-    border-color: var(--colorButton);
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.05);
     transform: translateY(-3px);
     box-shadow: 0 5px 15px rgba(62, 91, 255, 0.3);
 }

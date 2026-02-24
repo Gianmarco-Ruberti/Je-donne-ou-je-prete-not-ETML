@@ -22,6 +22,8 @@ export default class extends BaseSchema {
       table.string('image_path').nullable()
       table.string('categorie').defaultTo('aucune')
 
+      table.boolean('urgent').defaultTo('false')
+
       table.timestamp('created_at')
       table.timestamp('updated_at')
     })

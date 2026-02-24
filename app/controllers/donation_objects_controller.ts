@@ -22,7 +22,7 @@ export default class DonationObjectsController {
     const filterCategorie = request.input('filter_categorie')
 
     // On ajoute direct le filtre sur le status 1 ici
-    let query = DonationObject.query().where('status', 1).orderBy('created_at', 'desc')
+    let query = DonationObject.query().where('status', 1).orderBy('urgent', 'desc').orderBy('created_at', 'desc')
 
     if (filterType === '0') {
       query = query.where('type', false)

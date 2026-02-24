@@ -16,6 +16,7 @@ export default class extends BaseSeeder {
         imagePath: 't4n41e8b0sbcerfn7rxgwz4y.webp',
         availableFrom: DateTime.now(),
         availableUntil: DateTime.now().plus({ days: 7 }),
+        urgent: true,
       },
       {
         name: 'Ballon de basket',
@@ -25,6 +26,7 @@ export default class extends BaseSeeder {
         categorie: 'sport',
         userId: 1,
         imagePath: 't4n41e8b0sbcerfn7rxgwz4y.webp',
+        urgent: true,
       },
       {
         name: 'Livre - Le Seigneur des Anneaux',
@@ -36,6 +38,7 @@ export default class extends BaseSeeder {
         imagePath: 't4n41e8b0sbcerfn7rxgwz4y.webp',
         availableFrom: DateTime.now(),
         availableUntil: DateTime.now().plus({ days: 7 }),
+        urgent: true,
       },
       {
         name: "Veste d'hiver",
@@ -47,6 +50,7 @@ export default class extends BaseSeeder {
         imagePath: 't4n41e8b0sbcerfn7rxgwz4y.webp',
         availableFrom: DateTime.now(),
         availableUntil: DateTime.now().plus({ days: 7 }),
+        urgent: true,
       },
       {
         name: 'Console de jeu (ancienne génération)',
@@ -56,6 +60,7 @@ export default class extends BaseSeeder {
         categorie: 'tech',
         userId: 1,
         imagePath: 't4n41e8b0sbcerfn7rxgwz4y.webp',
+        urgent: true,
       },
       {
         name: 'Assiettes en porcelaine',
@@ -67,6 +72,7 @@ export default class extends BaseSeeder {
         imagePath: 't4n41e8b0sbcerfn7rxgwz4y.webp',
         availableFrom: DateTime.now(),
         availableUntil: DateTime.now().plus({ days: 7 }),
+        urgent: true,
       },
       {
         name: 'Tapis de Yoda',
@@ -78,6 +84,7 @@ export default class extends BaseSeeder {
         imagePath: 't4n41e8b0sbcerfn7rxgwz4y.webp',
         availableFrom: DateTime.now(),
         availableUntil: DateTime.now().plus({ days: 7 }),
+        urgent: true,
       },
       {
         name: 'Ordinateur portable',

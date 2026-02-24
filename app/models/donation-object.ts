@@ -28,7 +28,6 @@ export default class DonationObject extends BaseModel {
   @column()
   declare imagePath: string | null
 
-
   @column.dateTime()
   declare availableFrom: DateTime | null
 

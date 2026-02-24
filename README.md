@@ -10,7 +10,8 @@
 ---
 
 ## 🧐 Aperçu
-![LoginJeDonneJePrête](https://i.postimg.cc/c4VBSJdF/Capture-d-ecran-2025-12-19-124935.png)
+![LoginJeDonneJePrête](<img width="1013" height="615" alt="Capture d’écran 2026-02-24 104740" src="https://github.com/user-attachments/assets/fb929908-c8ab-44ae-af85-45c0f61044de" />
+)
 
 ## ✨ Fonctionnalités
 

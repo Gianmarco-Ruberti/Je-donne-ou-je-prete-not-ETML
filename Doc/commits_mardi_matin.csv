@@ -1,5 +1,30 @@
 Hash,Branche,Auteur,Date,Jour,Heure,Message,Description
-06bd1ed,main,Damien Rochat,2026-02-03,Tuesday,11:12,Fix(list): traduction des list,
+46ca17a,main,Damien Rochat,2026-02-24,Tuesday,08:52,Feat(message): add message on email,[45][DONE]
+e4d1e3e,detached,Damien Rochat,2026-02-24,Tuesday,08:15,Merge branch 'main' of https://github.com/BlackAngelTVdev/Je-donne-ou-je-prete,
+d00101f,detached,Damien Rochat,2026-02-24,Tuesday,08:14,Fix(validateur) : quoi je sais plus,[2][DONE]
+---,---,---,---,---,---,---,---
+70049e9,detached,Gianmarco-Ruberti,2026-02-10,Tuesday,11:05,feat(DB) : ajout de la colonne urgent,[3min][DONE]
+8def097,detached,Damien Rochat,2026-02-10,Tuesday,10:50,Fix(seeder): new catégorie,[20][DONE]
+1867e25,detached,Gianmarco-Ruberti,2026-02-10,Tuesday,10:32,fix(css) : changement de la couleur des placeholder et de button,[6min][DONE]
+9395d67,detached,Damien Rochat,2026-02-10,Tuesday,10:17,Feat(css): variables,[8][DONE]
+40550ce,detached,Damien Rochat,2026-02-10,Tuesday,10:11,Merge branch 'main' of https://github.com/BlackAngelTVdev/Je-donne-ou-je-prete,
+e3c7318,detached,Damien Rochat,2026-02-10,Tuesday,10:09,Fix(detail): css,[10][DONE]
+4ed903b,detached,Gianmarco-Ruberti,2026-02-10,Tuesday,10:09,feat(IMG) ajout du user.svg pour le logo user,[3min][DONE]
+928df75,detached,Gianmarco-Ruberti,2026-02-10,Tuesday,10:04,fix(CSS) suppression de tout les style dans le html et mise dans le CSS pour le header,[13min][DONE]
+01a2993,detached,Damien Rochat,2026-02-10,Tuesday,09:57,Merge branch 'main' of https://github.com/BlackAngelTVdev/Je-donne-ou-je-prete,
+42dad6b,detached,Damien Rochat,2026-02-10,Tuesday,09:53,Fix(db): correct db catégorie,[45][DONE]
+f237ba6,detached,Gianmarco-Ruberti,2026-02-10,Tuesday,09:27,fix(CSS) mise de la classe errors dans le message d'erreur du login,[1min][DONE]
+ac415f9,detached,Gianmarco-Ruberti,2026-02-10,Tuesday,09:24,fix(CSS) suppression de tout les style dans le html et mise dans le CSS du new-object,[5min][DONE]
+ca004ef,detached,Gianmarco-Ruberti,2026-02-10,Tuesday,09:17,Merge branch 'main' of https://github.com/BlackAngelTVdev/Je-donne-ou-je-prete,
+6146a7b,detached,Gianmarco-Ruberti,2026-02-10,Tuesday,09:15,fix(CSS) suppression de tout les style dans le html et mise dans le CSS du edit,[30min][DONE]
+33e2fc2,detached,Damien Rochat,2026-02-10,Tuesday,08:50,Merge branch 'main' of https://github.com/BlackAngelTVdev/Je-donne-ou-je-prete,
+85db96b,detached,Gianmarco-Ruberti,2026-02-10,Tuesday,08:43,fix(CSS) suppression de tout les style dans le html et mise dans le CSS du account,[42min][DONE]
+7bb1155,detached,Damien Rochat,2026-02-10,Tuesday,08:35,Fix(routes): USE AS,[21][Done]
+e771a6f,detached,Gianmarco-Ruberti,2026-02-10,Tuesday,08:17,feat(CSS) changement des couleurs comme demander par la cliente,[1min][DONE]
+c0a359c,detached,Damien Rochat,2026-02-10,Tuesday,08:13,FiX(routes): use as,[14][DONE]
+---,---,---,---,---,---,---,---
+24e7476,detached,Damien Rochat,2026-02-03,Tuesday,11:21,Fix(autoCSV): séparateur,[10][DONE]
+06bd1ed,detached,Damien Rochat,2026-02-03,Tuesday,11:12,Fix(list): traduction des list,
 d83bc88,detached,Damien Rochat,2026-02-03,Tuesday,11:04,Fix(catégorie) : traduction,[30][DONE]
 68d44b9,detached,Gianmarco-Ruberti,2026-02-03,Tuesday,10:57,fix(CSS) : responsive #44,[40][DONE]
 99d5d6e,detached,Damien Rochat,2026-02-03,Tuesday,10:47,Fix(traduction): liste de catégorie traduite,[30][DONE]
@@ -55,5 +80,8 @@ ce17622,detached,Damien Rochat,2026-01-20,Tuesday,08:25,Fix(getcommit) : add nam
 0fb1c93,detached,Damien Rochat,2026-01-20,Tuesday,08:13,Merge branch 'Réservation' of https://github.com/BlackAngelTVdev/Je-donne-ou-je-prete into Réservation,
 b9f75d0,detached,Damien Rochat,2026-01-20,Tuesday,08:12,Feat(autoCSV) : git log jnr,
 ---,---,---,---,---,---,---,---
-7d99b56,detached,Gianmarco-Ruberti,2026-01-13,Tuesday,11:25,feat(account) : ajout du
-ON A RIEN FAIT
+7d99b56,detached,Gianmarco-Ruberti,2026-01-13,Tuesday,11:25,feat(account) : ajout du css responsive pour les items,[DONE]
+32d3090,detached,Damien Rochat,2026-01-13,Tuesday,11:17,Feat(email): envoie un email pour réservé,
+13ae5fd,detached,Damien Rochat,2026-01-13,Tuesday,10:04,ROLBACK,
+44b8a6d,detached,Damien Rochat,2026-01-13,Tuesday,10:03,Test(Deploy),
+17c88c7,detached,Damien Rochat,2026-01-13,Tuesday,09:58,Fix(host): db host on server,

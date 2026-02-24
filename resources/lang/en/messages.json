@@ -40,7 +40,9 @@
     "give": "To give",
     "lend": "To lend",
     "all": "All",
-    "all_categories": "All categories"
+    "all_categories": "All categories",
+    "urgent": "URGENT"
+
   },
 
   "home": {

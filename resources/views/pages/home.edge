@@ -3,15 +3,15 @@
 @include('partials/header')
 
 @let(catMap = {
-  'Sport & Loisirs': 'sport',
-  'Culture & Livres': 'books',
-  'Vêtements': 'clothes',
-  'Informatique & Tech': 'tech',
-  'Maison & Cuisine': 'home',
-  'Jouets & Enfants': 'toys',
-  'Électroménager': 'appliances',
-  'Musique & Art': 'art',
-  'Bureau & Fournitures': 'office'
+'Sport & Loisirs': 'sport',
+'Culture & Livres': 'books',
+'Vêtements': 'clothes',
+'Informatique & Tech': 'tech',
+'Maison & Cuisine': 'home',
+'Jouets & Enfants': 'toys',
+'Électroménager': 'appliances',
+'Musique & Art': 'art',
+'Bureau & Fournitures': 'office'
 })
 
 <main>
@@ -24,10 +24,10 @@
       <option value="" {{ !filterType ? 'selected' : '' }}>
         {{ t('messages.common.all') }}
       </option>
-      <option value="0" {{ filterType === '0' ? 'selected' : '' }}>
+      <option value="0" {{ filterType==='0' ? 'selected' : '' }}>
         {{ t('messages.common.give') }}
       </option>
-      <option value="1" {{ filterType === '1' ? 'selected' : '' }}>
+      <option value="1" {{ filterType==='1' ? 'selected' : '' }}>
         {{ t('messages.common.lend') }}
       </option>
     </select>
@@ -40,43 +40,49 @@
       </option>
 
       @each(categorie in categories)
-        @let(currentKey = catMap[categorie] || categorie)
-        <option value="{{ categorie }}" {{ filterCategorie === categorie ? 'selected' : '' }}>
-          {{ t(`messages.add_item.categories.${currentKey}`, {}, categorie) }}
-        </option>
+      @let(currentKey = catMap[categorie] || categorie)
+      <option value="{{ categorie }}" {{ filterCategorie===categorie ? 'selected' : '' }}>
+        {{ t(`messages.add_item.categories.${currentKey}`, {}, categorie) }}
+      </option>
       @end
     </select>
   </form>
 
   <div class="midle">
     @each(object in objects)
-      <div class="item">
-        {{-- Utilisation de route() pour aller vers la fiche produit --}}
-        <a href="{{ route('donation_objects.show', { id: object.id }) }}" class="flexResponse">
-          @if(object.imagePath)
-            <img src="{{ `/uploads/items/${object.imagePath}` }}" loading="lazy" alt="{{ object.name }}"
-              class="item-image-thumbnail">
-          @end
+    <div class="item">
+      @if(object.urgent)
+        <div class="urgent-top-label">
+          {{ t('messages.common.urgent') }}
+        </div>
+        @end
+      {{-- Utilisation de route() pour aller vers la fiche produit --}}
+      <a href="{{ route('donation_objects.show', { id: object.id }) }}" class="flexResponse">
 
-          <div class="item-info">
-            <h2 class="item-name">{{ object.name }}</h2>
+        @if(object.imagePath)
+        <img src="{{ `/uploads/items/${object.imagePath}` }}" loading="lazy" alt="{{ object.name }}"
+          class="item-image-thumbnail">
+        @end
 
-            <p class="item-status">
-              @if(!object.type)
-                {{ t('messages.common.give') }}
-              @else
-                {{ t('messages.common.lend') }}
-              @end
+        <div class="item-info">
+          <h2 class="item-name">{{ object.name }}</h2>
 
-              @let(currentKey = catMap[object.categorie] || object.categorie)
-              | {{ t(`messages.add_item.categories.${currentKey}`, {}, object.categorie) }}
-            </p>
-          </div>
-        </a>
-      </div>
+          <p class="item-status">
+            @if(!object.type)
+            {{ t('messages.common.give') }}
+            @else
+            {{ t('messages.common.lend') }}
+            @end
+
+            @let(currentKey = catMap[object.categorie] || object.categorie)
+            | {{ t(`messages.add_item.categories.${currentKey}`, {}, object.categorie) }}
+          </p>
+        </div>
+      </a>
+    </div>
     @else
-      {{-- Petit bonus : traduction du message vide --}}
-      <p>{{ t('messages.home.no_objects_found', {}, 'Aucun objet trouvé.') }}</p>
+    {{-- Petit bonus : traduction du message vide --}}
+    <p>{{ t('messages.home.no_objects_found', {}, 'Aucun objet trouvé.') }}</p>
     @end
   </div>
 </main>

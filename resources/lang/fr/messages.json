@@ -40,7 +40,8 @@
     "give": "À donner",
     "lend": "À prêter",
     "all": "Tous",
-    "all_categories": "Toutes les catégories"
+    "all_categories": "Toutes les catégories",
+    "urgent": "URGENT"
   },
   "home": {
     "filter_type": "Filtrer par type",

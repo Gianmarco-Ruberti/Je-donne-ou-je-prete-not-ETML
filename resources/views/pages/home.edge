@@ -17,7 +17,7 @@
 <main>
   {{-- Action propre vers la route index --}}
   <form action="{{ route('donation_objects.index') }}" method="GET" class="filter-form">
-    
+
     {{-- Filtre Type --}}
     <label for="filter_type">{{ t('messages.home.filter_type') }}</label>
     <select name="filter_type" id="filter_type" onchange="this.form.submit()">

@@ -10,6 +10,7 @@ import sharp from 'sharp'
 import fs from 'node:fs/promises'
 import db from '@adonisjs/lucid/services/db'
 import mail from '@adonisjs/mail/services/main'
+import { Message } from '@adonisjs/mail/types'
 import { DateTime } from 'luxon'
 
 export default class DonationObjectsController {
@@ -63,34 +64,34 @@ export default class DonationObjectsController {
    * Enregistre un nouvel objet (Compression WebP)
    */
   async store({ request, response, auth }: HttpContext) {
-  if (!auth.user) return response.unauthorized('Vous devez être connecté.')
+    if (!auth.user) return response.unauthorized('Vous devez être connecté.')
 
-  const payload = await request.validateUsing(createDonationObjectValidator)
+    const payload = await request.validateUsing(createDonationObjectValidator)
 
-  let fileName: string | null = null
-  if (payload.image && payload.image.tmpPath) {
-    fileName = `${cuid()}.webp`
-    const uploadPath = app.makePath('public/uploads/items', fileName)
-    await sharp(payload.image.tmpPath)
-      .resize(1200, 1200, { fit: 'inside', withoutEnlargement: true })
-      .webp({ quality: 75 })
-      .toFile(uploadPath)
+    let fileName: string | null = null
+    if (payload.image && payload.image.tmpPath) {
+      fileName = `${cuid()}.webp`
+      const uploadPath = app.makePath('public/uploads/items', fileName)
+      await sharp(payload.image.tmpPath)
+        .resize(1200, 1200, { fit: 'inside', withoutEnlargement: true })
+        .webp({ quality: 75 })
+        .toFile(uploadPath)
+    }
+
+    const object = await DonationObject.create({
+      userId: auth.user.id,
+      name: payload.name,
+      description: payload.description,
+      type: payload.type === '1',
+      categorie: payload.categorie,
+      imagePath: fileName,
+      status: 1,
+      availableFrom: payload.available_from ? DateTime.fromJSDate(payload.available_from) : null,
+      availableUntil: payload.available_until ? DateTime.fromJSDate(payload.available_until) : null,
+    })
+
+    return response.redirect().toRoute('donation_objects.show', { id: object.id })
   }
-
-  const object = await DonationObject.create({
-    userId: auth.user.id,
-    name: payload.name,
-    description: payload.description,
-    type: payload.type === '1',
-    categorie: payload.categorie, // Ici 'sport', 'tech', etc.
-    imagePath: fileName,
-    status: 1,
-    availableFrom: payload.available_from ? DateTime.fromJSDate(payload.available_from) : null,
-    availableUntil: payload.available_until ? DateTime.fromJSDate(payload.available_until) : null,
-  })
-
-  return response.redirect().toRoute('donation_objects.show', { id: object.id })
-}
 
   /**
    * Affiche les détails d'un objet
@@ -163,18 +164,19 @@ export default class DonationObjectsController {
     if (object.imagePath) {
       try {
         await fs.unlink(app.makePath('public/uploads/items', object.imagePath))
-      } catch (e) {
-
-      }
+      } catch (e) {}
     }
 
     await object.delete()
     return response.redirect().toPath('/account')
   }
 
-  async reserve({ params, auth, response, session }: HttpContext) {
+  async reserve({ params, auth, response, session, request }: HttpContext) {
+    // Retiré 'mail' d'ici
     try {
-      const user = auth.user! // On récupère l'user connecté
+      const user = auth.user!
+      const userMessage = request.input('user_message', 'Aucun message particulier.')
+
       const item = await DonationObject.query().where('id', params.id).preload('user').firstOrFail()
 
       if (item.status === 2) {
@@ -182,24 +184,25 @@ export default class DonationObjectsController {
         return response.redirect().back()
       }
 
-
       item.status = 2
       item.reservedBy = user.id
       await item.save()
-      // -----------------------------
 
-      await mail.send((message) => {
+      // Utilisation du service mail importé
+      await mail.send((message: Message) => {
+        // <--- Ajout du type : Message
         message
-          .to(`${item.user.email}`)
+          .to(item.user.email)
           .from('dami.scoot3@gmail.com')
           .subject(`Demande de réservation : ${item.name}`)
           .htmlView('emails/reservation', {
             item: item,
             requester: user,
+            customMessage: userMessage,
           })
       })
 
-      session.flash('success', "Demande envoyée ! Retrouve-la dans ton historique.")
+      session.flash('success', 'Demande envoyée ! Retrouve-la dans ton historique.')
     } catch (error) {
       console.error(error)
       session.flash('error', "L'action a échoué.")
@@ -208,21 +211,19 @@ export default class DonationObjectsController {
     return response.redirect().back()
   }
 
+  async republish({ params, auth, response, session }: HttpContext) {
+    const user = auth.user!
 
- async republish({ params, auth, response, session }: HttpContext) {
-  const user = auth.user!
+    const object = await DonationObject.query()
+      .where('id', params.id)
+      .where('userId', user.id)
+      .firstOrFail()
 
-  const object = await DonationObject.query()
-    .where('id', params.id)
-    .where('userId', user.id)
-    .firstOrFail()
+    object.status = 1
+    object.reservedBy = null
+    await object.save()
 
-  object.status = 1
-  object.reservedBy = null
-  await object.save()
-
-  session.flash('success', 'L\'objet est de nouveau disponible !')
-  return response.redirect().back()
-}
-
+    session.flash('success', "L'objet est de nouveau disponible !")
+    return response.redirect().back()
+  }
 }

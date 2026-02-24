@@ -50,15 +50,31 @@
 
     {{-- Logique de réservation --}}
     @if(auth.isAuthenticated)
-    <form action="{{ route('donation_objects.reserve', { id: object.id }) }}" method="POST">
-      {{ csrfField() }}
-      <button type="submit" class="reservButton">{{ t('messages.show_item.reserve') }}</button>
-    </form>
+    <button type="button" class="reservButton" onclick="document.getElementById('reserve-modal').showModal()">
+      {{ t('messages.show_item.reserve') }}
+    </button>
+
+    <dialog id="reserve-modal" class="modal-cloud">
+      <form action="{{ route('donation_objects.reserve', { id: object.id }) }}" method="POST">
+        {{ csrfField() }}
+        <h3>Envoyer un message au donneur ?</h3>
+        <textarea name="user_message" placeholder="Laissez vide pour ne rien ajouter." rows="4"></textarea>
+
+        <div class="modal-actions">
+          <button type="submit" class="confirm-btn">Confirmer la réservation</button>
+          <button type="button" onclick="this.closest('dialog').close()" class="cancel-btn">Annuler</button>
+        </div>
+      </form>
+    </dialog>
     @else
     <a href="{{ route('auth.login.show') }}" class="reservButton">
       {{ t('messages.show_item.login_to_reserve') }}
     </a>
     @end
+
+    <style>
+
+    </style>
 
   </div>
 </main>

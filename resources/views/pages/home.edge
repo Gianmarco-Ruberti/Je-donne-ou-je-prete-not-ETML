@@ -15,6 +15,7 @@
 })
 
 <main>
+  @include('partials/flash')
   {{-- Action propre vers la route index --}}
   <form action="{{ route('donation_objects.index') }}" method="GET" class="filter-form">
 

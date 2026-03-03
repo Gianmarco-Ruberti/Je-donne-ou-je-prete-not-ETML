@@ -15,6 +15,7 @@
 })
 
 <main>
+  @include('partials/flash')
   <h1>{{ t('messages.edit_item.title') }}  {{ object.name }}</h1>
 
   {{-- La route update avec l'ID de l'objet --}}

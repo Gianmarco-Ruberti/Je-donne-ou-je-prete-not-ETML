@@ -10,7 +10,7 @@
 
 <body>
   <main>
-
+    @include('partials/flash')
     <form action="{{ route('autenticate') }}" method="post">
       <img src="{{ asset('resources/img/logo.png') }}">
       {{ csrfField() }}

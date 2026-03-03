@@ -1,0 +1,44 @@
+<div id="flash-container">
+  @if(flashMessages.has('success'))
+  <div class="flash success">
+    <div class="flash-icon">✓</div>
+    <div class="flash-content">
+      {{ flashMessages.get('success') }}
+    </div>
+    <div class="progress-bar" style="height: 2px;"></div>
+  </div>
+  @endif
+
+  @if(flashMessages.has('error'))
+  <div class="flash error">
+    <div class="flash-icon">✕</div>
+    <div class="flash-content">
+      {{ flashMessages.get('error') }}
+    </div>
+    <div class="progress-bar" style="height: 2px;"></div>
+  </div>
+  @endif
+</div>
+
+<style>
+
+</style>
+
+<script>
+  (function () {
+    document.addEventListener('DOMContentLoaded', () => {
+      const flashes = document.querySelectorAll('.flash');
+      flashes.forEach(flash => {
+        const removeToast = () => {
+          flash.classList.add('fade-out');
+          flash.addEventListener('animationend', (e) => {
+            if (e.animationName === 'fadeOut') flash.remove();
+          });
+        };
+
+        setTimeout(removeToast, 5000);
+        flash.addEventListener('click', removeToast);
+      });
+    });
+  })();
+</script>

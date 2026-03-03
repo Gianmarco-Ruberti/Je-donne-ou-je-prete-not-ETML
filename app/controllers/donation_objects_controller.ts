@@ -12,6 +12,7 @@ import db from '@adonisjs/lucid/services/db'
 import mail from '@adonisjs/mail/services/main'
 import { Message } from '@adonisjs/mail/types'
 import { DateTime } from 'luxon'
+import DonationPolicy from '#policies/donation_policy'
 
 export default class DonationObjectsController {
   /**
@@ -109,23 +110,23 @@ export default class DonationObjectsController {
   /**
    * Formulaire d'édition (vérification propriétaire)
    */
-  async edit({ params, view, auth, response }: HttpContext) {
-    const user = auth.user!
-    const object = await DonationObject.findOrFail(params.id)
+async edit({ params, view, bouncer }: HttpContext) {
+  const object = await DonationObject.findOrFail(params.id)
 
-    if (object.userId !== user.id) {
-      return response.redirect().toRoute('donation_objects.index')
-    }
+  // Vérifie si l'utilisateur a le droit d'éditer selon la Policy
+  await bouncer.with(DonationPolicy).authorize('edit', object)
 
-    return view.render('pages/edit-object', { object })
-  }
+  return view.render('pages/edit-object', { object })
+}
 
   /**
    * Mise à jour de l'objet (Suppression ancienne image + WebP)
    */
-  async update({ params, request, response }: HttpContext) {
+  async update({ params, request, response, bouncer }: HttpContext) {
     const payload = await request.validateUsing(updateDonationObjectValidator)
     const object = await DonationObject.findOrFail(params.id)
+
+    await bouncer.with(DonationPolicy).authorize('edit', object)
 
     const updateData: any = {
       name: payload.name,
@@ -162,24 +163,27 @@ export default class DonationObjectsController {
   /**
    * Suppression de l'objet et de son image
    */
-  async destroy({ params, response }: HttpContext) {
-    const object = await DonationObject.findOrFail(params.id)
+  async destroy({ params, response, bouncer }: HttpContext) {
+  const object = await DonationObject.findOrFail(params.id)
 
-    // Nettoyage du fichier image sur le serveur
-    if (object.imagePath) {
-      try {
-        await fs.unlink(app.makePath('public/uploads/items', object.imagePath))
-      } catch (e) {}
-    }
+  // On vérifie le droit de suppression
+  await bouncer.with(DonationPolicy).authorize('delete', object)
 
-    await object.delete()
-    return response.redirect().toPath('/account')
+  if (object.imagePath) {
+    try {
+      await fs.unlink(app.makePath('public/uploads/items', object.imagePath))
+    } catch (e) {}
   }
 
-  async reserve({ params, auth, response, session, request }: HttpContext) {
+  await object.delete()
+  return response.redirect().toPath('/account')
+}
+
+  async reserve({ params, auth, response, session, request, bouncer }: HttpContext) {
     try {
       const user = auth.user!
       await user.refresh()
+
 
       const userMessage = request.input('user_message', 'Aucun message particulier.')
 
@@ -187,6 +191,8 @@ export default class DonationObjectsController {
         .where('id', params.id)
         .preload('user')
         .firstOrFail()
+
+      await bouncer.with(DonationPolicy).authorize('reserve', item)
 
       if (item.status === 2) {
         session.flash('error', 'Cet objet est déjà réservé.')

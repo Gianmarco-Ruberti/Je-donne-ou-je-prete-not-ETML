@@ -254,6 +254,7 @@ main {
 }
 
 .flash {
+    overflow: hidden;
   right: 100%;
   top: 27.5px;
   pointer-events: auto;
@@ -263,7 +264,7 @@ main {
   background: var(--colorback);
   backdrop-filter: blur(8px);
   padding: 14px 18px;
-
+  border-radius: 12px;
   display: flex;
   align-items: center;
   gap: 12px;

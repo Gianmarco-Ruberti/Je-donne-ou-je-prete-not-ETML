@@ -132,25 +132,38 @@
   const availabilitySection = document.getElementById('availability_section');
   const untilField = document.getElementById('until_field');
 
+  // AJOUTE CES DEUX LIGNES ICI :
+  const imageSelector = document.getElementById('image');
+  const imageDisplay = document.getElementById('imageDisplay');
+
   function toggleDates() {
     const val = typeSelector.value;
-
     if (val === '0') {
-      // Cas : DON
       availabilitySection.style.display = 'block';
-      untilField.style.display = 'none'; // Pas de date de fin pour un don
+      untilField.style.display = 'none';
     } else if (val === '1') {
-      // Cas : PRÊT
       availabilitySection.style.display = 'block';
-      untilField.style.display = 'block'; // On affiche tout
+      untilField.style.display = 'block';
     } else {
-      // Cas : RIEN SÉLECTIONNÉ
       availabilitySection.style.display = 'none';
     }
   }
 
   typeSelector.addEventListener('change', toggleDates);
   window.addEventListener('DOMContentLoaded', toggleDates);
+
+  // CETTE PARTIE FONCTIONNERA MAINTENANT :
+  imageSelector.addEventListener('change', function (event) {
+    if (event.target.files && event.target.files[0]) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        imageDisplay.src = e.target.result;
+        imageDisplay.classList.remove('CACHER'); // Enlève la classe qui cache
+        imageDisplay.style.display = 'block';
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
+  });
 </script>
 
 @include('partials/footer')

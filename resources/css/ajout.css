@@ -1,134 +1,165 @@
 @import url(variable.css);
+
+/* --- Base et Titre --- */
 h1 {
     font-size: 26px;
     font-weight: 600;
-    margin: auto;
+    margin: 40px auto 20px auto;
     max-width: 650px;
-    padding: 0 20px; /* Ajout d'un padding pour les bords */
-    text-align: center; /* Centrer le titre par défaut */
+    padding: 0 20px;
+    text-align: center;
+    color: black; /* Ou ta couleur de titre habituelle */
 }
 
 form {
-    max-width: 650px;
+    width: 650px;
     background: var(--colorform);
-    padding: 20px 0;
-    margin: auto;
+    padding: 30px 0;
+    margin: 20px auto;
+    box-sizing: border-box;
+    border-radius: 15px; /* Petit arrondi pour le style */
+}
+
+/* --- Gestion des Espacements (Le coeur du problème) --- */
+/* On cible les divs de premier niveau dans le form pour l'espacement global */
+form > div,
+.field-group {
+    margin-top: 25px;
+    margin-bottom: 10px;
+    padding: 0 25px;
     box-sizing: border-box;
 }
 
-form div {
-    margin-top: 30px;
-    margin-bottom: 20px;
-    padding: 0 20px; /* Ajout d'un padding pour les champs */
-}
-
-.field{
-    margin: 0;
+/* Pour les petits champs à l'intérieur des sections (dates) */
+.field {
     margin-top: 15px;
+    padding: 0;
 }
 
-.form-group{
-    padding-left: 0;
-}
-
+/* --- Champs de saisie --- */
 input[type="text"],
+input[type="datetime-local"],
 textarea,
 select {
     width: 100%;
     padding: 12px 15px;
-    border: 1px solid var(--colorText);
+    border: 1px solid #ccc;
     border-radius: 12px;
     font-size: 16px;
     background-color: var(--colorText);
     outline: none;
     resize: vertical;
-    transition: 0.2s;
-    box-sizing: border-box; /* Essentiel pour que 100% inclut le padding */
+    transition: 0.2s ease-in-out;
+    box-sizing: border-box;
+    font-family: inherit;
 }
-
-input[type="text"]:focus,
+label {
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: inline-block;
+    color: #333;
+}
+input:focus,
 textarea:focus,
 select:focus {
     border-color: var(--colorButton);
     background-color: var(--colorFocus);
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05); /* Petit effet de focus propre */
 }
 
-::placeholder {
-    color: black;
+
+/* --- Boutons et Actions --- */
+/* On harmonise le placement du bouton et du lien retour */
+.actions,
+form > div:last-of-type {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 40px;
+    padding-bottom: 10px;
 }
 
-button {
+button[type="submit"] {
     width: 180px;
-    padding: 12px;
+    padding: 14px;
     background-color: var(--colorButton);
     color: white;
     border: none;
-    border-radius: 20px;
+    border-radius: 25px;
     cursor: pointer;
     font-size: 16px;
-    letter-spacing: 0.5px;
-    transition: 0.2s;
-    box-sizing: border-box;
-    display: block; /* Permet de le centrer sur mobile si nécessaire */
-    margin-left: auto; /* Centrage en desktop */
-    margin-right: auto;
+    font-weight: 600;
+    transition: transform 0.2s, opacity 0.2s;
 }
 
-button:hover {
-    background-color: var(--colorButton);
+button[type="submit"]:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
 }
 
-p {
-    max-width: 650px;
-    margin: auto;
-    padding: 0 20px;
-    text-align: center; /* Centrer le lien retour */
-}
-
-p a {
+/* Style des liens (Back / Cancel) */
+.btn-cancel,
+form p a,
+form div:last-of-type a {
     color: var(--colorButton);
     text-decoration: none;
+    font-weight: 500;
+    transition: 0.2s;
 }
 
-p a:hover {
+.btn-cancel:hover,
+form p a:hover,
+form div:last-of-type a:hover {
     text-decoration: underline;
 }
 
+/* --- Image Preview --- */
 #imageDisplay {
-    width: 150px;
-    height: 150px;
+    display: block;
+    margin-top: 15px;
+    width: 180px;
+    height: 180px;
     object-fit: cover;
-    border-radius: 8px;
+    border-radius: 12px;
+    border: 2px solid #eee;
 }
 
-/* RESPONSIVE MOBILE (max-width: 650px) */
+.CACHER {
+    display: none !important;
+}
+
+/* --- Erreurs --- */
+.errors,
+small.errors {
+    color: #e74c3c;
+    font-size: 14px;
+    margin-top: 6px;
+    display: block;
+}
+#availability_section p{
+margin-top: 0;
+  font-weight: bold;
+  color: var(--colorButton);
+}
+/* --- Mobile --- */
 @media (max-width: 650px) {
     h1 {
-        max-width: 100%;
-        padding: 0 15px;
-        text-align: center;
+        font-size: 22px;
     }
 
     form {
+        margin: 10px;
+        width: calc(100% - 20px);
+    }
+
+    .actions,
+    form > div:last-of-type {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    button[type="submit"] {
         width: 100%;
-        max-width: none;
-        padding: 0;
-    }
-    
-    form div {
-        padding: 0 15px; /* Réduction du padding sur les bords pour l'alignement */
-    }
-
-    button {
-        width: 100%; /* Le bouton prend toute la largeur */
-        margin-left: 0;
-        margin-right: 0;
-        margin-bottom: 15px;
-    }
-
-    p {
-        max-width: 100%;
-        padding: 0 15px;
-        margin-bottom: 15px;
     }
 }

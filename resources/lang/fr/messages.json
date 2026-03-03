@@ -19,7 +19,7 @@
     "status_select": "-- Sélectionner le statut --",
     "status_give": "Donner",
     "status_lend": "Prêter",
-    "loan_details": "Détails du prêt",
+    "loan_details": "Détails",
     "from": "Disponible à partir de :",
     "until": "Jusqu'à (date de fin) :",
     "submit": "Ajouter l'objet",

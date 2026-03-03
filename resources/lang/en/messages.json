@@ -19,7 +19,7 @@
     "status_select": "-- Select status --",
     "status_give": "Give",
     "status_lend": "Lend",
-    "loan_details": "Loan Details",
+    "loan_details": "Details",
     "from": "Available from:",
     "until": "Until (end date):",
     "submit": "Add Item",

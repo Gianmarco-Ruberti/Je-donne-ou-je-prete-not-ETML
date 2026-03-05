@@ -388,6 +388,7 @@ main {
   }
 
   .bottom-action-bar {
+    z-index: 100;
     padding: 10px 15px;
     display: flex;
     justify-content: space-around;

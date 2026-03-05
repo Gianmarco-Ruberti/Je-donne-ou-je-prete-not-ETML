@@ -213,7 +213,7 @@ label[for="filter_categorie"] {
     font-size: 14px;
     font-weight: bold;
     text-transform: uppercase;
-    z-index: 10;
+    z-index: 1;
     box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     pointer-events: none;
 }

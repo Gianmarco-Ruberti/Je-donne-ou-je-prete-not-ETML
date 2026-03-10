@@ -5,7 +5,6 @@
     "password": "Password",
     "login_button": "Login"
   },
-
   "add_item": {
     "title": "Propose a new item",
     "image_label": "Item Image",
@@ -42,9 +41,7 @@
     "all": "All",
     "all_categories": "All categories",
     "urgent": "URGENT"
-
   },
-
   "home": {
     "filter_type": "Filter by type",
     "filter_cat": "Filter by category"
@@ -58,10 +55,13 @@
   "show_item": {
     "published_by": "Published by:",
     "available_from": "Available from",
-    "available_fromdon" : "Available since",
+    "available_fromdon": "Available since",
     "to": "to",
     "reserve": "Reserve now",
-    "login_to_reserve": "Log in to reserve"
+    "login_to_reserve": "Log in to reserve",
+    "message_to_reserve": "Send a message to the donor ?",
+    "confirm_reserve": "Confirm the reservation",
+    "confirm_placolder": "Leave blank to avoid adding anything."
   },
   "account": {
     "logout": "Logout",

@@ -59,7 +59,10 @@
     "available_fromdon": "Disponible depuis le",
     "to": "au",
     "reserve": "Je réserve",
-    "login_to_reserve": "Connectez-vous pour réserver"
+    "login_to_reserve": "Connectez-vous pour réserver",
+    "message_to_reserve": "Envoyer un message au donneur ?",
+    "confirm_reserve": "Confirmer la réservation",
+    "confirm_placolder": "Laissez vide pour ne rien ajouter."
   },
   "account": {
     "logout": "Se déconnecter",

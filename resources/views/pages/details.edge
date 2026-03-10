@@ -62,12 +62,12 @@
     <dialog id="reserve-modal" class="modal-cloud">
       <form action="{{ route('donation_objects.reserve', { id: object.id }) }}" method="POST">
         {{ csrfField() }}
-        <h3>Envoyer un message au donneur ?</h3>
-        <textarea name="user_message" placeholder="Laissez vide pour ne rien ajouter." rows="4"></textarea>
+        <h3>{{ t('messages.show_item.message_to_reserve') }}</h3>
+        <textarea name="user_message" placeholder="{{ t('messages.show_item.confirm_placolder') }}" rows="4"></textarea>
 
         <div class="modal-actions">
-          <button type="submit" class="confirm-btn">Confirmer la réservation</button>
-          <button type="button" onclick="this.closest('dialog').close()" class="cancel-btn">Annuler</button>
+          <button type="submit" class="confirm-btn">{{ t('messages.show_item.confirm_reserve') }}</button>
+          <button type="button" onclick="this.closest('dialog').close()" class="cancel-btn">{{ t('messages.edit_item.cancel') }}</button>
         </div>
       </form>
     </dialog>

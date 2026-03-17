@@ -10,7 +10,6 @@ import sharp from 'sharp'
 import fs from 'node:fs/promises'
 import db from '@adonisjs/lucid/services/db'
 import mail from '@adonisjs/mail/services/main'
-import { Message } from '@adonisjs/mail/types'
 import { DateTime } from 'luxon'
 import DonationPolicy from '#policies/donation_policy'
 
@@ -22,20 +21,69 @@ export default class DonationObjectsController {
     const filterType = request.input('filter_type')
     const filterCategorie = request.input('filter_categorie')
 
+    const extainreColumn = await db
+      .from('information_schema.columns')
+      .whereRaw('table_schema = database()')
+      .where('table_name', 'users')
+      .where('column_name', 'extainre')
+      .first()
+
+    const hasExtainreColumn = !!extainreColumn
+
+    const externeColumn = hasExtainreColumn
+      ? null
+      : await db
+          .from('information_schema.columns')
+          .whereRaw('table_schema = database()')
+          .where('table_name', 'users')
+          .where('column_name', 'externe')
+          .first()
+
+    const hasExterneColumn = !!externeColumn
+
     // On ajoute direct le filtre sur le status 1 ici
     let query = DonationObject.query()
-      .where('status', 1)
-      .orderBy('urgent', 'desc')
-      .orderBy('created_at', 'desc')
+      .where('donation_objects.status', 1)
+      .orderBy('donation_objects.urgent', 'desc')
+
+    if (hasExtainreColumn || hasExterneColumn) {
+      const delayedUserColumn = hasExtainreColumn ? 'extainre' : 'externe'
+
+      query = query.whereRaw(
+        `NOT EXISTS (
+          SELECT 1
+          FROM users
+          WHERE users.id = donation_objects.user_id
+            AND COALESCE(users.${delayedUserColumn}, 0) = 1
+            AND donation_objects.created_at > DATE_SUB(NOW(), INTERVAL 3 MONTH)
+        )`
+      )
+
+      query = query.orderByRaw(
+        `CASE WHEN EXISTS (
+          SELECT 1
+          FROM users
+          WHERE users.id = donation_objects.user_id
+            AND COALESCE(users.${delayedUserColumn}, 0) = 1
+        )
+        THEN 1
+        ELSE 0
+        END ASC`
+      )
+
+      query = query.orderBy('donation_objects.created_at', 'desc')
+    } else {
+      query = query.orderBy('donation_objects.created_at', 'desc')
+    }
 
     if (filterType === '0') {
-      query = query.where('type', false)
+      query = query.where('donation_objects.type', false)
     } else if (filterType === '1') {
-      query = query.where('type', true)
+      query = query.where('donation_objects.type', true)
     }
 
     if (filterCategorie && filterCategorie !== '') {
-      query = query.where('categorie', filterCategorie)
+      query = query.where('donation_objects.categorie', filterCategorie)
     }
 
     const objects = await query
@@ -203,10 +251,16 @@ async edit({ params, view, bouncer }: HttpContext) {
       item.reservedBy = user.id
       await item.save()
 
+      const ownerEmail = item.user.email
+      if (!ownerEmail) {
+        session.flash('error', "Le propriétaire n'a pas d'email configuré.")
+        return response.redirect().back()
+      }
+
       // ENVOI DU MAIL
-      await mail.send((message: Message) => {
+      await mail.send((message) => {
         message
-          .to(item.user.email)
+          .to(ownerEmail)
           .from('dami.scoot3@gmail.com')
           .subject(`Demande de réservation : ${item.name}`)
           .htmlView('emails/reservation', {

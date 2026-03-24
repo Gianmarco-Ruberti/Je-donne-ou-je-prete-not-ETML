@@ -44,7 +44,9 @@
   },
   "home": {
     "filter_type": "Filter by type",
-    "filter_cat": "Filter by category"
+    "filter_cat": "Filter by category",
+    "mode_search": "Search mode",
+    "mode_donation": "Give / Lend mode"
   },
   "edit_item": {
     "title": "Edit Item:",
@@ -86,6 +88,6 @@
     "add": "Add",
     "account": "Account",
     "search": "Search",
-    "don": "Give"
+    "don": "Give/Lend"
   }
 }

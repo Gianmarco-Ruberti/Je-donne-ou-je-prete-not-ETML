@@ -45,7 +45,9 @@
   },
   "home": {
     "filter_type": "Filtrer par type",
-    "filter_cat": "Filtrer par catégorie"
+    "filter_cat": "Filtrer par catégorie",
+    "mode_search": "Mode recherche",
+    "mode_donation": "Mode don / prêt"
   },
   "edit_item": {
     "title": "Éditer l'objet :",
@@ -87,6 +89,6 @@
     "add": "Ajouter",
     "account": "Compte",
     "search": "Chercher",
-    "don": "Don"
+    "don": "Don/Prêt"
   }
 }

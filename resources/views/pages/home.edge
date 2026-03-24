@@ -19,6 +19,11 @@
 
 <main>
   @include('partials/flash')
+
+  <h1 class="home-mode-title">
+    {{ isSearchMode ? t('messages.nav.search') : t('messages.nav.don') }}
+  </h1>
+
   {{-- Action propre vers la route index --}}
   <form action="{{ route(indexRouteName) }}" method="GET" class="filter-form">
 

@@ -84,6 +84,8 @@
   },
   "nav": {
     "add": "Add",
-    "account": "Account"
+    "account": "Account",
+    "search": "Search",
+    "don": "Give"
   }
 }

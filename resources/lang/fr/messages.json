@@ -85,6 +85,8 @@
   },
   "nav": {
     "add": "Ajouter",
-    "account": "Compte"
+    "account": "Compte",
+    "search": "Chercher",
+    "don": "Don"
   }
 }

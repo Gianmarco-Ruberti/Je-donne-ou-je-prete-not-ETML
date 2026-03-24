@@ -17,7 +17,7 @@
 
 <body>
   @let(isSearchMode = !!isCherchePage)
-  @let(toggleLabel = isSearchMode ? 'Don' : 'Chercher')
+  @let(toggleLabel = isSearchMode ? t('messages.nav.don') : t('messages.nav.search'))
   @let(toggleRouteName = isSearchMode ? 'donation_objects.index' : 'cherche_objects.index')
 
   <header>

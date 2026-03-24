@@ -1,6 +1,9 @@
 @let(title = 'Home')
 @let(css = 'home.css')
 @include('partials/header')
+@let(isSearchMode = !!isCherchePage)
+@let(indexRouteName = isSearchMode ? 'cherche_objects.index' : 'donation_objects.index')
+@let(showRouteName = isSearchMode ? 'cherche_objects.show' : 'donation_objects.show')
 
 @let(catMap = {
 'Sport & Loisirs': 'sport',
@@ -17,9 +20,10 @@
 <main>
   @include('partials/flash')
   {{-- Action propre vers la route index --}}
-  <form action="{{ route('donation_objects.index') }}" method="GET" class="filter-form">
+  <form action="{{ route(indexRouteName) }}" method="GET" class="filter-form">
 
     {{-- Filtre Type --}}
+    @if(!isSearchMode)
     <label for="filter_type">{{ t('messages.home.filter_type') }}</label>
     <select name="filter_type" id="filter_type" onchange="this.form.submit()">
       <option value="" {{ !filterType ? 'selected' : '' }}>
@@ -32,6 +36,7 @@
         {{ t('messages.common.lend') }}
       </option>
     </select>
+    @end
 
     {{-- Filtre Catégorie --}}
     <label for="filter_categorie">{{ t('messages.home.filter_cat') }}</label>
@@ -58,7 +63,7 @@
         </div>
         @end
       {{-- Utilisation de route() pour aller vers la fiche produit --}}
-      <a href="{{ route('donation_objects.show', { id: object.id }) }}" class="flexResponse">
+      <a href="{{ route(showRouteName, { id: object.id }) }}" class="flexResponse">
 
         @if(object.imagePath)
         <img src="{{ `/uploads/items/${object.imagePath}` }}" loading="lazy" alt="{{ object.name }}"
@@ -69,10 +74,12 @@
           <h2 class="item-name">{{ object.name }}</h2>
 
           <p class="item-status">
-            @if(!object.type)
-            {{ t('messages.common.give') }}
+            @if(isSearchMode)
+            Recherche
+            @elseif(!object.type)
+              {{ t('messages.common.give') }}
             @else
-            {{ t('messages.common.lend') }}
+              {{ t('messages.common.lend') }}
             @end
 
             @let(currentKey = catMap[object.categorie] || object.categorie)

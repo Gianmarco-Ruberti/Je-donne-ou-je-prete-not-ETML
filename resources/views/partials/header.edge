@@ -16,6 +16,10 @@
 </head>
 
 <body>
+  @let(isSearchMode = !!isCherchePage)
+  @let(toggleLabel = isSearchMode ? 'Don' : 'Chercher')
+  @let(toggleRouteName = isSearchMode ? 'donation_objects.index' : 'cherche_objects.index')
+
   <header>
     {{-- Logo cliquable vers Home via route nommée --}}
     <a href="{{ route('donation_objects.index') }}" class="logo">
@@ -23,18 +27,22 @@
     </a>
 
     <div class="bouton">
+      <a href="{{ route(toggleRouteName) }}" class="action-button mode-switch-button">
+        {{ toggleLabel }}
+      </a>
+
       {{-- Ajouter un objet --}}
-      <a href="{{ route('donation_objects.create') }}" class="action-button">
+      <a href="{{ route('donation_objects.create') }}" class="action-button add-button">
         {{ t('messages.nav.add') }}
       </a>
 
       {{-- Compte utilisateur --}}
-      <a href="{{ route('account') }}" class="textdeco">
+      <a href="{{ route('account') }}" class="textdeco account-link">
         <img src="{{ asset('resources/img/user.svg') }}" class="imgbutton" alt="User">
       </a>
 
       {{-- Sélecteur de langue Desktop --}}
-      <div class="lang-switcher">
+      <div class="lang-switcher header-lang-switcher">
         <a href="?lang=fr" class="lang-link {{ i18n.locale === 'fr' ? 'active' : '' }}">FR</a>
         <span>|</span>
         <a href="?lang=en" class="lang-link {{ i18n.locale === 'en' ? 'active' : '' }}">EN</a>
@@ -46,6 +54,10 @@
   <div class="bottom-action-bar">
     <a href="{{ route('donation_objects.create') }}" class="action-button">
       {{ t('messages.nav.add') }}
+    </a>
+
+    <a href="{{ route(toggleRouteName) }}" class="action-button">
+      {{ toggleLabel }}
     </a>
 
     <a href="{{ route('account') }}" class="action-button">

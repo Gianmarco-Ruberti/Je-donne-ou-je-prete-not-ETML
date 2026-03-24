@@ -41,7 +41,13 @@ export default class ContainerBindingsMiddleware {
   handle(ctx: HttpContext, next: NextFn) {
     ctx.containerResolver.bindValue(HttpContext, ctx)
     ctx.containerResolver.bindValue(Logger, ctx.logger)
-    ctx.view.share({ repoVersion: ContainerBindingsMiddleware.computeRepoVersion() })
+    const requestPath = ctx.request.url()
+    const isCherchePage = requestPath.startsWith('/cherche') || requestPath.startsWith('/item/cherche')
+
+    ctx.view.share({
+      repoVersion: ContainerBindingsMiddleware.computeRepoVersion(),
+      isCherchePage,
+    })
 
     return next()
   }

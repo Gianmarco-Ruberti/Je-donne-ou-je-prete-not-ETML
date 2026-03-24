@@ -7,7 +7,6 @@ export default class ChercheObjectsController {
        * Liste des objets avec filtres (Home)
        */
       async index({ request, view }: HttpContext) {
-        const filterType = request.input('filter_type')
         const filterCategorie = request.input('filter_categorie')
     
         // On ajoute direct le filtre sur le status 1 ici
@@ -15,12 +14,6 @@ export default class ChercheObjectsController {
           .where('status', 1)
           .orderBy('urgent', 'desc')
           .orderBy('created_at', 'desc')
-    
-        if (filterType === '0') {
-          query = query.where('type', false)
-        } else if (filterType === '1') {
-          query = query.where('type', true)
-        }
     
         if (filterCategorie && filterCategorie !== '') {
           query = query.where('categorie', filterCategorie)
@@ -39,9 +32,10 @@ export default class ChercheObjectsController {
     
         return view.render('pages/home', {
           objects,
-          filterType,
+          filterType: null,
           filterCategorie,
           categories,
+          isChercheMode: true,
         })
       }
 }

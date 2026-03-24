@@ -17,15 +17,15 @@ router.post('/login', [AuthController, 'authenticate']).as('autenticate')
 router.get('/', [AuthController, 'login']).as('login0')
 // --- Protected routes ---
 router.group(() => {
-  // router.get('/profile', 'UsersController.profile').as('profile')
+  
   router.get('/account', [AccountsController, 'account']).as('account')
   router.get('/logout', [AuthController, 'logout']).as('logout')
 
   // DonationObjects routes
-  router.get('home', [DonationObjectsController, 'index']).as('donation_objects.index')
-  router.get('new', [DonationObjectsController, 'create']).as('donation_objects.create')
+  router.get('/home', [DonationObjectsController, 'index']).as('donation_objects.index')
+  router.get('/ew', [DonationObjectsController, 'create']).as('donation_objects.create')
 
-  router.get('cherche/home', [ChercheObjectsController, 'index']).as('cherche_objects.index')
+  router.get('/cherche/home', [ChercheObjectsController, 'index']).as('cherche_objects.index')
 
   router.group(() => {
     router.get('/:id', [DonationObjectsController, 'show']).as('donation_objects.show')

@@ -39,6 +39,7 @@
   "common": {
     "give": "À donner",
     "lend": "À prêter",
+    "search": "Recherche",
     "all": "Tous",
     "all_categories": "Toutes les catégories",
     "urgent": "URGENT"
@@ -59,11 +60,16 @@
     "published_by": "Publié par :",
     "available_from": "Disponible du",
     "available_fromdon": "Disponible depuis le",
+    "needed_from": "Besoin du",
     "to": "au",
     "reserve": "Je réserve",
+    "offer_help": "Je propose un don",
     "login_to_reserve": "Connectez-vous pour réserver",
+    "login_to_offer": "Connectez-vous pour proposer un don",
     "message_to_reserve": "Envoyer un message au donneur ?",
+    "message_to_offer": "Envoyer un message au demandeur ?",
     "confirm_reserve": "Confirmer la réservation",
+    "confirm_offer": "Confirmer l'offre",
     "confirm_placolder": "Laissez vide pour ne rien ajouter."
   },
   "account": {

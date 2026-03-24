@@ -1,6 +1,8 @@
 @let(title = t('messages.show_item.reserve'))
 @let(css = 'details.css')
 @include('partials/header')
+@let(isSearchMode = !!isCherchePage)
+@let(reserveRouteName = isSearchMode ? 'cherche_objects.reserve' : 'donation_objects.reserve')
 @let(catMap = {
 'Sport & Loisirs': 'sport',
 'Culture & Livres': 'books',
@@ -24,7 +26,9 @@
     <h1>{{ object.name }}</h1>
 
     <h2 class="item-status">
-      @if(!object.type)
+      @if(isSearchMode)
+      {{ t('messages.common.search') }}
+      @elseif(!object.type)
       {{ t('messages.common.give') }}
       @else
       {{ t('messages.common.lend') }}
@@ -36,7 +40,17 @@
     <h3>{{ t('messages.show_item.published_by') }} {{ object.user.Username }}</h3>
 
     <h3 class="item-date">
-      @if(object.type == 1)
+      @if(isSearchMode && object.neededFrom && object.neededUntil)
+      {{ t('messages.show_item.needed_from') }}
+      <strong>{{ object.neededFrom.toFormat('dd LLL yyyy') }}</strong>
+      {{ t('messages.show_item.to') }}
+      <strong>{{ object.neededUntil.toFormat('dd LLL yyyy') }}</strong>
+
+      @elseif(isSearchMode && object.neededFrom)
+      {{ t('messages.show_item.needed_from') }}
+      <strong>{{ object.neededFrom.toFormat('dd LLL yyyy') }}</strong>
+
+      @elseif(object.type == 1)
       {{-- Cas du PRÊT : On affiche du ... au ... --}}
       {{ t('messages.show_item.available_from') }}
       <strong>{{ object.availableFrom.toFormat('dd LLL yyyy') }}</strong>
@@ -56,24 +70,26 @@
     {{-- Logique de réservation --}}
     @if(auth.isAuthenticated)
     <button type="button" class="reservButton" onclick="document.getElementById('reserve-modal').showModal()">
-      {{ t('messages.show_item.reserve') }}
+      {{ isSearchMode ? t('messages.show_item.offer_help') : t('messages.show_item.reserve') }}
     </button>
 
     <dialog id="reserve-modal" class="modal-cloud">
-      <form action="{{ route('donation_objects.reserve', { id: object.id }) }}" method="POST">
+      <form action="{{ route(reserveRouteName, { id: object.id }) }}" method="POST">
         {{ csrfField() }}
-        <h3>{{ t('messages.show_item.message_to_reserve') }}</h3>
+        <h3>{{ isSearchMode ? t('messages.show_item.message_to_offer') : t('messages.show_item.message_to_reserve') }}</h3>
         <textarea name="user_message" placeholder="{{ t('messages.show_item.confirm_placolder') }}" rows="4"></textarea>
 
         <div class="modal-actions">
-          <button type="submit" class="confirm-btn">{{ t('messages.show_item.confirm_reserve') }}</button>
+          <button type="submit" class="confirm-btn">
+            {{ isSearchMode ? t('messages.show_item.confirm_offer') : t('messages.show_item.confirm_reserve') }}
+          </button>
           <button type="button" onclick="this.closest('dialog').close()" class="cancel-btn">{{ t('messages.edit_item.cancel') }}</button>
         </div>
       </form>
     </dialog>
     @else
     <a href="{{ route('auth.login.show') }}" class="reservButton">
-      {{ t('messages.show_item.login_to_reserve') }}
+      {{ isSearchMode ? t('messages.show_item.login_to_offer') : t('messages.show_item.login_to_reserve') }}
     </a>
     @end
 

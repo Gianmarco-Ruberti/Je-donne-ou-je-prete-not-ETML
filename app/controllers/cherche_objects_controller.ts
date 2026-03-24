@@ -8,6 +8,7 @@ import {
 import app from '@adonisjs/core/services/app'
 import { cuid } from '@adonisjs/core/helpers'
 import sharp from 'sharp'
+import fs from 'node:fs/promises'
 import mail from '@adonisjs/mail/services/main'
 import { DateTime } from 'luxon'
 import CherchePolicy from '#policies/cherche_policy'
@@ -79,6 +80,7 @@ export default class ChercheObjectsController {
       name: payload.name,
       description: payload.description,
       categorie: payload.categorie,
+      imagePath: fileName,
       status: 1,
       urgent: !!payload.IsUrgent,
       neededFrom: payload.available_from ? DateTime.fromJSDate(payload.available_from) : null,
@@ -127,6 +129,20 @@ export default class ChercheObjectsController {
       neededUntil: payload.available_until ? DateTime.fromJSDate(payload.available_until) : null,
     }
 
+    if (payload.image) {
+      const fileName = `${cuid()}.webp`
+      const uploadPath = app.makePath('public/uploads/items', fileName)
+
+      if (payload.image.tmpPath) {
+        await sharp(payload.image.tmpPath)
+          .resize(1200, 1200, { fit: 'inside', withoutEnlargement: true })
+          .webp({ quality: 75 })
+          .toFile(uploadPath)
+
+        updateData.imagePath = fileName
+      }
+    }
+
     object.merge(updateData)
     await object.save()
 
@@ -141,6 +157,12 @@ export default class ChercheObjectsController {
 
     // On vérifie le droit de suppression
     await bouncer.with(CherchePolicy).authorize('delete', object)
+
+    if (object.imagePath) {
+      try {
+        await fs.unlink(app.makePath('public/uploads/items', object.imagePath))
+      } catch (e) {}
+    }
 
     await object.delete()
     return response.redirect().toPath('/account')

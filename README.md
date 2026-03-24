@@ -18,7 +18,7 @@
 - ✅ **Prêter des objets** : Gérez facilement les prêts temporaires avec un suivi des dates de retour pour ne plus rien perdre.
 - ✅ **Gestion par catégorie** : Organisé de manière intuitive (Électronique, Outils, Loisirs) pour une recherche ultra-rapide.
 - ✅ **multilingue** : Peut prendre en charge toutes les lange du monde.
-- ❌ **Système de recherche** : Trouvez instantanément ce dont vous avez besoin grâce à des filtres avancés et une barre de recherche performante.
+- ❌ **Système de recherche** : Trouvez instantanément ce dont vous avez besoin grâce à des filtres avancés
 
 ## 🛠 Tech Stack
 

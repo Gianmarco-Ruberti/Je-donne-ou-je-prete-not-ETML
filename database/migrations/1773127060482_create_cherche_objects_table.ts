@@ -12,6 +12,7 @@ export default class extends BaseSchema {
 
       table.integer('status').notNullable().defaultTo(1)
       table.string('categorie').defaultTo('aucune')
+      table.string('image_path').nullable()
 
       // Temps de réservation en minutes (nullable au niveau DB)
       // Dans ta migration up()

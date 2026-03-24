@@ -22,6 +22,9 @@ export default class ChercheObject extends BaseModel {
   @column()
   declare categorie: string | null
 
+  @column()
+  declare imagePath: string | null
+
   @column.dateTime()
   declare neededFrom: DateTime | null
 

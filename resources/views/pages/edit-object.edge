@@ -14,12 +14,20 @@
   'Bureau & Fournitures': 'office'
 })
 
+{{-- Déterminer si c'est un objet donation ou cherche --}}
+@let(isDonation = object.type !== undefined)
+@let(isCherche = !isDonation)
+
 <main>
   @include('partials/flash')
   <h1>{{ t('messages.edit_item.title') }}  {{ object.name }}</h1>
 
   {{-- La route update avec l'ID de l'objet --}}
-  <form action="{{ route('donation_objects.update', { id: object.id }) }}" method="POST" enctype="multipart/form-data">
+  @if(isDonation)
+    <form id="editForm" action="{{ route('donation_objects.update', { id: object.id }) }}" method="POST" enctype="multipart/form-data">
+  @else
+    <form id="editForm" action="{{ route('cherche_objects.update', { id: object.id }) }}" method="POST" enctype="multipart/form-data">
+  @endif
     {{ csrfField() }}
 
     {{-- Pour Adonis, on utilise l'ID de route POST mais on simule le PUT ou PATCH --}}
@@ -66,7 +74,7 @@
 
     <div class="field-group">
     <label for="IsUrgent">Urgent ?</label>
-    <input type="checkbox" id="IsUrgent" name="IsUrgent" value="1">
+    <input type="checkbox" id="IsUrgent" name="IsUrgent" value="1" {{ object.urgent ? 'checked' : '' }}>
     </div>
 
     {{-- Catégorie --}}
@@ -79,7 +87,7 @@
 
         {{-- Liste simple des clés techniques --}}
         @each(key in ['sport', 'books', 'clothes', 'tech', 'home', 'toys', 'appliances', 'art', 'office'])
-        <option value="{{ key }}" {{ (old('categorie')===key) ? 'selected' : '' }}>
+        <option value="{{ key }}" {{ (old('categorie')===key || object.categorie === key) ? 'selected' : '' }}>
           {{ t(`messages.add_item.categories.${key}`) }}
         </option>
         @end
@@ -88,38 +96,56 @@
 
     <br>
 
-    {{-- Type (Don/Prêt) --}}
+    {{-- Mode (Don/Prêt/Recherche) --}}
     <div class="field-group">
-      <label for="type">{{ t('messages.add_item.status_label') }}</label><br>
-      <select id="type" name="type" required>
-        <option value="0" {{ (old('type') == '0' || object.type == false) ? 'selected' : '' }}>
-          {{ t('messages.add_item.status_give') }}
-        </option>
-        <option value="1" {{ (old('type') == '1' || object.type == true) ? 'selected' : '' }}>
-          {{ t('messages.add_item.status_lend') }}
-        </option>
+      <label for="mode">Mode :</label><br>
+      <select id="mode" name="mode" required>
+        <option value="">-- Sélectionner un mode --</option>
+        <option value="donation" {{ (isDonation) ? 'selected' : '' }}>{{ t('messages.home.mode_donation') }}</option>
+        <option value="search" {{ (isCherche) ? 'selected' : '' }}>{{ t('messages.home.mode_search') }}</option>
       </select>
     </div>
 
     <br>
 
-    {{-- Section Dates --}}
-    <div id="dates_section">
-      <p id="loan_text">{{ t('messages.add_item.loan_details') }}</p>
+    {{-- Type (Don/Prêt) - Visible uniquement en mode donation --}}
+    <div id="type_section" class="field-group" @if(!isDonation) style="display: none;" @endif>
+      <label for="type">{{ t('messages.add_item.status_label') }}</label><br>
+      <select id="type" name="type">
+        <option value="">{{ t('messages.add_item.status_select') }}</option>
+        <option value="0" {{ (old('type') == '0' || (isDonation && object.type == false)) ? 'selected' : '' }}>{{ t('messages.add_item.status_give') }}</option>
+        <option value="1" {{ (old('type') == '1' || (isDonation && object.type == true)) ? 'selected' : '' }}>{{ t('messages.add_item.status_lend') }}</option>
+      </select>
+    </div>
 
+    {{-- Section Dates --}}
+    <div id="availability_section" class="field-group" style="display: none;">
+      <p>{{ t('messages.add_item.loan_details') }}</p>
+
+      {{-- Toujours visible si Don ou Prêt --}}
       <div class="field">
         <label for="available_from">{{ t('messages.add_item.from') }}</label>
-        <input type="datetime-local" id="available_from" name="available_from"
-          value="{{ old('available_from') || (object.availableFrom ? object.availableFrom.toFormat('yyyy-MM-dd\'T\'HH:mm') : '') }}">
+        @if(isDonation)
+          <input type="datetime-local" id="available_from" name="available_from"
+            value="{{ old('available_from') || (object.availableFrom ? object.availableFrom.toISO().slice(0, 16) : '') }}">
+        @else
+          <input type="datetime-local" id="available_from" name="available_from"
+            value="{{ old('available_from') || (object.neededFrom ? object.neededFrom.toISO().slice(0, 16) : '') }}">
+        @endif
       </div>
 
-      {{-- On isole cette partie pour pouvoir la cacher en cas de DON --}}
+      {{-- Masqué si c'est un Don --}}
       <div id="until_field">
         <br>
         <div class="field">
           <label for="available_until">{{ t('messages.add_item.until') }}</label>
-          <input type="datetime-local" id="available_until" name="available_until"
-            value="{{ old('available_until') || (object.availableUntil ? object.availableUntil.toFormat('yyyy-MM-dd\'T\'HH:mm') : '') }}">
+          @if(isDonation)
+            <input type="datetime-local" id="available_until" name="available_until"
+              value="{{ old('available_until') || (object.availableUntil ? object.availableUntil.toISO().slice(0, 16) : '') }}">
+          @else
+            <input type="datetime-local" id="available_until" name="available_until"
+              value="{{ old('available_until') || (object.neededUntil ? object.neededUntil.toISO().slice(0, 16) : '') }}">
+          @endif
         </div>
       </div>
     </div>
@@ -128,43 +154,67 @@
 
     <div class="actions">
       <button type="submit" class="btn-save">{{ t('messages.edit_item.submit') }}</button>
-      <a href="{{ route('donation_objects.show', { id: object.id }) }}" class="btn-cancel">
-        {{ t('messages.edit_item.cancel') }}
-      </a>
+      @if(isDonation)
+        <a href="{{ route('donation_objects.show', { id: object.id }) }}" class="btn-cancel">
+          {{ t('messages.edit_item.cancel') }}
+        </a>
+      @else
+        <a href="{{ route('cherche_objects.show', { id: object.id }) }}" class="btn-cancel">
+          {{ t('messages.edit_item.cancel') }}
+        </a>
+      @endif
     </div>
   </form>
 </main>
 
 <script>
+  const modeSelector = document.getElementById('mode');
+  const typeSection = document.getElementById('type_section');
   const typeSelector = document.getElementById('type');
-  const datesSection = document.getElementById('dates_section');
+  const availabilitySection = document.getElementById('availability_section');
   const untilField = document.getElementById('until_field');
-  const loanText = document.getElementById('loan_text');
+  const editForm = document.getElementById('editForm');
 
   const imageSelector = document.getElementById('image');
   const imageDisplay = document.getElementById('imageDisplay');
 
-  function toggleDates() {
-    const val = typeSelector.value;
-
-    if (val === '0') {
-      // Cas DON : on montre la section mais on cache la date de fin
-      datesSection.style.display = 'block';
-      untilField.style.display = 'none';
-      if(loanText) loanText.style.display = 'block'; // Optionnel: cache le texte "Détails du prêt"
-    } else if (val === '1') {
-      // Cas PRÊT : on montre tout
-      datesSection.style.display = 'block';
-      untilField.style.display = 'block';
-      if(loanText) loanText.style.display = 'block';
+  function toggleMode() {
+    const mode = modeSelector.value;
+    
+    if (mode === 'donation') {
+      typeSection.style.display = 'block';
+      // Déclenche aussi la fonction toggleDates
+      toggleDates();
+      editForm.action = '{{ route("donation_objects.update", { id: object.id }) }}';
+    } else if (mode === 'search') {
+      typeSection.style.display = 'none';
+      typeSelector.value = '';
+      availabilitySection.style.display = 'block';
+      editForm.action = '{{ route("cherche_objects.update", { id: object.id }) }}';
     } else {
-      // Cas RIEN : on cache tout
-      datesSection.style.display = 'none';
+      typeSection.style.display = 'none';
+      availabilitySection.style.display = 'none';
     }
   }
 
+  function toggleDates() {
+    const val = typeSelector.value;
+    if (val === '0') {
+      availabilitySection.style.display = 'block';
+      untilField.style.display = 'none';
+    } else if (val === '1') {
+      availabilitySection.style.display = 'block';
+      untilField.style.display = 'block';
+    } else {
+      availabilitySection.style.display = 'none';
+    }
+  }
+
+  modeSelector.addEventListener('change', toggleMode);
   typeSelector.addEventListener('change', toggleDates);
-  window.addEventListener('DOMContentLoaded', toggleDates);
+  window.addEventListener('DOMContentLoaded', function() {
+    toggleMode();
+  });
 
   imageSelector.addEventListener('change', function (event) {
     if (event.target.files && event.target.files[0]) {

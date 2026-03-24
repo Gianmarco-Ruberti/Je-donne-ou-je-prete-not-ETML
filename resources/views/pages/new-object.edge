@@ -30,7 +30,7 @@
       type : 'file',
       attributes: { id: 'image', onchange: 'previewImage(event)' }
       })
-      <img class="CACHER" id="imageDisplay" src="" alt="Preview">
+      <img class="CACHER" id="imageDisplay" src="" alt="{{ t('messages.add_item.image_preview_alt') }}">
     </div>
 
     <br>
@@ -60,7 +60,7 @@
     <br>
 
     <div class="field-group">
-      <label for="IsUrgent">Urgent ?</label>
+      <label for="IsUrgent">{{ t('messages.add_item.urgent_label') }}</label>
       <input type="checkbox" id="IsUrgent" name="IsUrgent" value="1">
     </div>
 
@@ -85,11 +85,11 @@
 
     {{-- Type (Don/Prêt/Recherche) --}}
     <div class="field-group">
-      <label for="mode">Mode :</label><br>
+      <label for="mode">{{ t('messages.add_item.mode_label') }}</label><br>
       <select id="mode" name="mode" required>
-        <option value="">-- Sélectionner un mode --</option>
-        <option value="donation" {{ old('mode')=='donation' ? 'selected' : '' }}>{{ t('messages.home.mode_donation') }}</option>
-        <option value="search" {{ old('mode')=='search' ? 'selected' : '' }}>{{ t('messages.home.mode_search') }}</option>
+        <option value="">{{ t('messages.add_item.mode_select') }}</option>
+        <option value="donation" {{ old('mode')=='donation' ? 'selected' : '' }}>{{ t('messages.add_item.mode_donation') }}</option>
+        <option value="search" {{ old('mode')=='search' ? 'selected' : '' }}>{{ t('messages.add_item.mode_search') }}</option>
       </select>
     </div>
 

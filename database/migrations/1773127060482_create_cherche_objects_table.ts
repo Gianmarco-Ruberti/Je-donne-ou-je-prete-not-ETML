@@ -19,6 +19,9 @@ export default class extends BaseSchema {
       table.timestamp('needed_until').nullable()
       table.boolean('urgent').defaultTo('false')
 
+      // Celui qui a proposé le don (le donateur)
+      table.integer('gifted_by').unsigned().nullable().references('id').inTable('users').onDelete('SET NULL')
+
       table.timestamp('created_at')
       table.timestamp('updated_at')
     })

@@ -19,8 +19,9 @@
   <h1>{{ t('messages.add_item.title') }}</h1>
 
   {{-- Utilisation de route() pour l'action du formulaire --}}
-  <form action="{{ route('donation_objects.store') }}" method="POST" enctype="multipart/form-data">
+  <form id="objectForm" action="{{ route('donation_objects.store') }}" method="POST" enctype="multipart/form-data">
     {{ csrfField() }}
+    <input type="hidden" id="hiddenMode" name="mode" value="">
 
     <div>
       @!component('components/input', {
@@ -82,10 +83,22 @@
 
     <br>
 
-    {{-- Type (Don/Prêt) --}}
+    {{-- Type (Don/Prêt/Recherche) --}}
     <div class="field-group">
+      <label for="mode">Mode :</label><br>
+      <select id="mode" name="mode" required>
+        <option value="">-- Sélectionner un mode --</option>
+        <option value="donation" {{ old('mode')=='donation' ? 'selected' : '' }}>{{ t('messages.home.mode_donation') }}</option>
+        <option value="search" {{ old('mode')=='search' ? 'selected' : '' }}>{{ t('messages.home.mode_search') }}</option>
+      </select>
+    </div>
+
+    <br>
+
+    {{-- Type (Don/Prêt) - Visible uniquement en mode donation --}}
+    <div id="type_section" class="field-group" style="display: none;">
       <label for="type">{{ t('messages.add_item.status_label') }}</label><br>
-      <select id="type" name="type" required>
+      <select id="type" name="type">
         <option value="">{{ t('messages.add_item.status_select') }}</option>
         <option value="0" {{ old('type')=='0' ? 'selected' : '' }}>{{ t('messages.add_item.status_give') }}</option>
         <option value="1" {{ old('type')=='1' ? 'selected' : '' }}>{{ t('messages.add_item.status_lend') }}</option>
@@ -129,13 +142,35 @@
 </main>
 
 <script>
+  const modeSelector = document.getElementById('mode');
+  const typeSection = document.getElementById('type_section');
   const typeSelector = document.getElementById('type');
   const availabilitySection = document.getElementById('availability_section');
   const untilField = document.getElementById('until_field');
+  const objectForm = document.getElementById('objectForm');
+  const hiddenMode = document.getElementById('hiddenMode');
 
   // AJOUTE CES DEUX LIGNES ICI :
   const imageSelector = document.getElementById('image');
   const imageDisplay = document.getElementById('imageDisplay');
+
+  function toggleMode() {
+    const mode = modeSelector.value;
+    hiddenMode.value = mode;
+    
+    if (mode === 'donation') {
+      typeSection.style.display = 'block';
+      // Déclenche aussi la fonction toggleDates
+      toggleDates();
+    } else if (mode === 'search') {
+      typeSection.style.display = 'none';
+      typeSelector.value = '';
+      availabilitySection.style.display = 'block';
+    } else {
+      typeSection.style.display = 'none';
+      availabilitySection.style.display = 'none';
+    }
+  }
 
   function toggleDates() {
     const val = typeSelector.value;
@@ -150,8 +185,22 @@
     }
   }
 
+  // Intercepter le submit pour rediriger vers la bonne route
+  objectForm.addEventListener('submit', function(e) {
+    const mode = modeSelector.value;
+    if (mode === 'search') {
+      // Changer l'action vers cherche_objects.store
+      objectForm.action = '{{ route("cherche_objects.store") }}';
+    } else {
+      objectForm.action = '{{ route("donation_objects.store") }}';
+    }
+  });
+
+  modeSelector.addEventListener('change', toggleMode);
   typeSelector.addEventListener('change', toggleDates);
-  window.addEventListener('DOMContentLoaded', toggleDates);
+  window.addEventListener('DOMContentLoaded', function() {
+    toggleMode();
+  });
 
   // CETTE PARTIE FONCTIONNERA MAINTENANT :
   imageSelector.addEventListener('change', function (event) {

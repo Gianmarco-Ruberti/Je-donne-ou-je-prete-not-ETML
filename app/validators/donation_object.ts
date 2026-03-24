@@ -7,7 +7,7 @@ export const createDonationObjectValidator = vine.compile(
   vine.object({
     name: vine.string().trim().minLength(3).maxLength(255),
     description: vine.string().trim().minLength(10).maxLength(5000).optional(),
-    type: vine.enum(['0', '1']),
+    type: vine.enum(['0', '1']).optional(),
 
     // Important: Le format correspond au <input type="datetime-local">
     available_from: vine.date({ formats: ['iso8601', "yyyy-MM-dd'T'HH:mm"] })
@@ -35,7 +35,7 @@ export const updateDonationObjectValidator = vine.compile(
   vine.object({
     name: vine.string().trim().minLength(3).maxLength(255),
     description: vine.string().trim().escape().minLength(10).maxLength(5000).optional(),
-    type: vine.enum(['0', '1']),
+    type: vine.enum(['0', '1']).optional(),
 
     available_from: vine.date({ formats: ['iso8601', 'yyyy-MM-dd\'T\'HH:mm'] })
       .optional()

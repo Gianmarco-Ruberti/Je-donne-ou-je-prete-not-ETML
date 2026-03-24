@@ -17,64 +17,22 @@ export default class DonationObjectsController {
   /**
    * Liste des objets avec filtres (Home)
    */
-  async index({ request, view }: HttpContext) {
+  async index({ request, view, auth }: HttpContext) {
     const filterType = request.input('filter_type')
     const filterCategorie = request.input('filter_categorie')
-
-    const extainreColumn = await db
-      .from('information_schema.columns')
-      .whereRaw('table_schema = database()')
-      .where('table_name', 'users')
-      .where('column_name', 'extainre')
-      .first()
-
-    const hasExtainreColumn = !!extainreColumn
-
-    const externeColumn = hasExtainreColumn
-      ? null
-      : await db
-          .from('information_schema.columns')
-          .whereRaw('table_schema = database()')
-          .where('table_name', 'users')
-          .where('column_name', 'externe')
-          .first()
-
-    const hasExterneColumn = !!externeColumn
+    const currentUser = auth.user
+    const isExternalUser = !!currentUser?.extainre
 
     // On ajoute direct le filtre sur le status 1 ici
     let query = DonationObject.query()
       .where('donation_objects.status', 1)
       .orderBy('donation_objects.urgent', 'desc')
 
-    if (hasExtainreColumn || hasExterneColumn) {
-      const delayedUserColumn = hasExtainreColumn ? 'extainre' : 'externe'
-
-      query = query.whereRaw(
-        `NOT EXISTS (
-          SELECT 1
-          FROM users
-          WHERE users.id = donation_objects.user_id
-            AND COALESCE(users.${delayedUserColumn}, 0) = 1
-            AND donation_objects.created_at > DATE_SUB(NOW(), INTERVAL 3 MONTH)
-        )`
-      )
-
-      query = query.orderByRaw(
-        `CASE WHEN EXISTS (
-          SELECT 1
-          FROM users
-          WHERE users.id = donation_objects.user_id
-            AND COALESCE(users.${delayedUserColumn}, 0) = 1
-        )
-        THEN 1
-        ELSE 0
-        END ASC`
-      )
-
-      query = query.orderBy('donation_objects.created_at', 'desc')
-    } else {
-      query = query.orderBy('donation_objects.created_at', 'desc')
+    if (isExternalUser) {
+      query = query.whereRaw('donation_objects.created_at <= DATE_SUB(NOW(), INTERVAL 3 MONTH)')
     }
+
+    query = query.orderBy('donation_objects.created_at', 'desc')
 
     if (filterType === '0') {
       query = query.where('donation_objects.type', false)

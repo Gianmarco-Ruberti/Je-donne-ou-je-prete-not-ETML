@@ -17,7 +17,7 @@ router.post('/login', [AuthController, 'authenticate']).as('autenticate')
 router.get('/', [AuthController, 'login']).as('login0')
 // --- Protected routes ---
 router.group(() => {
-  router.get('/profile', 'UsersController.profile').as('profile')
+  // router.get('/profile', 'UsersController.profile').as('profile')
   router.get('/account', [AccountsController, 'account']).as('account')
   router.get('/logout', [AuthController, 'logout']).as('logout')
 
